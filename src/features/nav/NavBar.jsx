@@ -2,14 +2,17 @@ import React from 'react';
 import {Menu, Container, Button} from "semantic-ui-react";
 import './NavBar.css'
 
-const NavBar = () => {
+const NavBar = ({setFormOpen, formOpen}) => {
+    const toggleHandler = () => {
+        setFormOpen(!formOpen)
+    }
     return (
         <Menu borderless  fixed='top'>
             <Container>
 
                 <Menu.Item className="nav-logo" name='Eeavents'/>
                 <Menu.Item>
-                    <Button className='newevent-btn ' borderless  content='Create Event'/>
+                    <Button className='newevent-btn ' basic onClick={toggleHandler} content='Create Event'/>
                 </Menu.Item>
                 <Menu.Item position='right'>
                     <Button className={"login-btn"} basic  content='Login'/>

@@ -1,13 +1,12 @@
 import React from 'react';
 import EventListitem from "./EventListItem";
 
-const EventList = () => {
+const EventList = ({events}) => {
     return (
         <div>
-           <EventListitem/>
-           <EventListitem/>
-           <EventListitem/>
-           <EventListitem/>
+            {events.map(event => (
+                <EventListitem key={event.id} event={event}/>
+            ))}
         </div>
     );
 };

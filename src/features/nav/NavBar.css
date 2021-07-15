@@ -1,27 +1,33 @@
-.ui.basic.button.signup-btn:hover{
+.ui.basic.button.signup-btn:hover {
     background-color: #95D2EC !important;
 }
+
 .ui.basic.button.login-btn:hover {
     background-color: #95D2EC !important;
 
 }
-.ui.button.newevent-btn{
-    background-color: #95D2EC ;
+
+.ui.button.newevent-btn {
+    background-color: #95D2EC;
     border: none;
 }
-.ui.button.newevent-btn:hover{
-    background-color: #fff ;
-    color: rgba(0,0,0,.87) !important;
+
+.ui.button.newevent-btn:hover {
+    background-color: #95D2EC !important;
     border: none;
 }
+/*.ui.fixed.menu {*/
+/*    background-color:#e7f9ff ;*/
+/*}*/
 /*.newevent-btn:hover{*/
 /*    background-color: #95D2EC ;*/
 /*}*/
 .item.nav-logo {
-     color: #FF4242 !important;
+    color: #FF4242 !important;
     font-size: 18px;
-    font-weight: bold!important;
+    font-weight: bold !important;
 }
+
 /*.nav-bg {*/
 /*    z-index: 100;*/
 /*}*/
