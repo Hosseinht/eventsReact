@@ -6,7 +6,9 @@ body {
     background-color: #f1f1f1;
 }
 
-
+.ui.main.container {
+    margin-top: 7em;
+}
 /*.loginbtn {*/
 /*  background-color: #ed7966 !important;*/
 /*}*/

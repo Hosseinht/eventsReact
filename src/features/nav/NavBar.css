@@ -1,15 +1,27 @@
-.signup-btn:hover{
-    background-color: #95D2EC ;
+.ui.basic.button.signup-btn:hover{
+    background-color: #95D2EC !important;
 }
-.login-btn:hover {
-    background-color: #95D2EC ;
+.ui.basic.button.login-btn:hover {
+    background-color: #95D2EC !important;
+
 }
-.newevent-btn{
+.ui.button.newevent-btn{
     background-color: #95D2EC ;
+    border: none;
+}
+.ui.button.newevent-btn:hover{
+    background-color: #fff ;
+    color: rgba(0,0,0,.87) !important;
+    border: none;
 }
 /*.newevent-btn:hover{*/
 /*    background-color: #95D2EC ;*/
 /*}*/
-.nav-logo {
-     color: #FF4242;
+.item.nav-logo {
+     color: #FF4242 !important;
+    font-size: 18px;
+    font-weight: bold!important;
 }
+/*.nav-bg {*/
+/*    z-index: 100;*/
+/*}*/
