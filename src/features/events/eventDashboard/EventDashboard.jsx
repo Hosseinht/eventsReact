@@ -13,7 +13,7 @@ const EventDashboard = ({formOpen, setFormOpen}) => {
                <EventList events={events }/>
             </Grid.Column>
             <Grid.Column width={6}>
-                {formOpen && <EventForm setFormOpen={setFormOpen}/>}
+                {formOpen && <EventForm setEvents={setEvents} setFormOpen={setFormOpen}/>}
                 {/*it says if form is false don't show it*/}
 
             </Grid.Column>
