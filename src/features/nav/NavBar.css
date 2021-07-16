@@ -6,7 +6,9 @@
     background-color: #95D2EC !important;
 
 }
-
+.ui.fixed.menu{
+   min-height: 76px;
+}
 .ui.button.newevent-btn {
     background-color: #95D2EC;
     border: none;
