@@ -2,8 +2,10 @@ import React, {useState} from 'react';
 import {Button, Form, Header, Segment} from "semantic-ui-react";
 import cuid from "cuid";
 
-const EventForm = ({setFormOpen, setEvents, createEvent}) => {
-    const initialValues = {
+const EventForm = ({setFormOpen, setEvents, createEvent, selectedEvent}) => {
+    // - ?? is null conditional validator. if it's null we pass anything to the right
+    // if it's not our initial value is going to be set to our selectedEvent
+    const initialValues = selectedEvent ?? {
         title: '',
         category: '',
         description: '',
