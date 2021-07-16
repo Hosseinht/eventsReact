@@ -34,7 +34,7 @@ function App() {
                 <Route path='/events:id' component={EventDetailedPage}/>
                 <Route path='/createEvent' component={EventForm}/>
             </Container>
-               
+
         </>
     );
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Menu, Container, Button} from "semantic-ui-react";
 import './NavBar.css'
+import {NavLink, Link} from "react-router-dom";
 
 const NavBar = ({setFormOpen, formOpen}) => {
     // const toggleHandler = () => {
@@ -9,10 +10,10 @@ const NavBar = ({setFormOpen, formOpen}) => {
     return (
         <Menu borderless fixed='top'>
             <Container>
-
-                <Menu.Item className="nav-logo" name='Eeavents'/>
+                <Menu.Item header exact as={Link} to='/' className="nav-logo" name='Eeavents'/>
+                <Menu.Item  as={NavLink} to='/events'  name='List'/>
                 <Menu.Item>
-                    <Button className='newevent-btn ' basic onClick={() => setFormOpen(true)} content='Create Event'/>
+                    <Button as={NavLink} to="/createEvent" className='newevent-btn ' basic onClick={() => setFormOpen(true)} content='Create Event'/>
                 </Menu.Item>
                 <Menu.Item position='right'>
                     <Button className={"login-btn"} basic content='Login'/>
