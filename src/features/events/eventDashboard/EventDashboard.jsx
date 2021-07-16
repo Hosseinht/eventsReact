@@ -28,7 +28,11 @@ const EventDashboard = ({formOpen, setFormOpen, selectEvent, selectedEvent}) => 
                     setEvents={setEvents}
                     setFormOpen={setFormOpen}
                     createEvent={handleCreateEvent}
-                    selectedEvent={selectedEvent}/>}
+                    selectedEvent={selectedEvent}
+                    key={selectedEvent ? selectedEvent.id : null}
+                    // Issue with clicking on the view button.
+                    // with this react create a new component instance rather than update the current one
+                />}
                 {/*it says if form is false don't show it*/}
 
             </Grid.Column>

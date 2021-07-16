@@ -31,7 +31,7 @@ const EventForm = ({setFormOpen, setEvents, createEvent, selectedEvent}) => {
 
     return (
         <Segment clearing>
-            <Header content={'Create new event'}/>
+            <Header content={selectedEvent ? 'Edit' :'Create new event'}/>
             <Form onSubmit={handleFormSubmit}>
                 <Form.Field>
                     <input
