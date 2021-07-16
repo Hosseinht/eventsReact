@@ -2,6 +2,9 @@ import React from 'react';
 import {Menu, Container, Button} from "semantic-ui-react";
 import './NavBar.css'
 import {NavLink, Link} from "react-router-dom";
+import SignedOutMenu from "./SignedOutMenu";
+import SignedInMenu from "./SignedInMenu";
+import styled from "styled-components";
 
 const NavBar = ({setFormOpen, formOpen}) => {
     // const toggleHandler = () => {
@@ -10,21 +13,28 @@ const NavBar = ({setFormOpen, formOpen}) => {
     return (
         <Menu borderless fixed='top'>
             <Container>
-                <Menu.Item header exact as={Link} to='/' className="nav-logo" name='Eeavents'/>
-                <Menu.Item  as={NavLink} to='/events'  name='List'/>
+                <Menu.Item header exact as={Link} to='/events' className="nav-logo" name='Eeavents'/>
+                {/*<Menu.Item  as={NavLink} to='/events'  name='List'/>*/}
                 <Menu.Item>
-                    <Button as={NavLink} to="/createEvent" className='newevent-btn ' basic onClick={() => setFormOpen(true)} content='Create Event'/>
+                    <Button as={NavLink} to="/createEvent" className='newevent-btn ' basic
+                            onClick={() => setFormOpen(true)} content='Create Event'/>
                 </Menu.Item>
-                <Menu.Item position='right'>
-                    <Button className={"login-btn"} basic content='Login'/>
-                    <Button className={'signup-btn'} basic content='Register' style={{marginLeft: '0.5em'}}/>
-                </Menu.Item>
+                <SignedOutMenu/>
+                <UserInfoMenu>
+                    <SignedInMenu/>
+                </UserInfoMenu>
+
             </Container>
         </Menu>
     );
 };
 
 export default NavBar;
+
+const UserInfoMenu = styled.div`
+  display: flex;
+  align-items: center;
+`
 
 // <nav className="nav-bg bg-white text-gray-700 fixed inset-x-0">
 //             <div className="max-w-6xl mx-auto px-4">
