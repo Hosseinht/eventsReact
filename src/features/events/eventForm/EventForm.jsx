@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Button, Form, Header, Segment} from "semantic-ui-react";
 import cuid from "cuid";
 
-const EventForm = ({setFormOpen, setEvents, createEvent, selectedEvent}) => {
+const EventForm = ({setFormOpen, setEvents, createEvent, selectedEvent, updateEvent}) => {
     // - ?? is null conditional validator. if it's null we pass anything to the right
     // if it's not our initial value is going to be set to our selectedEvent
     const initialValues = selectedEvent ?? {
@@ -17,7 +17,12 @@ const EventForm = ({setFormOpen, setEvents, createEvent, selectedEvent}) => {
     const [values, setValues] = useState(initialValues)
 
     function handleFormSubmit() {
-        createEvent({...values, id: cuid(), hostedBy: 'Bob', attendees: [], hostPhotoURL:'/assets/user.png'})
+        // we don't all the properties in our form and  we don't want to lose the properties from our selected event
+        // selected event contain all the information in sampleData and the data there is more than we have in our form
+        //with spread operator we will have all those properties
+        selectedEvent ?
+            updateEvent({...selectedEvent, ...values}) :
+            createEvent({...values, id: cuid(), hostedBy: 'Bob', attendees: [], hostPhotoURL: '/assets/user.png'})
         setFormOpen(false)
     }
 
@@ -31,7 +36,7 @@ const EventForm = ({setFormOpen, setEvents, createEvent, selectedEvent}) => {
 
     return (
         <Segment clearing>
-            <Header content={selectedEvent ? 'Edit' :'Create new event'}/>
+            <Header content={selectedEvent ? 'Edit' : 'Create new event'}/>
             <Form onSubmit={handleFormSubmit}>
                 <Form.Field>
                     <input

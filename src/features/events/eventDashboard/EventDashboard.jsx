@@ -16,6 +16,11 @@ const EventDashboard = ({formOpen, setFormOpen, selectEvent, selectedEvent}) => 
         // we should get a new event in our list
     }
 
+    function handleUpdateEvent(updatedEvent) {
+        setEvents(events.map(evt => evt.id === updatedEvent.id ? updatedEvent : evt))
+        selectEvent(null)
+    }
+
 
     return (
         <Grid>
@@ -29,6 +34,7 @@ const EventDashboard = ({formOpen, setFormOpen, selectEvent, selectedEvent}) => 
                     setFormOpen={setFormOpen}
                     createEvent={handleCreateEvent}
                     selectedEvent={selectedEvent}
+                    updateEvent={handleUpdateEvent}
                     key={selectedEvent ? selectedEvent.id : null}
                     // Issue with clicking on the view button.
                     // with this react create a new component instance rather than update the current one
