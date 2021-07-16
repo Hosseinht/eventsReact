@@ -5,7 +5,7 @@ import EventDashboard from "../../features/events/eventDashboard/EventDashboard"
 import NavBar from "../../features/nav/NavBar";
 
 function App() {
-     const [formOpen, setOpenForm] = useState(true)
+     const [formOpen, setOpenForm] = useState(false)
     return (
         <>
             <NavBar setFormOpen={setOpenForm} formOpen={formOpen}/>
