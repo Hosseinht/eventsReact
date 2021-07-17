@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import '../../index.css';
-import {Button, Container} from "semantic-ui-react";
+import Container from "react-bootstrap/Container";
 import EventDashboard from "../../features/events/eventDashboard/EventDashboard";
 import NavBar from "../../features/nav/NavBar";
 import {Route} from 'react-router-dom'

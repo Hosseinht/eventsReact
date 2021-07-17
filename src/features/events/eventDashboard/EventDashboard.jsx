@@ -1,8 +1,12 @@
 import React, {useState} from 'react';
-import {Grid} from "semantic-ui-react";
 import EventList from "./EventList";
 import EventForm from "../eventForm/EventForm";
 import {sampleData} from "../../../app/api/sampleData";
+
+//Bootstrap
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 const EventDashboard = ({formOpen, setFormOpen, selectEvent, selectedEvent}) => {
     const [events, setEvents] = useState(sampleData)
@@ -27,32 +31,58 @@ const EventDashboard = ({formOpen, setFormOpen, selectEvent, selectedEvent}) => 
     }
 
     return (
-        <Grid>
-            <Grid.Column width={10}>
-                <EventList
-                    events={events}
-                    selectEvent={selectEvent}
-                    deleteEvent={handleDeleteEvent}
-                />
-            </Grid.Column>
-            <Grid.Column width={6}>
-                {formOpen &&
-                <EventForm
-                    setEvents={setEvents}
-                    setFormOpen={setFormOpen}
-                    createEvent={handleCreateEvent}
-                    selectedEvent={selectedEvent}
-                    updateEvent={handleUpdateEvent}
-                    key={selectedEvent ? selectedEvent.id : null}
-                    // Issue with clicking on the view button.
-                    // with this react create a new component instance rather than update the current one
-                />}
-                {/*it says if form is false don't show it*/}
 
-            </Grid.Column>
-        </Grid>
+        <Container>
+            <Row>
+                <Col lg={8} md={"auto"}>
+                    <EventList
+                        events={events}
+                        selectEvent={selectEvent}
+                        deleteEvent={handleDeleteEvent}
+                    />
+                </Col>
+                <Col lg={8} md={"auto"}>
+                    {formOpen &&
+                    <EventForm
+                        setEvents={setEvents}
+                        setFormOpen={setFormOpen}
+                        createEvent={handleCreateEvent}
+                        selectedEvent={selectedEvent}
+                        updateEvent={handleUpdateEvent}
+                        key={selectedEvent ? selectedEvent.id : null}
+                        // Issue with clicking on the view button.
+                        // with this react create a new component instance rather than update the current one
+                    />}
+                </Col>
+            </Row>
+        </Container>
 
     );
 };
 
 export default EventDashboard;
+
+// <Grid>
+//             <Grid.Column width={10}>
+//                 <EventList
+//                     events={events}
+//                     selectEvent={selectEvent}
+//                     deleteEvent={handleDeleteEvent}
+//                 />
+//             </Grid.Column>
+//             <Grid.Column width={6}>
+//                 {formOpen &&
+//                 <EventForm
+//                     setEvents={setEvents}
+//                     setFormOpen={setFormOpen}
+//                     createEvent={handleCreateEvent}
+//                     selectedEvent={selectedEvent}
+//                     updateEvent={handleUpdateEvent}
+//                     key={selectedEvent ? selectedEvent.id : null}
+//                     // Issue with clicking on the view button.
+//                     // with this react create a new component instance rather than update the current one
+//                 />}
+//                 {/*it says if form is false don't show it*/}
+//
+//             </Grid.Column>
+//         </Grid>

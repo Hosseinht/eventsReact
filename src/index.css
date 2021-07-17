@@ -4,9 +4,10 @@
 
 body {
     background-color: #f1f1f1;
+
 }
 
-.ui.main.container {
+.main{
     margin-top: 10em;
 }
 /*.loginbtn {*/
