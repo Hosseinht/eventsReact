@@ -8,6 +8,7 @@ import EventList from "./EventList";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import {BsFillClockFill, BsGeoAlt} from "react-icons/bs"
+import {Link} from "react-router-dom";
 
 const EventListitem = ({event, selectEvent, deleteEvent}) => {
     return (
@@ -50,8 +51,11 @@ const EventListitem = ({event, selectEvent, deleteEvent}) => {
                         {event.description}
                     </div>
                     <div className="description-btns">
-                        <Button onClick={() => selectEvent(event)}
-                                className='py-2 px-4 description-view-btn'>View</Button>{' '}
+                        <Button
+                            as={Link} to={`/events/${event.id}`}
+                            className='py-2 px-4 description-view-btn'>
+                            View
+                        </Button>{' '}
                         <Button onClick={() => deleteEvent(event.id)}
                                 className='p-2 px-3 description-delete-btn'>Delete</Button>
                     </div>
@@ -64,107 +68,113 @@ const EventListitem = ({event, selectEvent, deleteEvent}) => {
 export default EventListitem;
 
 const EventListWrapper = styled.div`
-  margin-bottom: 20px;
-  padding: 20px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  .top-part {
+margin-bottom: 20px;
+padding: 20px;
+box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+.top-part {
     display: flex;
     justify-content: start;
-    
+
     .top-part-info{
-      padding: 5px;
-      margin-left: 10px;
-    }
+    padding: 5px;
+    margin-left: 10px;
+}
     .user-name {
     margin-top: 10px;
     font-size:16px ;
-    }
-    
-  }
-  
-  .middle-part {
+}
+
+}
+
+.middle-part {
     padding: 15px 0;
     margin-top: 5px;
     display: flex;
     flex-wrap: wrap;
-  }
-  .middle-part-date{
+}
+.middle-part-date{
     display: flex;
-    
-  }
-  .middle-part-venue {
-  display: flex;
-  }
-  .middle-part-icon {
-    margin-right: 8px;
+
+}
+.middle-part-venue {
+    display: flex;
+}
+.middle-part-icon {
+    margin - right: 8px;
     margin-top: 3px;
-  }
-  .date {
+}
+.date {
+    margin - right: 10px;
+}
+.attendee-part {
+    display: flex;
+    flex-wrap: wrap;
+    margin:20px 0;
+
+}
+.description-btns {
+    float: right;
     margin-right: 10px;
-  }
-  .attendee-part {
-      display: flex;
-      flex-wrap: wrap;
-      margin:20px 0;
-  
-  }
-  .description-btns {
-  float: right;
-  margin-right: 10px;
-  margin-top: 10px;
-      
-  }
-  .bottom-part{
-  ::after{
-        content: "";
-        clear: both;
-        display: table;
-      }
-  }
-  .description-view-btn {
-    box-shadow: none;
+    margin-top: 10px;
+
+}
+.bottom-part{
+    ::after{
+    content: "";
+    clear: both;
+    display: table;
+}
+}
+.description-view-btn {
+    box - shadow: none;
     background-color: #47abd8;
     border: none;
     :hover {
-      background-color:#95D2EC ;
-      color: white;
-      font-weight: bold;
-    }
-  }
-  .description-delete-btn{
-    box-shadow: none;
+    background-color:#95D2EC ;
+    color: white;
+    font-weight: bold;
+}
+}
+.description-delete-btn{
+    box - shadow: none;
     background-color:#FF4242;
     border: none  ;
     :hover {
-        background-color:#ff5454;
-        color: white;
-        font-weight: bold;
-    }
-  }
+    background-color:#ff5454;
+    color: white;
+    font-weight: bold;
+}
+}
 `
 
-// <Segment.Group style={{marginBottom: "15px"}}>
-//                <Segment>
-//                    <Item.Group>
-//                        <Item>
-//                            <Item.Image size='tiny' circular src={event.hostPhotoURL}/>
-//                            <Item.Content>
-//                                <Item.Header content={event.title}/>
-//                                <Item.Description>{event.hostedBy}</Item.Description>
-//                            </Item.Content>
-//                        </Item>
+    //
+//     < Segment.Group
+// style = {
+// {
+//     marginBottom: "15px"
+// }
+// }>
+// <Segment>
+// <Item.Group>
+// <Item>
+// <Item.Image size='tiny' circular src={event.hostPhotoURL}/>
+// <Item.Content>
+// <Item.Header content={event.title}/>
+// <Item.Description>{event.hostedBy}</Item.Description>
+// </Item.Content>
+// </Item>
 //
-//                    </Item.Group>
-//                </Segment>
-//                <Segment borderless>
-//                    <span>
+// </Item.Group>
+// </Segment>
+// <Segment borderless>
+// <span>
 //                        <Icon name='clock'/> {event.date}
 //                        <Icon name='marker'/> {event.venue}
 //                    </span>
-//                </Segment>
-//                <Segment secondary>
-//                    <List horizontal>
-//                        {event.attendees.map(attendee => (
+// </Segment>
+// <Segment secondary>
+// <List horizontal>
+// {event.attendees.map(attendee => (
 //                            <EventListAttendee attende={attendee} key={attendee.id}/>
 //                        ))}
 //
