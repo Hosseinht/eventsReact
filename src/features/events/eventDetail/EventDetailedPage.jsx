@@ -17,9 +17,8 @@ const EventDetailedPage = () => {
 
         <EventDetailedPageWrapper>
             <Container>
-                 <h1 className='mt-5'>Hi</h1>
                 <Row>
-                   <Col md={"auto"} lg={8}>
+                   <Col md={"auto"} lg={6}>
                         <EventDetailedHeader/>
                         <EventDetailedInfo/>
                         <EventDetailedChat/>

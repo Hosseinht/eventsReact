@@ -6,8 +6,9 @@ import styled from "styled-components";
 const SignedOutMenu = ({setAuthenticated}) => {
     return (
         <SignoutMenuWrapper>
-            <Button onClick={()=> setAuthenticated(true)} variant='outline-dark' className='singout-btn py-2'> Login </Button>{' '}
-            <Button variant='outline-dark' className='singout-btn py-2'> Register </Button>
+            <Button onClick={() => setAuthenticated(true)} variant='light'
+                    className='singout-btn py-2'> Login </Button>{' '}
+            <Button variant='outline-light' className='singout-btn py-2'> Register </Button>
         </SignoutMenuWrapper>
     )
 };
@@ -18,6 +19,10 @@ const SignoutMenuWrapper = styled.div`
   margin-right: 5px;
   .singout-btn {
     box-shadow: none;
+    border: none;
+    color:#36bff7;
+    font-weight:bold;
+    background-color: transparent;
     :hover{
     background-color:#95D2EC ;
     color: white;

@@ -12,12 +12,12 @@ const SignedInMenu = ({signOut}) => {
     return (
         <SignedinMenuWrapper>
             <Image roundedCircle fluid className='user-img' src='/assets/user.png'/>
-            <NavDropdown className='fs-5' title="Bob" id="basic-nav-dropdown">
+            <NavDropdown className='nav-dropdown fs-6' title="Bob" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1"><BsPlus className='singin-icon' size='20px'/> Create
                     Event</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2"><BsPersonFill className='singin-icon' size='20px'/> My
                     profile</NavDropdown.Item>
-                <NavDropdown.Item onClick={signOut} ><BsPower className='singin-icon' size='20px'/> Sign
+                <NavDropdown.Item onClick={signOut}><BsPower className='singin-icon' size='20px'/> Sign
                     out</NavDropdown.Item>
             </NavDropdown>
         </SignedinMenuWrapper>
@@ -34,10 +34,16 @@ const SignedinMenuWrapper = styled.div`
       width: 30px;
       height: 30px;
       margin-right: 5px;
-      margin-top: 4px;
+      margin-top: 9px;
     }
     .singin-icon{
       margin-right: 5px;
+    }
+    .nav-dropdown {
+     .nav-link{
+      color: #36bff7 !important;
+      }
+      
     }
 `
 

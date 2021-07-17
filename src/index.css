@@ -1,15 +1,59 @@
-/*@tailwind base;*/
-/*@tailwind components;*/
-/*@tailwind utilities;*/
 
 body {
     background-color: #f1f1f1;
 
 }
 
-.main{
+.my-text-color {
+    color: #727e83;
+}
+
+.btn {
+    box-shadow: none;
+    background-color: transparent;
+    border: none;
+
+}
+
+.my-red-color {
+    color: #f77462;
+}
+
+.my-blue-color {
+    color: #36bff7;
+}
+
+.main {
     margin-top: 10em;
 }
+
+.my-blue-btn {
+    box-shadow: none;
+    background-color: transparent;
+    border: none;
+    color: #36bff7;
+}
+
+.my-blue-btn:hover {
+    background-color: #95D2EC;
+    color: white;
+    /*font-weight: bold;*/
+}
+
+.my-red-btn {
+    background-color: transparent;
+    color: #f77462;
+    border: none;
+
+}
+
+.my-red-btn:hover {
+    background-color: #f77462;
+    color: white;
+    /*font-weight: bold;*/
+}
+
+
 /*.loginbtn {*/
 /*  background-color: #ed7966 !important;*/
 /*}*/

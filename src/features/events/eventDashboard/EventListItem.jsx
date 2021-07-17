@@ -53,11 +53,11 @@ const EventListitem = ({event, selectEvent, deleteEvent}) => {
                     <div className="description-btns">
                         <Button
                             as={Link} to={`/events/${event.id}`}
-                            className='py-2 px-4 description-view-btn'>
+                            className='py-2 px-4 my-blue-btn'>
                             View
                         </Button>{' '}
                         <Button onClick={() => deleteEvent(event.id)}
-                                className='p-2 px-3 description-delete-btn'>Delete</Button>
+                                className='p-2 px-3 my-red-btn'>Delete</Button>
                     </div>
                 </div>
             </div>
@@ -100,11 +100,11 @@ box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     display: flex;
 }
 .middle-part-icon {
-    margin - right: 8px;
+    margin-right: 8px;
     margin-top: 3px;
 }
 .date {
-    margin - right: 10px;
+    margin-right: 10px;
 }
 .attendee-part {
     display: flex;
@@ -126,9 +126,10 @@ box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 }
 .description-view-btn {
-    box - shadow: none;
-    background-color: #47abd8;
+    box-shadow: none;
+    background-color: transparent;
     border: none;
+    color:#36bff7;
     :hover {
     background-color:#95D2EC ;
     color: white;
@@ -136,11 +137,11 @@ box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 }
 .description-delete-btn{
-    box - shadow: none;
-    background-color:#FF4242;
+    background-color:transparent;
+    color: #f77462;
     border: none  ;
     :hover {
-    background-color:#ff5454;
+    background-color:#f77462;
     color: white;
     font-weight: bold;
 }

@@ -29,7 +29,7 @@ const NavBar = ({setFormOpen, formOpen}) => {
                     <Navbar.Toggle className="mx-sm-5" aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse className='justify-content-between ' id="basic-navbar-nav">
                         <Nav className=" align-items-center mx-sm-5 align-items-sm-start ">
-                            <Navbar.Brand as={Link} to='/events' className='fs-3 py-3 events-logo'
+                            <Navbar.Brand as={Link} to='/events' className='fs-3  events-logo'
                                           href="#home">Eeavents</Navbar.Brand>
                             {authenticated &&
                             <Button as={NavLink} to="/createEvent" className='py-2 newevent-btn' href="#home">New
@@ -59,8 +59,6 @@ const NavbarCustom = styled.div`
       ::selection{
         color: white;
       }
-      
-      color: #FF4242;
   }
   .nav-link {
     margin-top: 3px;
@@ -70,8 +68,8 @@ const NavbarCustom = styled.div`
     margin-top: 10px;
   }
   .newevent-btn {
-    background-color: #95D2EC;
-    color: rgba(255,255,255,0.95);
+     background-color:  #f77462;
+    color: white;
     margin-top: 10px;
     border: none;
     box-shadow: none !important;
