@@ -4,6 +4,7 @@ import styled from "styled-components";
 //Bootstrap
 import Image from "react-bootstrap/cjs/Image";
 import Button from "react-bootstrap/Button";
+import {Link} from "react-router-dom";
 
 const EventDetailedHeader = () => {
     return (
@@ -33,7 +34,7 @@ const EventDetailedHeader = () => {
                     </div>
                 </div>
                 <div className="header-event-btn">
-                    <Button variant={'light'}>Manage Event</Button>
+                    <Button as={Link} to={`/manage/`} variant={'light'}>Manage Event</Button>
                 </div>
             </div>
         </EventDetailedHeaderWrapper>

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import Container from "react-bootstrap/Container";
+
 import Image from "react-bootstrap/Image";
 
 const EventDetailedSidebar = () => {

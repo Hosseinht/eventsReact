@@ -8,6 +8,7 @@ import styled from "styled-components";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import {Link} from "react-router-dom";
 
 const EventForm = ({setFormOpen, setEvents, createEvent, selectedEvent, updateEvent}) => {
     // - ?? is null conditional validator. if it's null we pass anything to the right
@@ -102,8 +103,13 @@ const EventForm = ({setFormOpen, setEvents, createEvent, selectedEvent, updateEv
                         />
                     </Form.Group>
                     <div className="form-btn">
-                        <Button className='form-btn-cancel' variant="light" type="submit"
-                                onClick={() => setFormOpen(false)}>
+                        <Button
+                            as={Link} to='/events'
+                            className='form-btn-cancel'
+                            variant="light"
+                            type="submit"
+
+                        >
                             Cancel
                         </Button> {""}
                         <Button className='form-btn-submit' variant="light" type='submit'>

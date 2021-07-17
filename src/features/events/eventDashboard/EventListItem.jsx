@@ -2,7 +2,6 @@ import React from 'react';
 import EventListAttendee from "./EventListAttendee";
 import './EventListItem.css'
 import styled from "styled-components";
-import EventList from "./EventList";
 
 //Bootstrap
 import Image from "react-bootstrap/Image";
@@ -10,7 +9,7 @@ import Button from "react-bootstrap/Button";
 import {BsFillClockFill, BsGeoAlt} from "react-icons/bs"
 import {Link} from "react-router-dom";
 
-const EventListitem = ({event, selectEvent, deleteEvent}) => {
+const EventListitem = ({event, deleteEvent}) => {
     return (
         <EventListWrapper>
             <div className="top-part">

@@ -1,8 +1,5 @@
 import React from 'react';
-import {Link} from "react-router-dom";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import Nav from "react-bootstrap/Nav";
-
 //Bootstrap
 import Image from "react-bootstrap/Image";
 import styled from "styled-components";

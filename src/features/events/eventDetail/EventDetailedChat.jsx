@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 //Bootstrap
 import ListGroup from "react-bootstrap/ListGroup";
-import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
