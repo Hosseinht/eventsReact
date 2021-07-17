@@ -8,7 +8,7 @@ import Image from "react-bootstrap/Image";
 import styled from "styled-components";
 import {BsPlus, BsPersonFill, BsPower} from "react-icons/bs";
 
-const SignedInMenu = ({setAuthenticated}) => {
+const SignedInMenu = ({signOut}) => {
     return (
         <SignedinMenuWrapper>
             <Image roundedCircle fluid className='user-img' src='/assets/user.png'/>
@@ -17,7 +17,7 @@ const SignedInMenu = ({setAuthenticated}) => {
                     Event</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2"><BsPersonFill className='singin-icon' size='20px'/> My
                     profile</NavDropdown.Item>
-                <NavDropdown.Item onClick={()=> setAuthenticated(false)} href="#action/3.3"><BsPower className='singin-icon' size='20px'/> Sign
+                <NavDropdown.Item onClick={signOut} ><BsPower className='singin-icon' size='20px'/> Sign
                     out</NavDropdown.Item>
             </NavDropdown>
         </SignedinMenuWrapper>

@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, } from 'react';
 import './NavBar.css'
-import {NavLink, Link} from "react-router-dom";
+import {NavLink, Link, useHistory} from "react-router-dom";
 import SignedOutMenu from "./SignedOutMenu";
 import SignedInMenu from "./SignedInMenu";
 import styled from "styled-components";
@@ -13,10 +13,15 @@ import Container from "react-bootstrap/Container";
 
 
 const NavBar = ({setFormOpen, formOpen}) => {
+    const history = useHistory()
     const [authenticated, setAuthenticated] = useState(false)
-    // const toggleHandler = () => {
-    //     setFormOpen(!formOpen)
-    // }
+
+    // to use history we need a handler to do an extra thing when user sign out
+    function handleSignout () {
+        setAuthenticated(false)
+        history.push('/events')
+    }
+
     return (
         <NavbarCustom>
             <Navbar className='' expand="lg">
@@ -33,7 +38,7 @@ const NavBar = ({setFormOpen, formOpen}) => {
                             {/*if authenticated is true anything after && will be executed*/}
                         </Nav>
                         <Nav className='justify-content-evenly login-register-btn w-50 mx-sm-5 align-items-sm-start'>
-                            {authenticated ? <SignedInMenu setAuthenticated={setAuthenticated}/> :
+                            {authenticated ? <SignedInMenu signOut={handleSignout}/> :
                                 <SignedOutMenu setAuthenticated={setAuthenticated}/>}
                         </Nav>
                     </Navbar.Collapse>
@@ -77,6 +82,10 @@ const NavbarCustom = styled.div`
     }
   }
 `
+
+ // const toggleHandler = () => {
+    //     setFormOpen(!formOpen)
+    // }
 
 // <nav className="nav-bg bg-white text-gray-700 fixed inset-x-0">
 //             <div className="max-w-6xl mx-auto px-4">
