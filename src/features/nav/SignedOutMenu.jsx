@@ -3,10 +3,10 @@ import Button from "react-bootstrap/Button";
 import styled from "styled-components";
 
 
-const SignedOutMenu = () => {
+const SignedOutMenu = ({setAuthenticated}) => {
     return (
         <SignoutMenuWrapper>
-            <Button variant='outline-dark' className='singout-btn py-2'> Login </Button>{' '}
+            <Button onClick={()=> setAuthenticated(true)} variant='outline-dark' className='singout-btn py-2'> Login </Button>{' '}
             <Button variant='outline-dark' className='singout-btn py-2'> Register </Button>
         </SignoutMenuWrapper>
     )
