@@ -10,25 +10,6 @@ const EventDashboard = () => {
     const {events} = useSelector(state => state.event)
     // event is the reducer and events is property for events that we're storing our events. initialState{events:sampleData}
 
-
-    // function handleCreateEvent(event) {
-    //     setEvents([...events, event])
-    //     // it's an array cuz sampleData is an array
-    //     //event = the event that we receive. and this is going to add this on as an individual element inside the array
-    //     //it returns a new array that we then use is inside setEvent. when we submit our form and call this function
-    //     // we should get a new event in our list
-    // }
-    //
-    // function handleUpdateEvent(updatedEvent) {
-    //     setEvents(events.map(evt => evt.id === updatedEvent.id ? updatedEvent : evt))
-    //
-    // }
-
-    function handleDeleteEvent(eventId){
-        // setEvents(events.filter(evt => evt.id !== eventId))
-        // تمام اونایی که یکی نیستن رو نگه دار یکی هست پاک کن
-    }
-
     return (
 
         <Container>
@@ -36,7 +17,6 @@ const EventDashboard = () => {
                 <Col lg={8} md={"auto"}>
                     <EventList
                         events={events}
-                        deleteEvent={handleDeleteEvent}
                     />
                 </Col>
                 <Col lg={8} md={"auto"}>

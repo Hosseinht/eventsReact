@@ -1,4 +1,4 @@
-import React, {useState, } from 'react';
+import React, {useState,} from 'react';
 import './NavBar.css'
 import {NavLink, Link, useHistory} from "react-router-dom";
 import SignedOutMenu from "./SignedOutMenu";
@@ -17,14 +17,14 @@ const NavBar = ({setFormOpen, formOpen}) => {
     const [authenticated, setAuthenticated] = useState(false)
 
     // to use history we need a handler to do an extra thing when user sign out
-    function handleSignout () {
+    function handleSignout() {
         setAuthenticated(false)
         history.push('/events')
     }
 
     return (
         <NavbarCustom>
-            <Navbar className='' expand="lg">
+            <Navbar fixed={'top'} className='' expand="lg">
                 <Container className='py-3'>
                     <Navbar.Toggle className="mx-sm-5" aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse className='justify-content-between ' id="basic-navbar-nav">
@@ -53,6 +53,12 @@ const NavBar = ({setFormOpen, formOpen}) => {
 export default NavBar;
 
 const NavbarCustom = styled.div`
+ 
+  
+  .navbar {
+     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px ;
+     background-color: rgba(255,255,255,0.9) ;
+  }
   .events-logo{
       :focus{
       color: #FF4242
@@ -82,9 +88,9 @@ const NavbarCustom = styled.div`
   }
 `
 
- // const toggleHandler = () => {
-    //     setFormOpen(!formOpen)
-    // }
+// const toggleHandler = () => {
+//     setFormOpen(!formOpen)
+// }
 
 // <nav className="nav-bg bg-white text-gray-700 fixed inset-x-0">
 //             <div className="max-w-6xl mx-auto px-4">
