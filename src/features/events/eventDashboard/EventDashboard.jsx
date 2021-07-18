@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
 import EventList from "./EventList";
-import {sampleData} from "../../../app/api/sampleData";
-
 //Bootstrap
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import {useSelector} from "react-redux";
 
 const EventDashboard = () => {
-    const [events, setEvents] = useState(sampleData)
+    const {events} = useSelector(state => state.event)
+    // event is the reducer and events is property for events that we're storing our events
 
 
     // function handleCreateEvent(event) {
@@ -25,7 +25,7 @@ const EventDashboard = () => {
     // }
 
     function handleDeleteEvent(eventId){
-        setEvents(events.filter(evt => evt.id !== eventId))
+        // setEvents(events.filter(evt => evt.id !== eventId))
         // تمام اونایی که یکی نیستن رو نگه دار یکی هست پاک کن
     }
 

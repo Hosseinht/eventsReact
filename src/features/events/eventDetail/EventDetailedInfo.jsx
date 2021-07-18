@@ -6,7 +6,7 @@ import {BsGeoAlt, BsFillCalendarFill, BsFillInfoSquareFill} from "react-icons/bs
 import Button from "react-bootstrap/cjs/Button";
 
 
-const EventDetailedInfo = () => {
+const EventDetailedInfo = ({event}) => {
     return (
         <EventDetailedInfoWrapper>
             <div className="info-event">
@@ -14,7 +14,7 @@ const EventDetailedInfo = () => {
                     <BsFillInfoSquareFill size='20px'/>
                 </div>
                 <div className="info-description-text">
-                    <p>Event Description</p>
+                    <p>{event.description}</p>
                 </div>
             </div>
             <div className="info-event">
@@ -22,7 +22,7 @@ const EventDetailedInfo = () => {
                     <BsFillCalendarFill color='#FF4242' size='20px'/>
                 </div>
                 <div className="info-date-text">
-                    <p>Event Date</p>
+                    <p>{event.date}</p>
                 </div>
             </div>
             <div className="info-event-venue">
@@ -31,7 +31,7 @@ const EventDetailedInfo = () => {
                         <BsGeoAlt size='20px'/>
                     </div>
                     <div className="info-venue-text">
-                        <p>Event Venue</p>
+                        <p>{event.venue}</p>
                     </div>
                 </div>
                 <div className=" info-event-btn">

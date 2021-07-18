@@ -6,20 +6,20 @@ import Image from "react-bootstrap/cjs/Image";
 import Button from "react-bootstrap/Button";
 import {Link} from "react-router-dom";
 
-const EventDetailedHeader = () => {
+const EventDetailedHeader = ({event}) => {
     return (
         <EventDetailedHeaderWrapper>
             <div className='fixedoverlay'>
-                <Image className='img-brightness' fluid src='/assets/categoryImages/drinks.jpg'/>
+                <Image className='img-brightness' fluid src={`/assets/categoryImages/${event.category}.jpg`}/>
                 <div className="content-title">
                     <div className="content-title-title">
-                        <p className='fs-3'>Event Title</p>
+                        <p className='fs-4'>{event.title}</p>
                     </div>
                     <div className='content-title-date'>
-                        <p>Event Date</p>
+                        <p>{event.date}</p>
                     </div>
                     <div className="content-title-host">
-                        <p className='fs-6'>Hosted by <strong> Bob</strong></p>
+                        <p className='fs-6'>Hosted by <strong> {event.hostedBy}</strong></p>
                     </div>
                 </div>
             </div>

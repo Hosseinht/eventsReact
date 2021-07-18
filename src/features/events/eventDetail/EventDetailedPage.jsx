@@ -1,4 +1,6 @@
 import React from 'react';
+import {useSelector} from "react-redux";
+
 import styled from "styled-components";
 
 //Bootstrap
@@ -12,20 +14,23 @@ import EventDetailedInfo from "./EventDetailedInfo";
 import EventDetailedChat from "./EventDetailedChat";
 import EventDetailedSidebar from "./EventDetailedSidebar";
 
-const EventDetailedPage = () => {
+
+const EventDetailedPage = ({match}) => {
+    //match allows us to access to params(id)
+    const event = useSelector(state => state.event.events.find(e => e.id === match.params.id))
     return (
 
         <EventDetailedPageWrapper>
             <Container>
                 <Row>
-                   <Col md={"auto"} lg={6}>
-                        <EventDetailedHeader/>
-                        <EventDetailedInfo/>
+                    <Col md={"auto"} lg={6}>
+                        <EventDetailedHeader event={event}/>
+                        <EventDetailedInfo event={event}/>
                         <EventDetailedChat/>
-                   </Col>
+                    </Col>
                     <Col md={"auto"} lg={4}>
-                        <EventDetailedSidebar/>
-                   </Col>
+                        <EventDetailedSidebar attendees={event.attendees}/>
+                    </Col>
                 </Row>
             </Container>
         </EventDetailedPageWrapper>

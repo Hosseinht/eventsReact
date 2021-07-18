@@ -3,19 +3,17 @@ import styled from "styled-components";
 
 import Image from "react-bootstrap/Image";
 
-const EventDetailedSidebar = () => {
+const EventDetailedSidebar = ({attendees}) => {
     return (
         <EventDetailedSidebarWrapper>
-            <p className='text-center '>2 People Going</p>
+            <p className='text-center '>{attendees.length} {attendees.length > 1 ? 'People' : 'Person'} Going</p>
 
-            <div className="sidebar-user">
-                <Image src="/assets/user.png"/>
-                <h5>Bob</h5>
-            </div>
-            <div className="sidebar-user">
-                <Image src="/assets/user.png"/>
-                <h5>Bob</h5>
-            </div>
+            {attendees.map(attendee => (
+                <div key={attendee.id} className="sidebar-user">
+                    <Image src={attendee.photoURL || "/assets/user.png"}/>
+                    <h5>{attendee.displayName}</h5>
+                </div>
+            ))}
         </EventDetailedSidebarWrapper>
     );
 };
