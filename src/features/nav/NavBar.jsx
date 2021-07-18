@@ -36,6 +36,7 @@ const NavBar = ({setFormOpen, formOpen}) => {
                                 Event</Button>
                             }
                             {/*if authenticated is true anything after && will be executed*/}
+                            <Nav.Link as={Link} to='/sandbox'>Sandbox </Nav.Link>
                         </Nav>
                         <Nav className='justify-content-evenly login-register-btn w-50 mx-sm-5 align-items-sm-start'>
                             {authenticated ? <SignedInMenu signOut={handleSignout}/> :

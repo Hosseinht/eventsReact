@@ -10,12 +10,18 @@ const SignedInMenu = ({signOut}) => {
         <SignedinMenuWrapper>
             <Image roundedCircle fluid className='user-img' src='/assets/user.png'/>
             <NavDropdown className='nav-dropdown fs-6' title="Bob" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1"><BsPlus className='singin-icon' size='20px'/> Create
-                    Event</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2"><BsPersonFill className='singin-icon' size='20px'/> My
-                    profile</NavDropdown.Item>
-                <NavDropdown.Item onClick={signOut}><BsPower className='singin-icon' size='20px'/> Sign
-                    out</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.1">
+                    <BsPlus className='singin-icon' size='20px'/>
+                    Create Event
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.2">
+                    <BsPersonFill className='singin-icon' size='20px'/>
+                    My profile
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={signOut}>
+                    <BsPower className='singin-icon' size='20px'/>
+                    Sign out
+                </NavDropdown.Item>
             </NavDropdown>
         </SignedinMenuWrapper>
 
