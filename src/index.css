@@ -10,7 +10,7 @@ body {
 
 .btn {
     box-shadow: none;
-    background-color: transparent;
+    /*background-color: transparent;*/
     border: none;
 
 }
