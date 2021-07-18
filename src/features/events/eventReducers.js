@@ -13,7 +13,7 @@ export const eventReducer = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 events: [...state.events, payload]
-                // We never intersted in mutating in redux (events.push). we always want our states to be immutable
+                // We never interested in mutating in redux (events.push). we always want our states to be immutable
                 // we want original Array of events(events = sampleData in initialState) and pass the payload which is our new event
             }
         case UPDATE_EVENT:
@@ -26,6 +26,7 @@ export const eventReducer = (state = initialState, {type, payload}) => {
                 ...state,
                  events: [...state.events.filter(evt => evt.id !== payload)]
                 // payload here is eventId in action.so we don't use payload.id
+                // اگه یکی نیستن فیلترش کن
             }
         default:
             return state

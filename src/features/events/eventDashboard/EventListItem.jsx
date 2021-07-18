@@ -1,7 +1,9 @@
 import React from 'react';
+import {useDispatch} from "react-redux";
 import EventListAttendee from "./EventListAttendee";
 import './EventListItem.css'
 import styled from "styled-components";
+import {deleteEvent} from "../eventActions";
 
 //Bootstrap
 import Image from "react-bootstrap/Image";
@@ -9,7 +11,10 @@ import Button from "react-bootstrap/Button";
 import {BsFillClockFill, BsGeoAlt} from "react-icons/bs"
 import {Link} from "react-router-dom";
 
-const EventListitem = ({event, deleteEvent}) => {
+
+const EventListitem = ({event}) => {
+    const dispatch = useDispatch()
+
     return (
         <EventListWrapper>
             <div className="top-part">
@@ -55,7 +60,7 @@ const EventListitem = ({event, deleteEvent}) => {
                             className='py-2 px-4 my-blue-btn'>
                             View
                         </Button>{' '}
-                        <Button onClick={() => deleteEvent(event.id)}
+                        <Button onClick={() => dispatch(deleteEvent(event.id))}
                                 className='p-2 px-3 my-red-btn'>Delete</Button>
                     </div>
                 </div>
@@ -67,87 +72,92 @@ const EventListitem = ({event, deleteEvent}) => {
 export default EventListitem;
 
 const EventListWrapper = styled.div`
-margin-bottom: 20px;
-padding: 20px;
-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-.top-part {
-    display: flex;
-    justify-content: start;
-
-    .top-part-info{
-    padding: 5px;
-    margin-left: 10px;
-}
-    .user-name {
-    margin-top: 10px;
-    font-size:16px ;
-}
-
-}
-
-.middle-part {
-    padding: 15px 0;
-    margin-top: 5px;
-    display: flex;
-    flex-wrap: wrap;
-}
-.middle-part-date{
-    display: flex;
-
-}
-.middle-part-venue {
-    display: flex;
-}
-.middle-part-icon {
-    margin-right: 8px;
-    margin-top: 3px;
-}
-.date {
-    margin-right: 10px;
-}
-.attendee-part {
-    display: flex;
-    flex-wrap: wrap;
-    margin:20px 0;
-
-}
-.description-btns {
-    float: right;
-    margin-right: 10px;
-    margin-top: 10px;
-
-}
-.bottom-part{
-    ::after{
-    content: "";
-    clear: both;
-    display: table;
-}
-}
-.description-view-btn {
-    box-shadow: none;
-    background-color: transparent;
-    border: none;
-    color:#36bff7;
-    :hover {
-    background-color:#95D2EC ;
-    color: white;
-    font-weight: bold;
-}
-}
-.description-delete-btn{
-    background-color:transparent;
-    color: #f77462;
-    border: none  ;
-    :hover {
-    background-color:#f77462;
-    color: white;
-    font-weight: bold;
-}
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    .top-part {
+        display: flex;
+        justify-content: start;
+        img{
+          width: 128px;
+          height: 128px;
+        }
+    
+        .top-part-info{
+        padding: 5px;
+        margin-left: 10px;
+    }
+        .user-name {
+        margin-top: 10px;
+        font-size:16px ;
+    }
+    
+    }
+    
+    
+    .middle-part {
+        padding: 15px 0;
+        margin-top: 5px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .middle-part-date{
+        display: flex;
+    
+    }
+    .middle-part-venue {
+        display: flex;
+    }
+    .middle-part-icon {
+        margin-right: 8px;
+        margin-top: 3px;
+    }
+    .date {
+        margin-right: 10px;
+    }
+    .attendee-part {
+        display: flex;
+        flex-wrap: wrap;
+        margin:20px 0;
+    
+    }
+    .description-btns {
+        float: right;
+        margin-right: 10px;
+        margin-top: 10px;
+    
+    }
+    .bottom-part{
+        ::after{
+        content: "";
+        clear: both;
+        display: table;
+    }
+    }
+    .description-view-btn {
+        box-shadow: none;
+        background-color: transparent;
+        border: none;
+        color:#36bff7;
+        :hover {
+        background-color:#95D2EC ;
+        color: white;
+        font-weight: bold;
+    }
+    }
+    .description-delete-btn{
+        background-color:transparent;
+        color: #f77462;
+        border: none  ;
+        :hover {
+        background-color:#f77462;
+        color: white;
+        font-weight: bold;
+    }
 }
 `
 
-    //
+//
 //     < Segment.Group
 // style = {
 // {

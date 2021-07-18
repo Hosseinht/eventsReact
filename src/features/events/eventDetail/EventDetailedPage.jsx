@@ -18,6 +18,8 @@ import EventDetailedSidebar from "./EventDetailedSidebar";
 const EventDetailedPage = ({match}) => {
     //match allows us to access to params(id)
     const event = useSelector(state => state.event.events.find(e => e.id === match.params.id))
+    // event is the reducer and events is property for events that we're storing our events. initialState{events:sampleData}
+
     return (
 
         <EventDetailedPageWrapper>

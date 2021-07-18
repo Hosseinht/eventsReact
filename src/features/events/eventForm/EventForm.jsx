@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import cuid from "cuid";
-
+import {useDispatch, useSelector} from "react-redux";
 // Styled Component
 import styled from "styled-components";
 
@@ -9,8 +9,15 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import {Link} from "react-router-dom";
+import {createEvent, updateEvent} from "../eventActions";
 
-const EventForm = ({setFormOpen, setEvents, createEvent, selectedEvent, updateEvent}) => {
+
+const EventForm = ({match, history}) => {
+    const dispatch = useDispatch();
+    const selectedEvent = useSelector((state) =>
+        state.event.events.find((e) => e.id === match.params.id)
+    );
+    // event is the reducer and events is property for events that we're storing our events. initialState{events:sampleData}
     // - ?? is null conditional validator. if it's null we pass anything to the right
     // if it's not our initial value is going to be set to our selectedEvent
     const initialValues = selectedEvent ?? {
@@ -29,9 +36,15 @@ const EventForm = ({setFormOpen, setEvents, createEvent, selectedEvent, updateEv
         // selected event contain all the information in sampleData and the data there is more than we have in our form
         //with spread operator we will have all those properties
         selectedEvent ?
-            updateEvent({...selectedEvent, ...values}) :
-            createEvent({...values, id: cuid(), hostedBy: 'Bob', attendees: [], hostPhotoURL: '/assets/user.png'})
-        setFormOpen(false)
+            dispatch(updateEvent({...selectedEvent, ...values})) :
+            dispatch(createEvent({
+                ...values,
+                id: cuid(),
+                hostedBy: 'Bob',
+                attendees: [],
+                hostPhotoURL: '/assets/user.png'
+            }));
+        history.push('/events');
     }
 
     function handleInputChange(e) {
@@ -44,8 +57,8 @@ const EventForm = ({setFormOpen, setEvents, createEvent, selectedEvent, updateEv
 
     return (
         <EventFormWrapper>
-            <Container className={"w-50"}>
-                <Form>
+            <Container className=''>
+                <Form onSubmit={handleFormSubmit}>
                     <h3>{selectedEvent ? 'Edit' : 'Create new event'}</h3>
                     <Form.Group className="mb-3 " controlId="titleInput">
                         {/*<Form.Label>Event Title</Form.Label>*/}
@@ -105,14 +118,14 @@ const EventForm = ({setFormOpen, setEvents, createEvent, selectedEvent, updateEv
                     <div className="form-btn">
                         <Button
                             as={Link} to='/events'
-                            className='form-btn-cancel'
+                            className='my-red-btn'
                             variant="light"
                             type="submit"
 
                         >
                             Cancel
                         </Button> {""}
-                        <Button className='form-btn-submit' variant="light" type='submit'>
+                        <Button className='my-blue-btn' variant="light" type='submit'>
                             Submit
                         </Button>
                     </div>
@@ -135,19 +148,11 @@ const EventFormWrapper = styled.div`
     .form-btn-cancel {
       margin-right: 5px;
       box-shadow: none !important;
-      :hover{
-        background-color: #FF4242;
-        color: white;
-        font-weight: bold;
-      }
+      
     }
     .form-btn-submit {
       box-shadow: none !important;
-      :hover{
-        background-color: #95D2EC;
-        color: white;
-        font-weight: bold;
-      }
+      
         
     }
     //input {

@@ -8,8 +8,8 @@ const EventList = ({events, selectEvent, deleteEvent}) => {
                 <EventListitem
                     key={event.id}
                     event={event}
-                    selectEvent={selectEvent}
-                    deleteEvent={deleteEvent}
+
+
                 />
             ))}
         </div>

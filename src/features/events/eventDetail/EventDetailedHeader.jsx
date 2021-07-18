@@ -34,7 +34,7 @@ const EventDetailedHeader = ({event}) => {
                     </div>
                 </div>
                 <div className="header-event-btn">
-                    <Button as={Link} to={`/manage/`} variant={'light'}>Manage Event</Button>
+                    <Button as={Link} to={`/manage/${event.id}`} variant={'light'}>Manage Event</Button>
                 </div>
             </div>
         </EventDetailedHeaderWrapper>

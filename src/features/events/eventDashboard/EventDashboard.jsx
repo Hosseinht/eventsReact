@@ -8,7 +8,7 @@ import {useSelector} from "react-redux";
 
 const EventDashboard = () => {
     const {events} = useSelector(state => state.event)
-    // event is the reducer and events is property for events that we're storing our events
+    // event is the reducer and events is property for events that we're storing our events. initialState{events:sampleData}
 
 
     // function handleCreateEvent(event) {
