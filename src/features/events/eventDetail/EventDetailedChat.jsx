@@ -93,8 +93,8 @@ const EventDetailedChatWrapper = styled.div`
     margin-bottom: 20px;
   }
   .list-group-item {
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    background-color: #f1f1f1;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: #ffffff;
   }
   img{
     width: 30px;

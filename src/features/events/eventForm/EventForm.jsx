@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import cuid from "cuid";
 import {useDispatch, useSelector} from "react-redux";
+import {Formik} from 'formik';
 // Styled Component
 import styled from "styled-components";
 
@@ -57,80 +58,85 @@ const EventForm = ({match, history}) => {
 
     return (
         <EventFormWrapper>
-            <Container className=''>
-                <Form onSubmit={handleFormSubmit}>
-                    <h3>{selectedEvent ? 'Edit' : 'Create new event'}</h3>
-                    <Form.Group className="mb-3 " controlId="titleInput">
-                        {/*<Form.Label>Event Title</Form.Label>*/}
-                        <Form.Control
-                            type="text"
-                            placeholder="Event Title"
-                            value={values.title}
-                            name='title'
-                            onChange={(e) => handleInputChange(e)}/>
-                    </Form.Group>
+            <Container className='form-container rounded-1'>
+                <h3>{selectedEvent ? 'Edit' : 'Create new event'}</h3>
+                <Formik
+                    initialValues={initialValues}
+                    onSubmit={(values) =>console.log(values)}
+                >
+                    {({values, handleChange, handleSubmit}) => (
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Group className="mb-3 " controlId="titleInput">
+                                {/*<Form.Label>Event Title</Form.Label>*/}
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Event Title"
+                                    value={values.title}
+                                    name='title'
+                                    onChange={handleChange}/>
+                            </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="categoryInput">
-                        <Form.Control
-                            type="text"
-                            placeholder="Category"
-                            value={values.category}
-                            name='category'
-                            onChange={(e) => handleInputChange(e)}
-                        />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="descriptionInput">
-                        <Form.Control
-                            type="text"
-                            placeholder="Description"
-                            value={values.description}
-                            name='description'
-                            onChange={(e) => handleInputChange(e)}
-                        />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="cityInput">
-                        <Form.Control
-                            type="text"
-                            placeholder="City"
-                            value={values.city}
-                            name='city'
-                            onChange={(e) => handleInputChange(e)}
-                        />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="venueInput">
-                        <Form.Control
-                            type="text"
-                            placeholder="Venue"
-                            value={values.venue}
-                            name='venue'
-                            onChange={(e) => handleInputChange(e)}
-                        />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="dateInput">
-                        <Form.Control
-                            type="date"
-                            placeholder="Date"
-                            value={values.date}
-                            name='date'
-                            onChange={(e) => handleInputChange(e)}
-                        />
-                    </Form.Group>
-                    <div className="form-btn">
-                        <Button
-                            as={Link} to='/events'
-                            className='my-red-btn'
-                            variant="light"
-                            type="submit"
-
-                        >
-                            Cancel
-                        </Button> {""}
-                        <Button className='my-blue-btn' variant="light" type='submit'>
-                            Submit
-                        </Button>
-                    </div>
-
-                </Form>
+                            <Form.Group className="mb-3" controlId="categoryInput">
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Category"
+                                    value={values.category}
+                                    name='category'
+                                    onChange={handleChange}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="descriptionInput">
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Description"
+                                    value={values.description}
+                                    name='description'
+                                    onChange={handleChange}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="cityInput">
+                                <Form.Control
+                                    type="text"
+                                    placeholder="City"
+                                    value={values.city}
+                                    name='city'
+                                    onChange={handleChange}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="venueInput">
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Venue"
+                                    value={values.venue}
+                                    name='venue'
+                                    onChange={handleChange}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="dateInput">
+                                <Form.Control
+                                    type="date"
+                                    placeholder="Date"
+                                    value={values.date}
+                                    name='date'
+                                    onChange={handleChange}
+                                />
+                            </Form.Group>
+                            <div className="form-btn">
+                                <Button
+                                    as={Link} to='/events'
+                                    className='my-red-btn'
+                                    variant="light"
+                                    type="submit"
+                                >
+                                    Cancel
+                                </Button> {""}
+                                <Button className='my-blue-btn' variant="light" type='submit'>
+                                    Submit
+                                </Button>
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
             </Container>
         </EventFormWrapper>
 
@@ -141,6 +147,11 @@ const EventForm = ({match, history}) => {
 export default EventForm;
 
 const EventFormWrapper = styled.div`
+    .form-container {
+       box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px ;
+       padding: 40px;
+      
+    }
     .form-group {
       margin-top: 20px !important;
     }
@@ -172,7 +183,7 @@ const EventFormWrapper = styled.div`
 //                        placeholder="Event Title"
 //                        value={values.title}
 //                        name='title'
-//                        onChange={(e) => handleInputChange(e)}
+//                        onChange={handleChange}
 //                    />
 //                </Form.Field>
 //                <Form.Field>
