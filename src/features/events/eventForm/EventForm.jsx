@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import cuid from "cuid";
 import {useDispatch, useSelector} from "react-redux";
-import {Formik, Form as FormikForm, Field} from 'formik';
+import {Formik, Form as FormikForm, Field, ErrorMessage} from 'formik';
+
+import * as Yup from 'yup'
 // Styled Component
 import styled from "styled-components";
 
@@ -30,31 +32,25 @@ const EventForm = ({match, history}) => {
         date: '',
     }
 
-    const [values, setValues] = useState(initialValues)
+    const validationSchema = Yup.object({
+        title: Yup.string().required("You must provide a title")
+    })
 
-    function handleFormSubmit() {
-        // we don't all the properties in our form and  we don't want to lose the properties from our selected event
-        // selected event contain all the information in sampleData and the data there is more than we have in our form
-        //with spread operator we will have all those properties
-        selectedEvent ?
-            dispatch(updateEvent({...selectedEvent, ...values})) :
-            dispatch(createEvent({
-                ...values,
-                id: cuid(),
-                hostedBy: 'Bob',
-                attendees: [],
-                hostPhotoURL: '/assets/user.png'
-            }));
-        history.push('/events');
-    }
-
-    function handleInputChange(e) {
-        const {name, value} = e.target;
-        setValues({...values, [name]: value})
-        // it allows us to spread all of the properties inside of values
-        // This says we're copying all of the current values, using spread operator.But the one that matches the name of the input
-        //that we are changing we're going to set to whatever  its value is that we get from e.target value
-    }
+    // function handleFormSubmit() {
+    //     // we don't all the properties in our form and  we don't want to lose the properties from our selected event
+    //     // selected event contain all the information in sampleData and the data there is more than we have in our form
+    //     //with spread operator we will have all those properties
+    //     selectedEvent ?
+    //         dispatch(updateEvent({...selectedEvent, ...values})) :
+    //         dispatch(createEvent({
+    //             ...values,
+    //             id: cuid(),
+    //             hostedBy: 'Bob',
+    //             attendees: [],
+    //             hostPhotoURL: '/assets/user.png'
+    //         }));
+    //     history.push('/events');
+    // }
 
     return (
         <EventFormWrapper>
@@ -62,12 +58,14 @@ const EventForm = ({match, history}) => {
                 <h3>{selectedEvent ? 'Edit' : 'Create new event'}</h3>
                 <Formik
                     initialValues={initialValues}
+                    validationSchema={validationSchema}
                     onSubmit={(values) => console.log(values)}
                 >
                     <FormikForm>
                         <Form.Group className="mb-3 " controlId="titleInput">
                             {/*<Form.Label>Event Title</Form.Label>*/}
                             <Field className='form-control' name='title' placeholder="Event Title"/>
+                            <ErrorMessage name={'title'} render={error =><Form.Label>{error}</Form.Label>}/>
                         </Form.Group>
                         <Form.Group className="mb-3 " controlId="categoryInput">
                             {/*<Form.Label>Event Title</Form.Label>*/}
@@ -114,6 +112,10 @@ const EventForm = ({match, history}) => {
 export default EventForm;
 
 const EventFormWrapper = styled.div`
+    .form-label {
+      color: #f83b1e;
+      margin: 10px 0 0 10px;
+    }
     .form-container {
        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px ;
        padding: 40px;
