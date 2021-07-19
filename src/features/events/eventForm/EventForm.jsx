@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import cuid from "cuid";
 import {useDispatch, useSelector} from "react-redux";
-import {Formik, Form as FormikForm, Field, ErrorMessage} from 'formik';
+import {Formik, Form as FormikForm} from 'formik';
 
 import * as Yup from 'yup'
 // Styled Component
@@ -13,6 +13,7 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import {Link} from "react-router-dom";
 import {createEvent, updateEvent} from "../eventActions";
+import MyTextInput from "../../../app/common/form/MyTextInput";
 
 
 const EventForm = ({match, history}) => {
@@ -33,61 +34,48 @@ const EventForm = ({match, history}) => {
     }
 
     const validationSchema = Yup.object({
-        title: Yup.string().required("You must provide a title")
+        title: Yup.string().required("You must provide a title"),
+        category: Yup.string().required("You must provide a category"),
+        description: Yup.string().required(""),
+        city: Yup.string().required(""),
+        venue: Yup.string().required(""),
+        date: Yup.string().required(""),
     })
-
-    // function handleFormSubmit() {
-    //     // we don't all the properties in our form and  we don't want to lose the properties from our selected event
-    //     // selected event contain all the information in sampleData and the data there is more than we have in our form
-    //     //with spread operator we will have all those properties
-    //     selectedEvent ?
-    //         dispatch(updateEvent({...selectedEvent, ...values})) :
-    //         dispatch(createEvent({
-    //             ...values,
-    //             id: cuid(),
-    //             hostedBy: 'Bob',
-    //             attendees: [],
-    //             hostPhotoURL: '/assets/user.png'
-    //         }));
-    //     history.push('/events');
-    // }
 
     return (
         <EventFormWrapper>
             <Container className='form-container rounded-1'>
-                <h3>{selectedEvent ? 'Edit' : 'Create new event'}</h3>
+
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
-                    onSubmit={(values) => console.log(values)}
+                    onSubmit={(values) => {
+                        // we don't all the properties in our form and  we don't want to lose the properties from our selected event
+                        // selected event contain all the information in sampleData and the data there is more than we have in our form
+                        //with spread operator we will have all those properties
+                        selectedEvent ?
+                            dispatch(updateEvent({...selectedEvent, ...values})) :
+                            dispatch(createEvent({
+                                ...values,
+                                id: cuid(),
+                                hostedBy: 'Bob',
+                                attendees: [],
+                                hostPhotoURL: '/assets/user.png'
+                            }));
+                        history.push('/events');
+                    }}
                 >
                     <FormikForm>
-                        <Form.Group className="mb-3 " controlId="titleInput">
-                            {/*<Form.Label>Event Title</Form.Label>*/}
-                            <Field className='form-control' name='title' placeholder="Event Title"/>
-                            <ErrorMessage name={'title'} render={error =><Form.Label>{error}</Form.Label>}/>
-                        </Form.Group>
-                        <Form.Group className="mb-3 " controlId="categoryInput">
-                            {/*<Form.Label>Event Title</Form.Label>*/}
-                            <Field className='form-control' name='category' placeholder="Category"/>
-                        </Form.Group>
-                        <Form.Group className="mb-3 " controlId="descriptionInput">
-                            {/*<Form.Label>Event Title</Form.Label>*/}
-                            <Field className='form-control' name='description' placeholder="Description"/>
-                        </Form.Group>
-                        <Form.Group className="mb-3 " controlId="cityInput">
-                            {/*<Form.Label>Event Title</Form.Label>*/}
-                            <Field className='form-control' name='city' placeholder="City"/>
-                        </Form.Group>
-                        <Form.Group className="mb-3 " controlId="venueInput">
-                            {/*<Form.Label>Event Title</Form.Label>*/}
-                            <Field className='form-control' name='venue' placeholder="Venue"/>
-                        </Form.Group>
-                        <Form.Group className="mb-3 " controlId="dateInput">
-                            {/*<Form.Label>Event Title</Form.Label>*/}
-                            <Field className='form-control' name='date' placeholder="Date" type='date'/>
-                        </Form.Group>
-                        <div className="form-btn">
+                        <h3 className='text-muted fs-5'>Event Detail</h3>
+                        <MyTextInput className='form-control' name='title' placeholder="Event Title"/>
+                        <MyTextInput className='form-control' name='category' placeholder="Category"/>
+                        <MyTextInput className='form-control' name='description' placeholder="Description"/>
+                        <h3 className='text-muted fs-5 mt-5'>Event Location</h3>
+                        <MyTextInput className='form-control' name='city' placeholder="City"/>
+                        <MyTextInput className='form-control' name='venue' placeholder="Venue"/>
+                        <MyTextInput className='form-control' name='date' placeholder="Date" type='date'/>
+
+                        <div className="form-btn mt-5">
                             <Button
                                 as={Link} to='/events'
                                 className='my-red-btn'
@@ -122,7 +110,7 @@ const EventFormWrapper = styled.div`
       
     }
     .form-group {
-      margin-top: 20px !important;
+      //margin-top: 20px !important;
     }
    
     .form-btn-cancel {
