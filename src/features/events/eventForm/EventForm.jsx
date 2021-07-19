@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import cuid from "cuid";
 import {useDispatch, useSelector} from "react-redux";
-import {Formik} from 'formik';
+import {Formik, Form as FormikForm, Field} from 'formik';
 // Styled Component
 import styled from "styled-components";
 
@@ -62,80 +62,47 @@ const EventForm = ({match, history}) => {
                 <h3>{selectedEvent ? 'Edit' : 'Create new event'}</h3>
                 <Formik
                     initialValues={initialValues}
-                    onSubmit={(values) =>console.log(values)}
+                    onSubmit={(values) => console.log(values)}
                 >
-                    {({values, handleChange, handleSubmit}) => (
-                        <Form onSubmit={handleSubmit}>
-                            <Form.Group className="mb-3 " controlId="titleInput">
-                                {/*<Form.Label>Event Title</Form.Label>*/}
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Event Title"
-                                    value={values.title}
-                                    name='title'
-                                    onChange={handleChange}/>
-                            </Form.Group>
-
-                            <Form.Group className="mb-3" controlId="categoryInput">
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Category"
-                                    value={values.category}
-                                    name='category'
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="descriptionInput">
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Description"
-                                    value={values.description}
-                                    name='description'
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="cityInput">
-                                <Form.Control
-                                    type="text"
-                                    placeholder="City"
-                                    value={values.city}
-                                    name='city'
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="venueInput">
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Venue"
-                                    value={values.venue}
-                                    name='venue'
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="dateInput">
-                                <Form.Control
-                                    type="date"
-                                    placeholder="Date"
-                                    value={values.date}
-                                    name='date'
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-                            <div className="form-btn">
-                                <Button
-                                    as={Link} to='/events'
-                                    className='my-red-btn'
-                                    variant="light"
-                                    type="submit"
-                                >
-                                    Cancel
-                                </Button> {""}
-                                <Button className='my-blue-btn' variant="light" type='submit'>
-                                    Submit
-                                </Button>
-                            </div>
-                        </Form>
-                    )}
+                    <FormikForm>
+                        <Form.Group className="mb-3 " controlId="titleInput">
+                            {/*<Form.Label>Event Title</Form.Label>*/}
+                            <Field className='form-control' name='title' placeholder="Event Title"/>
+                        </Form.Group>
+                        <Form.Group className="mb-3 " controlId="categoryInput">
+                            {/*<Form.Label>Event Title</Form.Label>*/}
+                            <Field className='form-control' name='category' placeholder="Category"/>
+                        </Form.Group>
+                        <Form.Group className="mb-3 " controlId="descriptionInput">
+                            {/*<Form.Label>Event Title</Form.Label>*/}
+                            <Field className='form-control' name='description' placeholder="Description"/>
+                        </Form.Group>
+                        <Form.Group className="mb-3 " controlId="cityInput">
+                            {/*<Form.Label>Event Title</Form.Label>*/}
+                            <Field className='form-control' name='city' placeholder="City"/>
+                        </Form.Group>
+                        <Form.Group className="mb-3 " controlId="venueInput">
+                            {/*<Form.Label>Event Title</Form.Label>*/}
+                            <Field className='form-control' name='venue' placeholder="Venue"/>
+                        </Form.Group>
+                        <Form.Group className="mb-3 " controlId="dateInput">
+                            {/*<Form.Label>Event Title</Form.Label>*/}
+                            <Field className='form-control' name='date' placeholder="Date" type='date'/>
+                        </Form.Group>
+                        <div className="form-btn">
+                            <Button
+                                as={Link} to='/events'
+                                className='my-red-btn'
+                                variant="light"
+                                type="submit"
+                            >
+                                Cancel
+                            </Button> {""}
+                            <Button className='my-blue-btn' variant="light" type='submit'>
+                                Submit
+                            </Button>
+                        </div>
+                    </FormikForm>
                 </Formik>
             </Container>
         </EventFormWrapper>
