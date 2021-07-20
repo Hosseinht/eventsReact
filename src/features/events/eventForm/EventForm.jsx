@@ -70,47 +70,57 @@ const EventForm = ({match, history}) => {
                         console.log(values)
                     }}
                 >
-                    <FormikForm>
-                        <h3 className='text-muted fs-5'>Event Detail</h3>
-                        <MyTextInput name='title' placeholder="Event Title"/>
-                        <MySelectInput className='form-select' label='Category' name='category'>
-                            <option> Select a Category</option>
-                            <option value="drinks">Drink</option>
-                            <option value="culture">Culture</option>
-                            <option value="film">Film</option>
-                            <option value="food">Food</option>
-                            <option value="Music">music</option>
-                            <option value="Travel">travel</option>
-                        </MySelectInput>
-                        <MyTextArea name='description' placeholder="Description"/>
-                        <h3 className='text-muted fs-5 mt-5'>Event Location</h3>
-                        <MyTextInput name='city' placeholder="City"/>
-                        <MyTextInput name='venue' placeholder="Venue"/>
-                        {/*<MyTextInput name='date' placeholder='Event Data' type='datetime-local'/>*/}
-                        <MyDateInput
-                            className='form-control'
-                            name='date'
-                            placeholderText="Event Date"
-                            timeFormat="HH:mm"
-                            dateFormat="MMMM d, yyyy h:mm a"
-                            showTimeSelect
-                            timeCaption='time'
-                        />
+                    {({isSubmitting, dirty, isValid}) => (
+                        <FormikForm>
+                            <h3 className='text-muted fs-5'>Event Detail</h3>
+                            <MyTextInput name='title' placeholder="Event Title"/>
+                            <MySelectInput className='form-select' label='Category' name='category'>
+                                <option> Select a Category</option>
+                                <option value="drinks">Drink</option>
+                                <option value="culture">Culture</option>
+                                <option value="film">Film</option>
+                                <option value="food">Food</option>
+                                <option value="Music">music</option>
+                                <option value="Travel">travel</option>
+                            </MySelectInput>
+                            <MyTextArea name='description' placeholder="Description"/>
+                            <h3 className='text-muted fs-5 mt-5'>Event Location</h3>
+                            <MyTextInput name='city' placeholder="City"/>
+                            <MyTextInput name='venue' placeholder="Venue"/>
+                            {/*<MyTextInput name='date' placeholder='Event Data' type='datetime-local'/>*/}
+                            <MyDateInput
+                                className='form-control'
+                                name='date'
+                                placeholderText="Event Date"
+                                timeFormat="HH:mm"
+                                dateFormat="MMMM d, yyyy h:mm a"
+                                showTimeSelect
+                                timeCaption='time'
+                            />
 
-                        <div className="form-btn mt-5">
-                            <Button
-                                as={Link} to='/events'
-                                className='my-red-btn'
-                                variant="light"
-                                type="submit"
-                            >
-                                Cancel
-                            </Button> {""}
-                            <Button className='my-blue-btn' variant="light" type='submit'>
-                                Submit
-                            </Button>
-                        </div>
-                    </FormikForm>
+                            <div className="form-btn mt-5">
+                                <Button
+                                    disabled={isSubmitting}
+                                    as={Link} to='/events'
+                                    className='my-red-btn'
+                                    variant="light"
+                                    type="submit"
+                                >
+                                    Cancel
+                                </Button> {""}
+                                <Button
+                                    className='my-blue-btn'
+                                    variant="light"
+                                    type='submit'
+                                    loading={isSubmitting}
+                                    disabled={!isValid || !dirty || isSubmitting}
+                                >
+                                    Submit
+                                </Button>
+                            </div>
+                        </FormikForm>
+                    )}
+
                 </Formik>
             </Container>
         </EventFormWrapper>
