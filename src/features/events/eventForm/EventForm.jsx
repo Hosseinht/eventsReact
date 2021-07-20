@@ -14,9 +14,12 @@ import Container from "react-bootstrap/Container";
 import {Link} from "react-router-dom";
 import {createEvent, updateEvent} from "../eventActions";
 import MyTextInput from "../../../app/common/form/MyTextInput";
+import MyTextArea from "../../../app/common/form/MyTextArea";
+import MySelectInput from "../../../app/common/form/MySelectInput";
 
 
 const EventForm = ({match, history}) => {
+
     const dispatch = useDispatch();
     const selectedEvent = useSelector((state) =>
         state.event.events.find((e) => e.id === match.params.id)
@@ -36,10 +39,10 @@ const EventForm = ({match, history}) => {
     const validationSchema = Yup.object({
         title: Yup.string().required("You must provide a title"),
         category: Yup.string().required("You must provide a category"),
-        description: Yup.string().required(""),
-        city: Yup.string().required(""),
-        venue: Yup.string().required(""),
-        date: Yup.string().required(""),
+        description: Yup.string().required("description is required"),
+        city: Yup.string().required("City is required"),
+        venue: Yup.string().required("Venue is required"),
+        date: Yup.string().required("Data is required"),
     })
 
     return (
@@ -63,17 +66,26 @@ const EventForm = ({match, history}) => {
                                 hostPhotoURL: '/assets/user.png'
                             }));
                         history.push('/events');
+                        console.log(values)
                     }}
                 >
                     <FormikForm>
                         <h3 className='text-muted fs-5'>Event Detail</h3>
-                        <MyTextInput className='form-control' name='title' placeholder="Event Title"/>
-                        <MyTextInput className='form-control' name='category' placeholder="Category"/>
-                        <MyTextInput className='form-control' name='description' placeholder="Description"/>
+                        <MyTextInput name='title' placeholder="Event Title"/>
+                        <MySelectInput className='form-select' label='Category' name='category'>
+                            <option> Select a Category</option>
+                            <option value="drinks">Drink</option>
+                            <option value="culture">Culture</option>
+                            <option value="film">Film</option>
+                            <option value="food">Food</option>
+                            <option value="Music">music</option>
+                            <option value="Travel">travel</option>
+                        </MySelectInput>
+                        <MyTextArea name='description' placeholder="Description"/>
                         <h3 className='text-muted fs-5 mt-5'>Event Location</h3>
-                        <MyTextInput className='form-control' name='city' placeholder="City"/>
-                        <MyTextInput className='form-control' name='venue' placeholder="Venue"/>
-                        <MyTextInput className='form-control' name='date' placeholder="Date" type='date'/>
+                        <MyTextInput name='city' placeholder="City"/>
+                        <MyTextInput name='venue' placeholder="Venue"/>
+                        <MyTextInput name='date' placeholder="Date" type='date'/>
 
                         <div className="form-btn mt-5">
                             <Button
@@ -100,8 +112,12 @@ const EventForm = ({match, history}) => {
 export default EventForm;
 
 const EventFormWrapper = styled.div`
+    select{
+      margin-top: 20px;
+    }
     .form-label {
       color: #f83b1e;
+      border-color: #f83b1e;
       margin: 10px 0 0 10px;
     }
     .form-container {
