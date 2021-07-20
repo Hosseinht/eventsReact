@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from "styled-components";
-
+import {format} from "date-fns";
 //Bootstrap
 import {BsGeoAlt, BsFillCalendarFill, BsFillInfoSquareFill} from "react-icons/bs"
 import Button from "react-bootstrap/cjs/Button";
+
 
 
 const EventDetailedInfo = ({event}) => {
@@ -22,7 +23,7 @@ const EventDetailedInfo = ({event}) => {
                     <BsFillCalendarFill color='#FF4242' size='20px'/>
                 </div>
                 <div className="info-date-text">
-                    <p>{event.date}</p>
+                    <p>{format(event.date, 'MMMM d, yyyy h:mm a')}</p>
                 </div>
             </div>
             <div className="info-event-venue">

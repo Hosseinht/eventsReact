@@ -4,7 +4,7 @@ import EventListAttendee from "./EventListAttendee";
 import './EventListItem.css'
 import styled from "styled-components";
 import {deleteEvent} from "../eventActions";
-
+import {format} from 'date-fns'
 //Bootstrap
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
@@ -34,7 +34,7 @@ const EventListitem = ({event}) => {
                 <div className="middle-part-date">
                     <BsFillClockFill size='15px' className='middle-part-icon'/>
                     <div className="date">
-                        {event.date}
+                        {format(event.date, 'MMMM d, yyyy h:mm a')}
                     </div>
                 </div>
                 <div className="middle-part-venue ">

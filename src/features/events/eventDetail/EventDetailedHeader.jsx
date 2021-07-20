@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from "styled-components";
-
+import {format} from "date-fns";
 //Bootstrap
 import Image from "react-bootstrap/cjs/Image";
 import Button from "react-bootstrap/Button";
 import {Link} from "react-router-dom";
+
 
 const EventDetailedHeader = ({event}) => {
     return (
@@ -16,7 +17,7 @@ const EventDetailedHeader = ({event}) => {
                         <p className='fs-4'>{event.title}</p>
                     </div>
                     <div className='content-title-date'>
-                        <p>{event.date}</p>
+                        <p>{format(event.date, 'MMMM d, yyyy h:mm a')}</p>
                     </div>
                     <div className="content-title-host">
                         <p className='fs-6'>Hosted by <strong> {event.hostedBy}</strong></p>
