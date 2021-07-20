@@ -16,6 +16,7 @@ import {createEvent, updateEvent} from "../eventActions";
 import MyTextInput from "../../../app/common/form/MyTextInput";
 import MyTextArea from "../../../app/common/form/MyTextArea";
 import MySelectInput from "../../../app/common/form/MySelectInput";
+import MyDateInput from "../../../app/common/form/MyDateInput";
 
 
 const EventForm = ({match, history}) => {
@@ -85,7 +86,16 @@ const EventForm = ({match, history}) => {
                         <h3 className='text-muted fs-5 mt-5'>Event Location</h3>
                         <MyTextInput name='city' placeholder="City"/>
                         <MyTextInput name='venue' placeholder="Venue"/>
-                        <MyTextInput name='date' placeholder="Date" type='date'/>
+                        {/*<MyTextInput name='date' placeholder='Event Data' type='datetime-local'/>*/}
+                        <MyDateInput
+                            className='form-control'
+                            name='date'
+                            placeholderText="Event Date"
+                            timeFormat="HH:mm"
+                            dateFormat="MMMM d, yyyy h:mm a"
+                            showTimeSelect
+                            timeCaption='time'
+                        />
 
                         <div className="form-btn mt-5">
                             <Button

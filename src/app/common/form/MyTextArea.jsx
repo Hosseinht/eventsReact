@@ -15,7 +15,7 @@ const MyTextArea = ({label, ...props}) => {
             <label>{label}</label>
             {/*we don't really use it in our application. it's label above our inputs*/}
 
-            <textarea className={`form-select ${meta.touched && meta.error && 'is-invalid'}`}{...field} {...props}/>
+            <textarea className={`form-control ${meta.touched && meta.error && 'is-invalid'}`}{...field} {...props}/>
 
 
 
