@@ -1,6 +1,6 @@
-import React, {useState,} from 'react';
+import React from 'react';
 import './NavBar.css'
-import {NavLink, Link, useHistory} from "react-router-dom";
+import {NavLink, Link} from "react-router-dom";
 import SignedOutMenu from "./SignedOutMenu";
 import SignedInMenu from "./SignedInMenu";
 import styled from "styled-components";
@@ -10,17 +10,12 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import {useSelector} from "react-redux";
 
 
-const NavBar = ({setFormOpen, formOpen}) => {
-    const history = useHistory()
-    const [authenticated, setAuthenticated] = useState(false)
+const NavBar = ({setFormOpen}) => {
+    const {authenticated} = useSelector(state => state.auth)
 
-    // to use history we need a handler to do an extra thing when user sign out
-    function handleSignout() {
-        setAuthenticated(false)
-        history.push('/events')
-    }
 
     return (
         <NavbarCustom>
@@ -39,8 +34,8 @@ const NavBar = ({setFormOpen, formOpen}) => {
                             {/*<Nav.Link as={Link} to='/sandbox'>Sandbox </Nav.Link>*/}
                         </Nav>
                         <Nav className='justify-content-evenly login-register-btn w-50 mx-sm-5 align-items-sm-start'>
-                            {authenticated ? <SignedInMenu signOut={handleSignout}/> :
-                                <SignedOutMenu setAuthenticated={setAuthenticated}/>}
+                            {authenticated ? <SignedInMenu/> :
+                                <SignedOutMenu/>}
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

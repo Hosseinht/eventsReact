@@ -1,16 +1,22 @@
 import React from 'react';
 import NavDropdown from "react-bootstrap/NavDropdown";
+import {Link, useHistory} from "react-router-dom";
 //Bootstrap
 import Image from "react-bootstrap/Image";
 import styled from "styled-components";
 import {BsPlus, BsPersonFill, BsPower} from "react-icons/bs";
+import {useDispatch, useSelector} from "react-redux";
+import {signOutUser} from "../auth/authActions";
 
-const SignedInMenu = ({signOut}) => {
+const SignedInMenu = () => {
+    const dispatch = useDispatch()
+    const {currentUser} = useSelector(state => state.auth)
+    const history = useHistory()
     return (
         <SignedinMenuWrapper>
-            <Image roundedCircle fluid className='user-img' src='/assets/user.png'/>
-            <NavDropdown className='nav-dropdown fs-6' title="Bob" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">
+            <Image roundedCircle fluid className='user-img' src={currentUser.photoURL || '/assets/user.png'}/>
+            <NavDropdown className='nav-dropdown fs-6' title={currentUser.email} id="basic-nav-dropdown">
+                <NavDropdown.Item as={Link} to='/createEvent'>
                     <BsPlus className='singin-icon' size='20px'/>
                     Create Event
                 </NavDropdown.Item>
@@ -18,7 +24,11 @@ const SignedInMenu = ({signOut}) => {
                     <BsPersonFill className='singin-icon' size='20px'/>
                     My profile
                 </NavDropdown.Item>
-                <NavDropdown.Item onClick={signOut}>
+                <NavDropdown.Item onClick={() => {
+                    dispatch(signOutUser());
+                    history.push('/')
+                }
+                }>
                     <BsPower className='singin-icon' size='20px'/>
                     Sign out
                 </NavDropdown.Item>
