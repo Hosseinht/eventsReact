@@ -8,11 +8,13 @@ import HomePage from "../../features/home/HomePage";
 import EventDetailedPage from "../../features/events/eventDetail/EventDetailedPage";
 import EventForm from "../../features/events/eventForm/EventForm";
 import Sandbox from "../../features/sandbox/Sandbox";
+import ModalManager from "../common/modals/ModalManager";
 
 function App() {
     const {key} = useLocation()
     return (
         <>
+            <ModalManager/>
             <NavBar/>
             <Container className="main">
                 <Route path='/' exact component={HomePage}/>

@@ -1,12 +1,15 @@
 import React from 'react';
 import Button from "react-bootstrap/Button";
 import styled from "styled-components";
+import {useDispatch} from "react-redux";
+import {openModal} from "../../app/common/modals/modalReducer";
 
 
 const SignedOutMenu = ({setAuthenticated}) => {
+    const dispatch = useDispatch()
     return (
         <SignoutMenuWrapper>
-            <Button onClick={() => setAuthenticated(true)} variant='light'
+            <Button onClick={() => dispatch(openModal({modalType: 'LoginForm'}))} variant='light'
                     className='singout-btn py-2'> Login </Button>{' '}
             <Button variant='outline-light' className='singout-btn py-2'> Register </Button>
         </SignoutMenuWrapper>

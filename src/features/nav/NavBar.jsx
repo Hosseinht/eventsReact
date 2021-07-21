@@ -30,7 +30,7 @@ const NavBar = ({setFormOpen, formOpen}) => {
                     <Navbar.Collapse className='justify-content-between ' id="basic-navbar-nav">
                         <Nav className=" align-items-center mx-sm-5 align-items-sm-start ">
                             <Navbar.Brand as={Link} to='/events' className='fs-3  events-logo'
-                                          href="#home">Eeavents</Navbar.Brand>
+                            >Eeavents</Navbar.Brand>
                             {authenticated &&
                             <Button as={NavLink} to="/createEvent" className='py-2 newevent-btn' href="#home">New
                                 Event</Button>
