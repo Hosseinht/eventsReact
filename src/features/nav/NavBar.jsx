@@ -54,14 +54,14 @@ const NavbarCustom = styled.div`
      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px ;
      background-color: rgba(255,255,255,0.9) ;
   }
-  .events-logo{
-      :focus{
-      color: #FF4242
-      }
-      ::selection{
-        color: white;
-      }
-  }
+  //.events-logo{
+  //    :focus{
+  //    color: #FF4242
+  //    }
+  //    ::selection{
+  //      color: white;
+  //    }
+  //}
   .nav-link {
     margin-top: 3px;
   }

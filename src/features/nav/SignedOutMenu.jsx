@@ -5,7 +5,7 @@ import {useDispatch} from "react-redux";
 import {openModal} from "../../app/common/modals/modalReducer";
 
 
-const SignedOutMenu = ({setAuthenticated}) => {
+const SignedOutMenu = () => {
     const dispatch = useDispatch()
     return (
         <SignoutMenuWrapper>
