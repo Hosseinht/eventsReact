@@ -1,3 +1,4 @@
+/* global google */
 import React from 'react';
 import cuid from "cuid";
 import {useDispatch, useSelector} from "react-redux";
@@ -53,7 +54,7 @@ const EventForm = ({match, history}) => {
         }),
         venue: Yup.object().shape({
             address: Yup.string().required("Venue is required")
-        }) ,
+        }),
         date: Yup.string().required("Data is required"),
     })
 
@@ -81,7 +82,7 @@ const EventForm = ({match, history}) => {
                         console.log(values)
                     }}
                 >
-                    {({isSubmitting, dirty, isValid}) => (
+                    {({isSubmitting, dirty, isValid, values}) => (
                         <FormikForm>
                             <h3 className='text-muted fs-5'>Event Detail</h3>
                             <MyTextInput name='title' placeholder="Event Title"/>
@@ -96,8 +97,23 @@ const EventForm = ({match, history}) => {
                             </MySelectInput>
                             <MyTextArea name='description' placeholder="Description"/>
                             <h3 className='text-muted fs-5 mt-5'>Event Location</h3>
-                            <MyPlaceInput className='form-control mt-3' name='city' placeholder="City"/>
-                            <MyPlaceInput className='form-control mt-3' name='venue' placeholder="Venue"/>
+                            <MyPlaceInput
+                                className='form-control mt-3'
+                                name='city'
+                                placeholder="City"
+
+                            />
+                            <MyPlaceInput
+                                className='form-control mt-3'
+                                name='venue'
+                                disabled={!values.city.latLng}
+                                placeholder="Venue"
+                                options={{
+                                    location: new google.maps.LatLng(values.city.latLng),
+                                    radius: 1000, //it's 1000KM
+                                    type: ['establishment']
+                                }}
+                            />
                             {/*<MyTextInput name='date' placeholder='Event Data' type='datetime-local'/>*/}
                             <MyDateInput
                                 className='form-control'

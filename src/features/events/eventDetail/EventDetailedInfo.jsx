@@ -32,7 +32,7 @@ const EventDetailedInfo = ({event}) => {
                         <BsGeoAlt size='20px'/>
                     </div>
                     <div className="info-venue-text">
-                        <p>{event.venue}</p>
+                        <p>{event.venue.address}</p>
                     </div>
                 </div>
                 <div className=" info-event-btn">

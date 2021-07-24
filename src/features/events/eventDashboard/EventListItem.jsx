@@ -41,7 +41,7 @@ const EventListitem = ({event}) => {
                 <div className="middle-part-venue ">
                     <BsGeoAlt size='15px' className='middle-part-icon'/>
                     <div className="venue">
-                        {event.venue}
+                        {event.venue.address}
                     </div>
                 </div>
             </div>
