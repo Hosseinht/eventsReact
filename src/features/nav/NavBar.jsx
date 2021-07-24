@@ -30,6 +30,9 @@ const NavBar = ({setFormOpen}) => {
                             <Button as={NavLink} to="/createEvent" className='py-2 newevent-btn' href="#home">New
                                 Event</Button>
                             }
+                             <Button as={NavLink} to="/sandbox" className='py-2 ms-2 sandbox-btn' href="#home">Sandbox</Button>
+
+
                             {/*if authenticated is true anything after && will be executed*/}
                             {/*<Nav.Link as={Link} to='/sandbox'>Sandbox </Nav.Link>*/}
                         </Nav>
@@ -49,7 +52,18 @@ export default NavBar;
 
 const NavbarCustom = styled.div`
  
-  
+    .sandbox-btn {
+        background-color:  #47abd8;
+        color: white;
+        margin-top: 10px;
+        border: none;
+        box-shadow: none !important;
+    
+        :hover {
+            color: rgb(255,255,255);
+            background-color:  #f77462;
+        }
+    }
   .navbar {
      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px ;
      background-color: rgba(255,255,255,0.9) ;
