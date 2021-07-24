@@ -17,6 +17,7 @@ import MyTextInput from "../../../app/common/form/MyTextInput";
 import MyTextArea from "../../../app/common/form/MyTextArea";
 import MySelectInput from "../../../app/common/form/MySelectInput";
 import MyDateInput from "../../../app/common/form/MyDateInput";
+import MyPlaceInput from "../../../app/common/form/MyPlaceInput";
 
 
 const EventForm = ({match, history}) => {
@@ -32,8 +33,14 @@ const EventForm = ({match, history}) => {
         title: '',
         category: '',
         description: '',
-        city: '',
-        venue: '',
+        city: {
+            address: '',
+            latLng: null
+        },
+        venue: {
+            address: '',
+            latLng: null
+        },
         date: '',
     }
 
@@ -41,8 +48,12 @@ const EventForm = ({match, history}) => {
         title: Yup.string().required("You must provide a title"),
         category: Yup.string().required("You must provide a category"),
         description: Yup.string().required("description is required"),
-        city: Yup.string().required("City is required"),
-        venue: Yup.string().required("Venue is required"),
+        city: Yup.object().shape({
+            address: Yup.string().required("City is required")
+        }),
+        venue: Yup.object().shape({
+            address: Yup.string().required("Venue is required")
+        }) ,
         date: Yup.string().required("Data is required"),
     })
 
@@ -85,8 +96,8 @@ const EventForm = ({match, history}) => {
                             </MySelectInput>
                             <MyTextArea name='description' placeholder="Description"/>
                             <h3 className='text-muted fs-5 mt-5'>Event Location</h3>
-                            <MyTextInput name='city' placeholder="City"/>
-                            <MyTextInput name='venue' placeholder="Venue"/>
+                            <MyPlaceInput className='form-control mt-3' name='city' placeholder="City"/>
+                            <MyPlaceInput className='form-control mt-3' name='venue' placeholder="Venue"/>
                             {/*<MyTextInput name='date' placeholder='Event Data' type='datetime-local'/>*/}
                             <MyDateInput
                                 className='form-control'
@@ -159,6 +170,10 @@ const EventFormWrapper = styled.div`
       
         
     }
+    
+    
+ 
+ }
     //input {
     //  padding: 10px 0;
     //  

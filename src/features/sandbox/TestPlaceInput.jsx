@@ -5,7 +5,7 @@ import PlacesAutocomplete, {
 } from 'react-places-autocomplete';
 
 export default function TestPlaceInput() {
-    const [address, setAddress] = useState()
+    const [address, setAddress] = useState('')
 
     function handleChange(address) {
         setAddress(address);
@@ -13,6 +13,7 @@ export default function TestPlaceInput() {
 
     function handleSelect(address) {
         geocodeByAddress(address)
+            //address = the address that we select from our places auto complete
             .then(results => getLatLng(results[0]))
             .then(latLng => console.log('Success', latLng))
             .catch(error => console.error('Error', error));
@@ -27,6 +28,7 @@ export default function TestPlaceInput() {
             onSelect={handleSelect}
         >
             {({getInputProps, suggestions, getSuggestionItemProps, loading}) => (
+                // render props
                 <div>
                     <input
                         {...getInputProps({
