@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import {format} from "date-fns";
 //Bootstrap
 import {BsGeoAlt, BsFillCalendarFill, BsFillInfoSquareFill} from "react-icons/bs"
 import Button from "react-bootstrap/cjs/Button";
+import EventDetailedMap from "./EventDetailedMap";
 
 
 
 const EventDetailedInfo = ({event}) => {
+    const [mapOpen, setMapOpenToggle] = useState(false)
     return (
         <EventDetailedInfoWrapper>
             <div className="info-event">
@@ -36,10 +38,13 @@ const EventDetailedInfo = ({event}) => {
                     </div>
                 </div>
                 <div className=" info-event-btn">
-                    <Button className='my-blue-btn'>Show Map</Button>
+                    <Button variant='light' onClick={() => setMapOpenToggle(!mapOpen)} className='my-blue-btn'>
+                        {mapOpen ? 'Hide Map' : 'Show Map'}
+                    </Button>
                 </div>
-
             </div>
+            {mapOpen && <EventDetailedMap latLng={event.venue.latLng}/>}
+
         </EventDetailedInfoWrapper>
     );
 };
@@ -73,10 +78,12 @@ const EventDetailedInfoWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 80px;
   
   }
   .info-event-venue-info {
     display: flex;
+    margin-top: 15px;
     
     //align-items: center;
   }
@@ -86,6 +93,7 @@ const EventDetailedInfoWrapper = styled.div`
   }
   .info-event-btn {
     margin: 5px;
+    align-self: center;
   }
   .info-description-text {
     //margin-top: 15px;

@@ -15,6 +15,7 @@ import EventDetailedChat from "./EventDetailedChat";
 import EventDetailedSidebar from "./EventDetailedSidebar";
 
 
+
 const EventDetailedPage = ({match}) => {
     //match allows us to access to params(id)
     const event = useSelector(state => state.event.events.find(e => e.id === match.params.id))
@@ -29,6 +30,7 @@ const EventDetailedPage = ({match}) => {
                         <EventDetailedHeader event={event}/>
                         <EventDetailedInfo event={event}/>
                         <EventDetailedChat/>
+
                     </Col>
                     <Col md={"auto"} lg={4}>
                         <EventDetailedSidebar attendees={event.attendees}/>
