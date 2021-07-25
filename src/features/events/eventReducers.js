@@ -1,9 +1,9 @@
 import {sampleData} from "../../app/api/sampleData";
-import {CREATE_EVENT, DELETE_EVENT, UPDATE_EVENT} from "./eventConstant";
+import {CREATE_EVENT, DELETE_EVENT, FETCH_EVENTS, UPDATE_EVENT} from "./eventConstant";
 
 
 const initialState = {
-    events: sampleData
+    events: []
 }
 
 // action = {type, payload}. we simply remove action. .
@@ -27,6 +27,13 @@ export const eventReducer = (state = initialState, {type, payload}) => {
                  events: [...state.events.filter(evt => evt.id !== payload)]
                 // payload here is eventId in action.so we don't use payload.id
                 // اگه یکی نیستن فیلترش کن
+            }
+        case FETCH_EVENTS:
+            return {
+                ...state,
+                // events: [...payload]
+                // events are array anyway so we don't need to spread this action so:
+                events: payload
             }
         default:
             return state
