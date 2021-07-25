@@ -33,12 +33,12 @@ const Sandbox = () => {
             <h1>Testing 123</h1>
             <h3>Data is: {data} </h3>
             <Button name='increment' loading={loading}
-                     onClick={(e) =>{
-                         dispatch(increment(20))
-                         setTarget(e.target.name)
+                    onClick={(e) => {
+                        dispatch(increment(20))
+                        setTarget(e.target.name)
                     }}
                     variant='primary'>
-                {loading && target==='increment' ?
+                {loading && target === 'increment' ?
                     <div>
                         < Spinner
                             as="span"
@@ -53,11 +53,14 @@ const Sandbox = () => {
                     : "Increment"}
             </Button>{" "}
             <Button name='decrement' loading={loading}
-                    onClick={(e) =>{
-                         dispatch(decrement(10))
-                         setTarget(e.target.name)
+                    onClick={(e) => {
+                        dispatch(decrement(10))
+                        setTarget(e.target.name)
                     }}
-                    variant='warning'>
+                    variant='warning'
+                    className='sandbox-btn'
+                    style={{width: "100px"}}
+            >
                 {loading && target === 'decrement' ?
                     <div>
                         < Spinner
@@ -66,7 +69,7 @@ const Sandbox = () => {
                             size="sm"
                             role="status"
                             aria-hidden="true"
-                        />Loading...
+                        />
                     </div>
                     : "Decrement"}</Button>{" "}
             <Button onClick={() => dispatch(openModal({modalType: 'TestModal', modalProps: {data}}))} variant='info'>Open
