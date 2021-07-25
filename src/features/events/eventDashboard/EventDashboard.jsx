@@ -5,8 +5,8 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {useSelector} from "react-redux";
-import Spinner from "react-bootstrap/cjs/Spinner";
 import EventListItemPlaceholder from "./EventListItemPlaceholder";
+import EventFilters from "./EventFilter";
 
 const EventDashboard = () => {
     const {events} = useSelector(state => state.event)
@@ -28,8 +28,8 @@ const EventDashboard = () => {
                         events={events}
                     />
                 </Col>
-                <Col lg={8} md={"auto"}>
-                    <h2>Event Filters</h2>
+                <Col lg={4} md={"auto"}>
+                    <EventFilters/>
                 </Col>
             </Row>
         </Container>

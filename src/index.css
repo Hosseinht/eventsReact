@@ -8,14 +8,19 @@ body {
     color: #727e83;
 }
 
+.my-box-shadow {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
 .btn {
     box-shadow: none;
     /*background-color: transparent;*/
     border: none;
 }
-.btn:focus,.btn:active {
-   outline: none !important;
-   box-shadow: none;
+
+.btn:focus, .btn:active {
+    outline: none !important;
+    box-shadow: none;
 }
 
 .my-red-color {
@@ -59,6 +64,11 @@ body {
 .react-datepicker-wrapper {
     width: 100%;
     margin-top: 20px;
+}
+
+.react-calendar {
+    width: 100%;
+    border: none;
 }
 
 /*.loginbtn {*/

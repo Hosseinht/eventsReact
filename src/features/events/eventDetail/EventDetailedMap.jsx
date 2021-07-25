@@ -1,9 +1,7 @@
 import React from 'react';
-import styled from "styled-components";
 import GoogleMapReact from 'google-map-react';
 import Container from "react-bootstrap/Container";
 import {BsGeoAlt} from "react-icons/bs"
-import { FaMapMarker } from "react-icons/fa";
 const {REACT_APP_GOOGLE_MAP_API} = process.env
 
 function Marker() {

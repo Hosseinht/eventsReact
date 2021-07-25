@@ -1,8 +1,7 @@
 import {useField} from "formik";
-import FormGroup from "react-bootstrap/FormGroup";
 import Form from "react-bootstrap/Form";
 import React from "react";
-import {categoryData} from "../../api/categorySnippet";
+
 
 const MySelectInput = ({label, ...props}) => {
     const [field, meta] = useField(props)

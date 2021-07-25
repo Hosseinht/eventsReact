@@ -10,7 +10,7 @@ import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import {BsFillClockFill, BsGeoAlt} from "react-icons/bs"
 import {Link} from "react-router-dom";
-import Modal from "react-bootstrap/Modal";
+
 
 
 const EventListitem = ({event}) => {

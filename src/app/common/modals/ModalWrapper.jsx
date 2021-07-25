@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
 import {useDispatch} from "react-redux";
 import {closeModal} from "./modalReducer";
 
