@@ -5,16 +5,25 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {useSelector} from "react-redux";
+import Spinner from "react-bootstrap/cjs/Spinner";
+import EventListItemPlaceholder from "./EventListItemPlaceholder";
 
 const EventDashboard = () => {
     const {events} = useSelector(state => state.event)
     // event is the reducer and events is property for events that we're storing our events. initialState{events:sampleData}
+    const {loading} = useSelector(state => state.async)
 
     return (
 
         <Container>
             <Row>
                 <Col lg={8} md={"auto"}>
+                    {loading &&
+                    <>
+                        <EventListItemPlaceholder/>
+                        <EventListItemPlaceholder/>
+                    </>
+                    }
                     <EventList
                         events={events}
                     />
