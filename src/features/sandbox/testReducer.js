@@ -2,7 +2,7 @@ export const INCREMENT_COUNTER = 'INCREMENT_COUNTER'
 export const DECREMENT_COUNTER = 'DECREMENT_COUNTER'
 
 
-export const increment = (amount) => {
+export const increment = (amount) => async (dispatch) => {
     return {
         type:INCREMENT_COUNTER,
         payload: amount
