@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
 import {decrement, increment} from "./testReducer";
 import {openModal} from "../../app/common/modals/modalReducer";
 import TestPlaceInput from "./TestPlaceInput";
@@ -8,7 +9,9 @@ import TestMap from "./TestMap";
 
 const Sandbox = () => {
     const dispatch = useDispatch()
+    const [target, setTarget] = useState(null)
     const data = useSelector(state => state.test.data)
+    const {loading} = useSelector(state => state.async)
 
     const defaultProps = {
         center: {
@@ -29,8 +32,43 @@ const Sandbox = () => {
         <>
             <h1>Testing 123</h1>
             <h3>Data is: {data} </h3>
-            <Button onClick={() => dispatch(increment(20))} variant='primary'>Increment</Button>{" "}
-            <Button onClick={() => dispatch(decrement(10))} variant='warning'>Decrement</Button>{" "}
+            <Button name='increment' loading={loading}
+                     onClick={(e) =>{
+                         dispatch(increment(20))
+                         setTarget(e.target.name)
+                    }}
+                    variant='primary'>
+                {loading && target==='increment' ?
+                    <div>
+                        < Spinner
+                            as="span"
+                            animation="border"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                            className='me-1'
+                        />
+                        Loading...
+                    </div>
+                    : "Increment"}
+            </Button>{" "}
+            <Button name='decrement' loading={loading}
+                    onClick={(e) =>{
+                         dispatch(decrement(10))
+                         setTarget(e.target.name)
+                    }}
+                    variant='warning'>
+                {loading && target === 'decrement' ?
+                    <div>
+                        < Spinner
+                            as="span"
+                            animation="grow"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                        />Loading...
+                    </div>
+                    : "Decrement"}</Button>{" "}
             <Button onClick={() => dispatch(openModal({modalType: 'TestModal', modalProps: {data}}))} variant='info'>Open
                 Modal</Button>
             <div className='mt-5'>
