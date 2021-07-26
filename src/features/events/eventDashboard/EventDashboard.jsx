@@ -1,17 +1,28 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import EventList from "./EventList";
+import EventFilters from "./EventFilter";
 //Bootstrap
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {useSelector} from "react-redux";
 import EventListItemPlaceholder from "./EventListItemPlaceholder";
-import EventFilters from "./EventFilter";
+import getEventsFromFirestore from "../../../app/firestore/firestoreService";
 
 const EventDashboard = () => {
     const {events} = useSelector(state => state.event)
     // event is the reducer and events is property for events that we're storing our events. initialState{events:sampleData}
     const {loading} = useSelector(state => state.async)
+
+    useEffect(() =>{
+        const unsubscribe = getEventsFromFirestore({
+            // after we've received the data back from firestore, what we want to do next?
+            next: snapshot => console.log(snapshot.docs.map(docSnapshot =>docSnapshot.data())),
+            error: error => console.log(error)
+        })
+        // when component unmount. to unsubscribe we need to call it
+        return unsubscribe
+    })
 
     return (
 
