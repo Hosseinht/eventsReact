@@ -4,19 +4,18 @@ import {asyncActionError, asyncActionFinish, asyncActionStart} from "../async/as
 import {dataFromSnapshot} from "../firestore/firestoreService";
 
 
-// rule for custom hook is start it with use
-const useFirestoreCollection = ({query, data, deps}) => {
+const useFirestoreDoc = ({query, data, deps}) => {
     // query: firestore query. data: what to do when we receive the data. deps:dependencies that we need for example useEffect hook
 
     const dispatch = useDispatch()
+
 
     useEffect(() => {
         dispatch(asyncActionStart());
         const unsubscribe = query().onSnapshot(
             snapshot => {
-                const docs = snapshot.docs.map(doc => dataFromSnapshot(doc));
-                data(docs)
-                dispatch(asyncActionFinish())
+                data(dataFromSnapshot(snapshot));
+                dispatch(asyncActionFinish());
             },
             error => dispatch(asyncActionError())
         );
@@ -24,7 +23,6 @@ const useFirestoreCollection = ({query, data, deps}) => {
             unsubscribe()
         }
     }, deps) // eslint-disable-line react-hooks/exhaustive-deps
-    // we are going to pass the dependencies from the component that uses this hook. so to remove the warning
 };
 
-export default useFirestoreCollection;
+export default useFirestoreDoc;

@@ -23,6 +23,7 @@ const EventDashboard = () => {
     // event is the reducer and events is property for events that we're storing our events. initialState{events:sampleData}
     const {loading} = useSelector(state => state.async)
 
+
     useFirestoreCollection({
         query: () => listenToEventsFromFirestore(),
         data: events => dispatch(listenToEvents(events)),

@@ -10,11 +10,11 @@ export function dataFromSnapshot(snapshot) {
     const data = snapshot.data();
 
     // if the data type is timestamp then we want to covert it into a JS date
-    for (const prop in data){
+    for (const prop in data) {
         // loop over all the properties inside an object
-        if (data.hasOwnProperty(prop)){
+        if (data.hasOwnProperty(prop)) {
             // we don't want to deal with non properties like prototype methods of the object
-            if (data[prop] instanceof firebase.firestore.Timestamp){
+            if (data[prop] instanceof firebase.firestore.Timestamp) {
                 data[prop] = data[prop].toDate()
             }
         }
@@ -33,5 +33,9 @@ const listenToEventsFromFirestore = () => {
 };
 
 export default listenToEventsFromFirestore;
+
+export function listenToEventFromFirestore(eventId) {
+    return db.collection('events').doc(eventId);
+}
 
 // it just store our firebase and firestore queries
