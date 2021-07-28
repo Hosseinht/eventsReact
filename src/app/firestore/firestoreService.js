@@ -27,11 +27,11 @@ export function dataFromSnapshot(snapshot) {
 }
 
 
-const getEventsFromFirestore = (observer) => {
-    return db.collection('events').onSnapshot(observer)
+const listenToEventsFromFirestore = () => {
+    return db.collection('events');
     // get or listen to data. here we listen
 };
 
-export default getEventsFromFirestore;
+export default listenToEventsFromFirestore;
 
 // it just store our firebase and firestore queries

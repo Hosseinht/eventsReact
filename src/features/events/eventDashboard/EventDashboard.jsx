@@ -1,17 +1,21 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import EventList from "./EventList";
 import EventFilters from "./EventFilter";
 import {useDispatch, useSelector} from "react-redux";
 import EventListItemPlaceholder from "./EventListItemPlaceholder";
-import getEventsFromFirestore, {dataFromSnapshot} from "../../../app/firestore/firestoreService";
+
+//Actions
 import {listenToEvents} from "../eventActions";
 
 //Bootstrap
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {asyncActionError, asyncActionFinish, asyncActionStart} from "../../../app/async/asyncReducer";
-// for loading indicator
+
+// FireStore
+import useFirestoreCollection from "../../../app/hooks/useFirestoreCollection";
+import listenToEventsFromFirestore from "../../../app/firestore/firestoreService";
+
 
 const EventDashboard = () => {
     const dispatch = useDispatch()
@@ -19,22 +23,11 @@ const EventDashboard = () => {
     // event is the reducer and events is property for events that we're storing our events. initialState{events:sampleData}
     const {loading} = useSelector(state => state.async)
 
-    useEffect(() => {
-        dispatch(asyncActionStart())
-        const unsubscribe = getEventsFromFirestore({
-            // after we've received the data back from firestore, what we want to do next?
-            // our data from firestore comes back as a snapshot
-            next: snapshot => {
-                dispatch(listenToEvents(snapshot.docs.map(docSnapshot => dataFromSnapshot(docSnapshot))));
-                dispatch(asyncActionFinish())
-            },
-            // this is a collection and returns us an array of documents
-            error: error => dispatch(asyncActionError(error)),
-            complete: () => console.log('Hi there')
-        })
-        // when component unmount. to unsubscribe we need to call it
-        return unsubscribe
-    }, [dispatch])
+    useFirestoreCollection({
+        query: () => listenToEventsFromFirestore(),
+        data: events => dispatch(listenToEvents(events)),
+        deps: [dispatch]
+    })
 
     return (
 
