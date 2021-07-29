@@ -1,6 +1,6 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
-
+import {Redirect} from 'react-router-dom'
 import styled from "styled-components";
 
 //Bootstrap
@@ -27,7 +27,7 @@ const EventDetailedPage = ({match}) => {
     const event = useSelector((state) => state.event.events.find(e => e.id === match.params.id))
     // event is the reducer and events is property for events that we're storing our events. initialState{events:sampleData}
 
-    const {loading} = useSelector((state) => state.async)
+    const {loading, error} = useSelector((state) => state.async)
 
     useFirestoreDoc({
         query: () => listenToEventFromFirestore(match.params.id),
@@ -37,7 +37,8 @@ const EventDetailedPage = ({match}) => {
     })
 
 
-    if (loading || !event) return <LoadingComponent content='loading...'/>
+    if (loading || (!event && !error)) return <LoadingComponent content='loading...'/>
+    if (error) return <Redirect to='/error'/>
     return (
         <EventDetailedPageWrapper>
             <Container>
