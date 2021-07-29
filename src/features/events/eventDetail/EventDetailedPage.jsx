@@ -49,7 +49,7 @@ const EventDetailedPage = ({match}) => {
 
                     </Col>
                     <Col md={"auto"} lg={4}>
-                        <EventDetailedSidebar attendees={event?.attendees}/>
+                        <EventDetailedSidebar attendees={event.attendees}/>
                         {/* ?: we may have attendees or not */}
                     </Col>
                 </Row>

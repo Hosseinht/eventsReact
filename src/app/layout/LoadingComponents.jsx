@@ -5,8 +5,9 @@ import styled from "styled-components";
 const LoadingComponent = ({inverted=true, content='Loading...'}) => {
     return (
         <EventListItemPlaceholderWrapper>
-            <div>
-              <Spinner animation="border" />
+            <div className='d-flex '>
+              <Spinner animation="border" className='me-2' />
+              <p className='fs-5'>...loading</p>
             </div>
         </EventListItemPlaceholderWrapper>
     );

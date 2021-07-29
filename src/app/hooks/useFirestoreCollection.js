@@ -3,7 +3,6 @@ import {useEffect} from "react";
 import {asyncActionError, asyncActionFinish, asyncActionStart} from "../async/asyncReducer";
 import {dataFromSnapshot} from "../firestore/firestoreService";
 
-
 // rule for custom hook is start it with use
 const useFirestoreCollection = ({query, data, deps}) => {
     // query: firestore query. data: what to do when we receive the data. deps:dependencies that we need for example useEffect hook

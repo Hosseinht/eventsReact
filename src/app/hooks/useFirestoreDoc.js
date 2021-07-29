@@ -3,6 +3,7 @@ import {useEffect} from "react";
 import {asyncActionError, asyncActionFinish, asyncActionStart} from "../async/asyncReducer";
 import {dataFromSnapshot} from "../firestore/firestoreService";
 
+//this will be used in EventDetailPage
 
 const useFirestoreDoc = ({query, data, deps}) => {
     // query: firestore query. data: what to do when we receive the data. deps:dependencies that we need for example useEffect hook
@@ -14,6 +15,12 @@ const useFirestoreDoc = ({query, data, deps}) => {
         dispatch(asyncActionStart());
         const unsubscribe = query().onSnapshot(
             snapshot => {
+                // console.log(snapshot)
+                if (!snapshot.exists) {
+                    dispatch(asyncActionError({code: 'not-found', message: 'Could not find document'}))
+                    return;
+                    // return means we don't continue from here
+                }
                 data(dataFromSnapshot(snapshot));
                 dispatch(asyncActionFinish());
             },
