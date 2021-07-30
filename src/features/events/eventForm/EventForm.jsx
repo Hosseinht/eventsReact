@@ -3,21 +3,37 @@ import React from 'react';
 import cuid from "cuid";
 import {useDispatch, useSelector} from "react-redux";
 import {Formik, Form as FormikForm} from 'formik';
-
 import * as Yup from 'yup'
+import {Link, Redirect} from "react-router-dom";
+import {toast} from "react-toastify";
+import LoadingComponent from "../../../app/layout/LoadingComponents";
+
 // Styled Component
 import styled from "styled-components";
 
 //Bootstrap
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import {Link} from "react-router-dom";
-import {createEvent, updateEvent} from "../eventActions";
+
+
+//Actions
+import {createEvent, listenToEvents, updateEvent} from "../eventActions";
+
+//Custom Form Inputs
 import MyTextInput from "../../../app/common/form/MyTextInput";
 import MyTextArea from "../../../app/common/form/MyTextArea";
 import MySelectInput from "../../../app/common/form/MySelectInput";
 import MyDateInput from "../../../app/common/form/MyDateInput";
 import MyPlaceInput from "../../../app/common/form/MyPlaceInput";
+
+//Firestore
+import useFirestoreDoc from "../../../app/hooks/useFirestoreDoc";
+import {
+    addEventToFirestore,
+    listenToEventFromFirestore,
+    updateEventInFirestore
+} from "../../../app/firestore/firestoreService";
+import Spinner from "react-bootstrap/Spinner";
 
 
 const EventForm = ({match, history}) => {
@@ -26,6 +42,8 @@ const EventForm = ({match, history}) => {
     const selectedEvent = useSelector((state) =>
         state.event.events.find((e) => e.id === match.params.id)
     );
+
+    const {loading, error} = useSelector(state => state.async)
     // event is the reducer and events is property for events that we're storing our events. initialState{events:sampleData}
     // - ?? is null conditional validator. if it's null we pass anything to the right
     // if it's not our initial value is going to be set to our selectedEvent
@@ -57,6 +75,16 @@ const EventForm = ({match, history}) => {
         date: Yup.string().required("Data is required"),
     })
 
+    useFirestoreDoc({
+        query: () => listenToEventFromFirestore(match.params.id),
+        data: (event) => dispatch(listenToEvents([event])),
+        deps: [match.params.id, dispatch]
+        // when the eventId(match.params.id) changes rerun the use effect
+    })
+
+    if (loading || (!selectedEvent && !error)) return <LoadingComponent content='loading...'/>
+    if (error) return <Redirect to='/error'/>
+
     return (
         <EventFormWrapper>
             <Container className='form-container rounded-1'>
@@ -64,21 +92,19 @@ const EventForm = ({match, history}) => {
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
-                    onSubmit={(values) => {
-                        // we don't all the properties in our form and  we don't want to lose the properties from our selected event
-                        // selected event contain all the information in sampleData and the data there is more than we have in our form
-                        //with spread operator we will have all those properties
-                        selectedEvent ?
-                            dispatch(updateEvent({...selectedEvent, ...values})) :
-                            dispatch(createEvent({
-                                ...values,
-                                id: cuid(),
-                                hostedBy: 'Bob',
-                                attendees: [],
-                                hostPhotoURL: '/assets/user.png'
-                            }));
-                        history.push('/events');
-                        console.log(values)
+                    onSubmit={async (values, {setSubmitting}) => {
+                        try {
+                            selectedEvent ?
+                                await updateEventInFirestore(values) :
+                                await addEventToFirestore(values)
+                            setSubmitting(false)
+                            history.push('/events');
+                            console.log(values)
+                        } catch (error) {
+                            toast.error(error.message)
+                            setSubmitting(false)
+                        }
+
                     }}
                 >
                     {({isSubmitting, dirty, isValid, values}) => (
@@ -138,10 +164,20 @@ const EventForm = ({match, history}) => {
                                     className='my-blue-btn'
                                     variant="light"
                                     type='submit'
-                                    loading={isSubmitting}
                                     disabled={!isValid || !dirty || isSubmitting}
                                 >
-                                    Submit
+                                    {isSubmitting  ?
+                                        <div>
+                                            < Spinner
+                                                as="span"
+                                                animation="border"
+                                                size="sm"
+                                                role="status"
+                                                aria-hidden="true"
+                                                className='me-1'
+                                            />
+                                        </div>
+                                        : "Submit"}
                                 </Button>
                             </div>
                         </FormikForm>

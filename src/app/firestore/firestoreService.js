@@ -1,4 +1,7 @@
+// it just store our firebase and firestore queries
+
 import firebase from "../config/firebase";
+import cuid from "cuid";
 
 const db = firebase.firestore()
 
@@ -31,11 +34,25 @@ const listenToEventsFromFirestore = () => {
     return db.collection('events');
     // get or listen to data. here we listen
 };
-
 export default listenToEventsFromFirestore;
 
 export function listenToEventFromFirestore(eventId) {
     return db.collection('events').doc(eventId);
 }
 
-// it just store our firebase and firestore queries
+export function addEventToFirestore(event) {
+    return db.collection('events').add({
+        ...event,
+        hostedBye: 'Brandon',
+        hostPhotoURL: 'https://randomuser.me/api/portraits/women/13.jpg',
+        attendees: firebase.firestore.FieldValue.arrayUnion({
+            id: cuid(),
+            displayName: 'Brandon',
+            hostPhotoURL: 'https://randomuser.me/api/portraits/women/13.jpg',
+        })
+    })
+}
+
+export function updateEventInFirestore(event) {
+    return db.collection('events').doc(event.id).update(event)
+}
