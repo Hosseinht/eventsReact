@@ -13,10 +13,11 @@ import styled from "styled-components";
 //Bootstrap
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import Spinner from "react-bootstrap/Spinner";
 
 
 //Actions
-import { listenToEvents} from "../eventActions";
+import {listenToEvents} from "../eventActions";
 
 //Custom Form Inputs
 import MyTextInput from "../../../app/common/form/MyTextInput";
@@ -28,11 +29,10 @@ import MyPlaceInput from "../../../app/common/form/MyPlaceInput";
 //Firestore
 import useFirestoreDoc from "../../../app/hooks/useFirestoreDoc";
 import {
-    addEventToFirestore,
+    addEventToFirestore, cancelEventToggle,
     listenToEventFromFirestore,
     updateEventInFirestore
 } from "../../../app/firestore/firestoreService";
-import Spinner from "react-bootstrap/Spinner";
 
 
 const EventForm = ({match, history}) => {
@@ -76,14 +76,14 @@ const EventForm = ({match, history}) => {
 
     useFirestoreDoc({
         shouldExecute: !!match.params.id,
-         // !! makes it a boolean. if we don't have id it's false
+        // !! makes it a boolean. if we don't have id it's false
         query: () => listenToEventFromFirestore(match.params.id),
         data: (event) => dispatch(listenToEvents([event])),
         deps: [match.params.id, dispatch]
         // when the eventId(match.params.id) changes rerun the use effect
     })
 
-    if (loading ) return <LoadingComponent content='loading...'/>
+    if (loading) return <LoadingComponent content='loading...'/>
     if (error) return <Redirect to='/error'/>
 
     return (
@@ -151,36 +151,50 @@ const EventForm = ({match, history}) => {
                                 timeCaption='time'
                             />
 
-                            <div className="form-btn mt-5">
+                            <div className="form-btn-group ">
+                                {selectedEvent &&
                                 <Button
-                                    disabled={isSubmitting}
-                                    as={Link} to='/events'
-                                    className='my-red-btn'
+                                    className={`mt-5 ${selectedEvent.isCancelled ? 'my-blue-btn-invert' : 'my-red-btn-inverted'}`}
                                     variant="light"
-                                    type="submit"
+                                    type="button"
+                                    onClick={() => cancelEventToggle(selectedEvent)}
                                 >
-                                    Cancel
-                                </Button> {""}
-                                <Button
-                                    className='my-blue-btn'
-                                    variant="light"
-                                    type='submit'
-                                    disabled={!isValid || !dirty || isSubmitting}
-                                >
-                                    {isSubmitting  ?
-                                        <div>
-                                            < Spinner
-                                                as="span"
-                                                animation="border"
-                                                size="sm"
-                                                role="status"
-                                                aria-hidden="true"
-                                                className='me-1'
-                                            />
-                                        </div>
-                                        : "Submit"}
+                                    {selectedEvent.isCancelled ? 'Reactive Event' : 'Cancel Event'}
                                 </Button>
+                                }
+
+                                <div className="form-btn mt-5 ">
+                                    <Button
+                                        disabled={isSubmitting}
+                                        as={Link} to='/events'
+                                        className='my-red-btn'
+                                        variant="light"
+                                        type="submit"
+                                    >
+                                        Cancel
+                                    </Button> {""}
+                                    <Button
+                                        className='my-blue-btn'
+                                        variant="light"
+                                        type='submit'
+                                        disabled={!isValid || !dirty || isSubmitting}
+                                    >
+                                        {isSubmitting ?
+                                            <div>
+                                                < Spinner
+                                                    as="span"
+                                                    animation="border"
+                                                    size="sm"
+                                                    role="status"
+                                                    aria-hidden="true"
+                                                    className='me-1'
+                                                />
+                                            </div>
+                                            : "Submit"}
+                                    </Button>
+                                </div>
                             </div>
+
                         </FormikForm>
                     )}
 
@@ -211,7 +225,9 @@ const EventFormWrapper = styled.div`
     .form-group {
       //margin-top: 20px !important;
     }
-   
+   //.form-btn{
+   //   align-items: center;
+   //}
     .form-btn-cancel {
       margin-right: 5px;
       box-shadow: none !important;
@@ -219,13 +235,17 @@ const EventFormWrapper = styled.div`
     }
     .form-btn-submit {
       box-shadow: none !important;
-      
-        
+  
     }
+    .form-btn-group {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      
+    }
+   
     
-    
- 
- }
     //input {
     //  padding: 10px 0;
     //  

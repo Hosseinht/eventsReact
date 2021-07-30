@@ -10,6 +10,7 @@ import Button from "react-bootstrap/Button";
 import {BsFillClockFill, BsGeoAlt} from "react-icons/bs"
 import {Link} from "react-router-dom";
 import {deleteEventInFirestore} from "../../../app/firestore/firestoreService";
+import {Badge} from "react-bootstrap";
 
 
 const EventListitem = ({event}) => {
@@ -29,7 +30,18 @@ const EventListitem = ({event}) => {
                         <p>{event.hostedBy}</p>
                     </div>
                 </div>
+
             </div>
+
+            {event.isCancelled && (
+                // <Badge className='tag' bg="primary" style={{top: '-240px'}}>Danger</Badge>
+                <div className="my-badge-label">
+                    <span className="badge ">This event has been cancelled</span>
+                </div>
+
+            )}
+
+
             <div className="middle-part">
                 <div className="middle-part-date">
                     <BsFillClockFill size='15px' className='middle-part-icon'/>
@@ -72,6 +84,16 @@ const EventListitem = ({event}) => {
 export default EventListitem;
 
 const EventListWrapper = styled.div`
+    .my-badge-label{
+          display: flex!important;
+          justify-content: flex-end!important;
+          transform: translateY(-60px);
+          margin-right:-30px ;
+          span {
+            background-color: #f77462;
+            color: white;
+          }
+        }
     margin-bottom: 20px;
     padding: 20px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -154,6 +176,7 @@ const EventListWrapper = styled.div`
         color: white;
         font-weight: bold;
     }
+    
 }
 `
 

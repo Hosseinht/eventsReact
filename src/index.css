@@ -48,6 +48,26 @@ body {
     /*font-weight: bold;*/
 }
 
+.my-blue-btn-invert {
+    box-shadow: none;
+    background-color: #36bff7;
+    border: none;
+    color: white;
+}
+.my-blue-btn-invert:focus {
+    box-shadow: none;
+    background-color: #36bff7;
+    border: none;
+    color: white;
+}
+
+.my-blue-btn-invert:hover {
+    box-shadow: none;
+    background-color: transparent;
+    border: none;
+    color: #36bff7;
+}
+
 .my-red-btn {
     background-color: transparent;
     color: #f77462;
@@ -59,6 +79,21 @@ body {
     background-color: #f77462;
     color: white;
     /*font-weight: bold;*/
+}
+
+.my-red-btn-inverted {
+    background-color: #f77462;
+    color: white;
+}
+.my-red-btn-inverted:focus {
+    background-color: #f77462;
+    color: white;
+}
+
+.my-red-btn-inverted:hover {
+    background-color: transparent;
+    color: #f77462;
+    border: none;
 }
 
 .react-datepicker-wrapper {
