@@ -31,7 +31,7 @@ export function dataFromSnapshot(snapshot) {
 
 
 const listenToEventsFromFirestore = () => {
-    return db.collection('events');
+    return db.collection('events').orderBy('date');
     // get or listen to data. here we listen
 };
 export default listenToEventsFromFirestore;
@@ -43,16 +43,20 @@ export function listenToEventFromFirestore(eventId) {
 export function addEventToFirestore(event) {
     return db.collection('events').add({
         ...event,
-        hostedBye: 'Brandon',
-        hostPhotoURL: 'https://randomuser.me/api/portraits/women/13.jpg',
+        hostedBy: 'Jane',
+        hostPhotoURL: 'https://randomuser.me/api/portraits/women/21.jpg',
         attendees: firebase.firestore.FieldValue.arrayUnion({
             id: cuid(),
-            displayName: 'Brandon',
-            hostPhotoURL: 'https://randomuser.me/api/portraits/women/13.jpg',
+            displayName: 'Jane',
+            photoURL: 'https://randomuser.me/api/portraits/women/21.jpg',
         })
     })
 }
 
 export function updateEventInFirestore(event) {
     return db.collection('events').doc(event.id).update(event)
+}
+
+export function deleteEventInFirestore(eventId) {
+    return db.collection('events').doc(eventId).delete()
 }

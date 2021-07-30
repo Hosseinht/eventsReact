@@ -1,6 +1,5 @@
 /* global google */
 import React from 'react';
-import cuid from "cuid";
 import {useDispatch, useSelector} from "react-redux";
 import {Formik, Form as FormikForm} from 'formik';
 import * as Yup from 'yup'
@@ -17,7 +16,7 @@ import Container from "react-bootstrap/Container";
 
 
 //Actions
-import {createEvent, listenToEvents, updateEvent} from "../eventActions";
+import { listenToEvents} from "../eventActions";
 
 //Custom Form Inputs
 import MyTextInput from "../../../app/common/form/MyTextInput";
@@ -76,13 +75,15 @@ const EventForm = ({match, history}) => {
     })
 
     useFirestoreDoc({
+        shouldExecute: !!match.params.id,
+         // !! makes it a boolean. if we don't have id it's false
         query: () => listenToEventFromFirestore(match.params.id),
         data: (event) => dispatch(listenToEvents([event])),
         deps: [match.params.id, dispatch]
         // when the eventId(match.params.id) changes rerun the use effect
     })
 
-    if (loading || (!selectedEvent && !error)) return <LoadingComponent content='loading...'/>
+    if (loading ) return <LoadingComponent content='loading...'/>
     if (error) return <Redirect to='/error'/>
 
     return (

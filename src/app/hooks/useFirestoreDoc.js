@@ -5,13 +5,14 @@ import {dataFromSnapshot} from "../firestore/firestoreService";
 
 //this will be used in EventDetailPage
 
-const useFirestoreDoc = ({query, data, deps}) => {
+const useFirestoreDoc = ({query, data, deps, shouldExecute = true}) => {
     // query: firestore query. data: what to do when we receive the data. deps:dependencies that we need for example useEffect hook
 
     const dispatch = useDispatch()
 
 
     useEffect(() => {
+        if (!shouldExecute) return;
         dispatch(asyncActionStart());
         const unsubscribe = query().onSnapshot(
             snapshot => {
