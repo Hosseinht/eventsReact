@@ -5,22 +5,18 @@ import {
 import firebase from "../../app/config/firebase";
 
 
-export const signInUser = (creds) => async (dispatch) => {
-    try {
-        const result = await firebase.auth().signInWithEmailAndPassword(creds.email, creds.password)
-        dispatch({type: SIGN_IN_USER, payload:result.user})
-    } catch (error) {
-        throw error
-        // because this is a form that we're using to login the user.
-        // then we're going to throw the error we get back to the form itself
+export const signInUser = (user) => {
+    return {
+        type: SIGN_IN_USER,
+        payload: user
     }
 };
 
-export const verifyAuth = () => (dispatch)=>{
+export const verifyAuth = () => (dispatch) => {
     return firebase.auth().onAuthStateChanged(user => {
-        if(user){
-            dispatch({type:SIGN_IN_USER, payload:user})
-        }else {
+        if (user) {
+            dispatch(signInUser(user))
+        } else {
             dispatch(signOutUser())
         }
     })

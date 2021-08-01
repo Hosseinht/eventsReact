@@ -9,6 +9,7 @@ import styled from "styled-components";
 import {useDispatch} from "react-redux";
 import {signInUser} from "./authActions";
 import {closeModal} from "../../app/common/modals/modalReducer";
+import {signInWithEmail} from "../../app/firestore/firebaseService";
 
 const LoginForm = () => {
     const dispatch = useDispatch()
@@ -23,7 +24,7 @@ const LoginForm = () => {
                 onSubmit={async (values, {setSubmitting}) => {
                     //setSubmitting give us ability to turn off the submitting status or set it to false after submitted data
                     try {
-                        await dispatch(signInUser(values))
+                        await signInWithEmail(values)
                         setSubmitting(false)
                         dispatch(closeModal())
                     } catch (error) {
