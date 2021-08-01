@@ -1,17 +1,34 @@
 import React from 'react';
 import NavDropdown from "react-bootstrap/NavDropdown";
 import {Link, useHistory} from "react-router-dom";
+import { useSelector} from "react-redux";
+
+//
+import {toast} from "react-toastify";
+
 //Bootstrap
 import Image from "react-bootstrap/Image";
 import styled from "styled-components";
 import {BsPlus, BsPersonFill, BsPower} from "react-icons/bs";
-import {useDispatch, useSelector} from "react-redux";
-import {signOutUser} from "../auth/authActions";
+
+//Firebase
+import {signOutFirebase} from "../../app/firestore/firebaseService";
+
 
 const SignedInMenu = () => {
-    const dispatch = useDispatch()
     const {currentUser} = useSelector(state => state.auth)
     const history = useHistory()
+
+    async function handleSignOut() {
+        // async because we want to wait until the user has signed out before we push to the new location
+        try {
+            await signOutFirebase()
+            history.push('/')
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
     return (
         <SignedinMenuWrapper>
             <Image roundedCircle fluid className='user-img' src={currentUser.photoURL || '/assets/user.png'}/>
@@ -24,11 +41,7 @@ const SignedInMenu = () => {
                     <BsPersonFill className='singin-icon' size='20px'/>
                     My profile
                 </NavDropdown.Item>
-                <NavDropdown.Item onClick={() => {
-                    dispatch(signOutUser());
-                    history.push('/')
-                }
-                }>
+                <NavDropdown.Item onClick={handleSignOut}>
                     <BsPower className='singin-icon' size='20px'/>
                     Sign out
                 </NavDropdown.Item>
