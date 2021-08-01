@@ -20,11 +20,16 @@ const LoginForm = () => {
                     email: Yup.string().required().email(),
                     password: Yup.string().required()
                 })}
-                onSubmit={(values, {setSubmitting}) => {
+                onSubmit={async (values, {setSubmitting}) => {
                     //setSubmitting give us ability to turn off the submitting status or set it to false after submitted data
-                    dispatch(signInUser(values))
-                    setSubmitting(false)
-                    dispatch(closeModal())
+                    try {
+                        await dispatch(signInUser(values))
+                        setSubmitting(false)
+                        dispatch(closeModal())
+                    } catch (error) {
+                        setSubmitting(false)
+                        console.log(error)
+                    }
                 }}
             >
                 {({isSubmitting, dirty, isValid}) => (
