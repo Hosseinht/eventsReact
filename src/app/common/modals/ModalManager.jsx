@@ -2,6 +2,7 @@ import React from 'react';
 import {useSelector} from "react-redux";
 import TestModal from "../../../features/sandbox/TestModal";
 import LoginForm from "../../../features/auth/LoginForm";
+import RegisterForm from "../../../features/auth/RegisteForm";
 
 const ModalManager = () => {
     // Select a specific modal and display it on our page
@@ -9,6 +10,7 @@ const ModalManager = () => {
     const modalLookup = {
         TestModal,
         LoginForm,
+        RegisterForm,
     }
     const currentModal = useSelector(state => state.modals)
     // when we open a modal there's going to be something inside our state.and it will be store in currentModal

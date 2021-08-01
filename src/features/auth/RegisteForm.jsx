@@ -8,27 +8,27 @@ import Spinner from "react-bootstrap/Spinner";
 import styled from "styled-components";
 import {useDispatch} from "react-redux";
 import {closeModal} from "../../app/common/modals/modalReducer";
-import {signInWithEmail} from "../../app/firestore/firebaseService";
+import {registerInFirebase, signInWithEmail} from "../../app/firestore/firebaseService";
 
-const LoginForm = () => {
+const RegisterForm = () => {
     const dispatch = useDispatch()
     return (
-        <ModalWrapper header='Sign in' size='md'>
+        <ModalWrapper header='Register' size='md'>
             <Formik
-                initialValues={{email: '', password: ''}}
+                initialValues={{displayName: '', email: '', password: ''}}
                 validationSchema={Yup.object({
+                    displayName: Yup.string().required(),
                     email: Yup.string().required().email(),
                     password: Yup.string().required()
                 })}
                 onSubmit={async (values, {setSubmitting, setErrors}) => {
                     //setSubmitting give us ability to turn off the submitting status or set it to false after submitted data
                     try {
-                        await signInWithEmail(values)
+                        await registerInFirebase(values)
                         setSubmitting(false)
                         dispatch(closeModal())
                     } catch (error) {
                         setErrors({auth: error.message})
-                        // because we are using modal we don't use toast
                         setSubmitting(false)
                     }
                 }}
@@ -36,6 +36,8 @@ const LoginForm = () => {
                 {({isSubmitting, dirty, isValid, errors}) => (
                     <LoginFormWrapper>
                         <FormikForm>
+                            <MyTextInput className={`form-control ${!isValid && 'is-invalid'}`} name='displayName'
+                                         placeholder='Display Name'/>
                             <MyTextInput className={`form-control ${!isValid && 'is-invalid'}`} name='email'
                                          placeholder='Email Address'/>
                             <MyTextInput className={`form-control ${!isValid && 'is-invalid'}`} name='password'
@@ -61,7 +63,7 @@ const LoginForm = () => {
                                     className='me-2'
                                 />}
 
-                                Login
+                                Register
                             </Button>
                         </FormikForm>
                     </LoginFormWrapper>
@@ -72,7 +74,7 @@ const LoginForm = () => {
     );
 };
 
-export default LoginForm;
+export default RegisterForm;
 
 const LoginFormWrapper = styled.div`
   .form-label {

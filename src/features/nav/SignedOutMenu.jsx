@@ -11,7 +11,7 @@ const SignedOutMenu = () => {
         <SignoutMenuWrapper>
             <Button onClick={() => dispatch(openModal({modalType: 'LoginForm'}))} variant='light'
                     className='singout-btn py-2'> Login </Button>{' '}
-            <Button variant='outline-light' className='singout-btn py-2'> Register </Button>
+            <Button onClick={() => dispatch(openModal({modalType: 'RegisterForm'}))} variant='outline-light' className='singout-btn py-2'> Register </Button>
         </SignoutMenuWrapper>
     )
 };
