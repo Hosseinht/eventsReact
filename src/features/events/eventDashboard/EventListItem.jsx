@@ -17,7 +17,7 @@ const EventListitem = ({event}) => {
 
 
     return (
-        <EventListWrapper>
+        <EventListWrapper className='mt-5'>
             <div className="top-part">
                 <div className="user-img">
                     <Image roundedCircle src={event.hostPhotoURL}/>
@@ -86,15 +86,15 @@ export default EventListitem;
 const EventListWrapper = styled.div`
     .my-badge-label{
           display: flex!important;
-          justify-content: flex-end!important;
-          transform: translateY(-60px);
+          justify-content: center!important;
+          transform: translateY(-160px);
           margin-right:-30px ;
           span {
             background-color: #f77462;
             color: white;
           }
         }
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     padding: 20px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     .top-part {

@@ -1,5 +1,5 @@
 /* global google */
-import React from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Formik, Form as FormikForm} from 'formik';
 import * as Yup from 'yup'
@@ -14,7 +14,7 @@ import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Spinner from "react-bootstrap/Spinner";
-
+import Modal from "react-bootstrap/Modal";
 
 //Actions
 import {listenToEvents} from "../eventActions";
@@ -38,6 +38,9 @@ import {
 const EventForm = ({match, history}) => {
 
     const dispatch = useDispatch();
+    const [loadingCancel, setLoadingCancel] = useState(false)
+    const [confirmOpen, setConfirmOpen] = useState(false)
+    const handleClose = () => setConfirmOpen(false);
     const selectedEvent = useSelector((state) =>
         state.event.events.find((e) => e.id === match.params.id)
     );
@@ -73,6 +76,18 @@ const EventForm = ({match, history}) => {
         }),
         date: Yup.string().required("Data is required"),
     })
+
+    async function handleCancelToggle(event) {
+        setConfirmOpen(false)
+        setLoadingCancel(true)
+        try {
+            await cancelEventToggle(event)
+            setLoadingCancel(false)
+        } catch (error) {
+            setLoadingCancel(true)
+            toast.error(error.message)
+        }
+    }
 
     useFirestoreDoc({
         shouldExecute: !!match.params.id,
@@ -154,12 +169,30 @@ const EventForm = ({match, history}) => {
                             <div className="form-btn-group ">
                                 {selectedEvent &&
                                 <Button
-                                    className={`mt-5 ${selectedEvent.isCancelled ? 'my-blue-btn-invert' : 'my-red-btn-inverted'}`}
+
+                                    className={`mt-5 my-toggle-btn ${selectedEvent.isCancelled ? 'my-blue-btn-invert' : 'my-red-btn-inverted'}`}
                                     variant="light"
                                     type="button"
-                                    onClick={() => cancelEventToggle(selectedEvent)}
+                                    onClick={() => setConfirmOpen(true)}
                                 >
-                                    {selectedEvent.isCancelled ? 'Reactive Event' : 'Cancel Event'}
+                                    {loadingCancel ?
+                                        <div>
+                                            < Spinner
+                                                as="span"
+                                                animation="border"
+                                                size="sm"
+                                                role="status"
+                                                aria-hidden="true"
+                                                className='me-1'
+                                            />
+                                        </div>
+                                        :
+                                        <div>
+                                            {selectedEvent.isCancelled ? 'Reactive Event' : 'Cancel Event'}
+                                        </div>
+
+                                    }
+
                                 </Button>
                                 }
 
@@ -199,6 +232,22 @@ const EventForm = ({match, history}) => {
                     )}
 
                 </Formik>
+
+                <Modal centered show={confirmOpen} onHide={handleClose} animation={false}>
+
+                    <Modal.Body> {selectedEvent?.isCancelled ? 'This will reactivate the event - are you sure?'
+                        :
+                        'This will cancel the event - are you sure?'}</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="light" className='my-red-btn-inverted' onClick={handleClose}>
+                            Cancel
+                        </Button>
+                        <Button variant="light" className='my-blue-btn-invert'
+                                onClick={() => handleCancelToggle(selectedEvent)}>
+                            Ok
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </Container>
         </EventFormWrapper>
 
@@ -243,6 +292,9 @@ const EventFormWrapper = styled.div`
       flex-wrap: wrap;
       justify-content: space-between;
       
+    }
+    .my-toggle-btn {
+      min-width: 120px;
     }
    
     
