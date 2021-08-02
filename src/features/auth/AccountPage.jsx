@@ -12,6 +12,8 @@ import Container from "react-bootstrap/Container";
 import {FaFacebookSquare, FaGoogle} from "react-icons/fa";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
+import {updateUserPassword} from "../../app/firestore/firebaseService";
+import Spinner from "react-bootstrap/Spinner";
 
 const AccountPage = () => {
     const {currentUser} = useSelector((state) => state.auth)
@@ -28,8 +30,14 @@ const AccountPage = () => {
                             newPassword1: Yup.string().required('Password is required'),
                             newPassword2: Yup.string().oneOf([Yup.ref('newPassword1'), null], "Passwords do not match")
                         })}
-                        onSubmit={(values) => {
-                            console.log(values)
+                        onSubmit={async (values, {setSubmitting, setErrors}) => {
+                            try {
+                                await updateUserPassword(values)
+                                setSubmitting(false)
+                            } catch (error) {
+                                setErrors({auth: error.message})
+                                setSubmitting(false)
+                            }
                         }}
                     >
                         {({errors, isSubmitting, isValid, dirty}) => (
@@ -41,8 +49,16 @@ const AccountPage = () => {
                                     <span className='my-red-color'>{errors.auth}</span>
                                 </div>
                                 }
-                                <Button variant='light' className='my-blue-btn mt-3 mb-5'
+                                <Button type='submit' variant='light' className='my-blue-btn mt-3 mb-5'
                                         disabled={!isValid || isSubmitting || !dirty}>
+                                    {isSubmitting && <Spinner
+                                        as="span"
+                                        animation="border"
+                                        size="sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                        className='me-2'
+                                    />}
                                     Update Password
                                 </Button>
                             </FormikForm>

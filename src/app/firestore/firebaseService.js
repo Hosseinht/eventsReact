@@ -43,3 +43,11 @@ export async function socialLogin(selectedProvider) {
         toast.error = error.message
     }
 }
+
+export function updateUserPassword(creds) {
+    const user = firebase.auth().currentUser;
+    // this is synchronous. this is not something we need to go up to Firebase and retrieve back from the cloude
+    // this is stored in local storage
+    return user.updatePassword(creds.newPassword1)
+
+}
