@@ -1,7 +1,8 @@
 import {
     SIGN_IN_USER,
-    SIGN_OUT_USER
+    SIGN_OUT_USER,
 } from "./authConstants";
+import {APP_LOADED} from '../../app/async/asyncReducer'
 import firebase from "../../app/config/firebase";
 
 
@@ -9,6 +10,7 @@ export const signInUser = (user) => {
     return {
         type: SIGN_IN_USER,
         payload: user
+
     }
 };
 
@@ -16,8 +18,10 @@ export const verifyAuth = () => (dispatch) => {
     return firebase.auth().onAuthStateChanged(user => {
         if (user) {
             dispatch(signInUser(user))
+            dispatch({type: APP_LOADED})
         } else {
             dispatch(signOutUser())
+            dispatch({type: APP_LOADED})
         }
     })
     // we want to make sure that we're always verifying or listening t the Authentications State. so we need to dispatch

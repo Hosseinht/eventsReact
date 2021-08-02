@@ -10,7 +10,7 @@ import Button from "react-bootstrap/Button";
 import {BsFillClockFill, BsGeoAlt} from "react-icons/bs"
 import {Link} from "react-router-dom";
 import {deleteEventInFirestore} from "../../../app/firestore/firestoreService";
-import {Badge} from "react-bootstrap";
+
 
 
 const EventListitem = ({event}) => {

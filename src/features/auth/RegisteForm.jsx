@@ -9,7 +9,7 @@ import Spinner from "react-bootstrap/Spinner";
 import styled from "styled-components";
 import {useDispatch} from "react-redux";
 import {closeModal} from "../../app/common/modals/modalReducer";
-import {registerInFirebase, signInWithEmail} from "../../app/firestore/firebaseService";
+import {registerInFirebase} from "../../app/firestore/firebaseService";
 import SocialLogin from "./SocialLogin";
 
 const RegisterForm = () => {
