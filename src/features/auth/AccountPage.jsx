@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Formik, Form as FormikForm} from "formik";
 import * as Yup from 'yup'
 
@@ -11,40 +11,47 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import {FaFacebookSquare, FaGoogle} from "react-icons/fa";
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const AccountPage = () => {
+    const {currentUser} = useSelector((state) => state.auth)
     return (
         <AccountPageWrapper>
             <Container className='w-75'>
                 <p className='display-6'>Account</p>
-                <p>Use this form to change your password</p>
-                <Formik
-                    initialValues={{newPassword1: '', newPassword2: ''}}
-                    validationSchema={Yup.object({
-                        newPassword1: Yup.string().required('Password is required'),
-                        newPassword2: Yup.string().oneOf([Yup.ref('newPassword1'), null], "Passwords do not match")
-                    })}
-                    onSubmit={(values) => {
-                        console.log(values)
-                    }}
-                >
-                    {({errors, isSubmitting, isValid, dirty}) => (
-                        <FormikForm>
-                            <MyTextInput name='newPassword1' type='password' placeholder='New Password'/>
-                            <MyTextInput name='newPassword2' type='password' placeholder='Confirm Password'/>
-                            {errors.auth &&
-                            <div className='p-2'>
-                                <span className='my-red-color'>{errors.auth}</span>
-                            </div>
-                            }
-                            <Button variant='light' className='my-blue-btn mt-3 mb-5'
-                                    disabled={!isValid || isSubmitting || !dirty}>
-                                Update Password
-                            </Button>
-                        </FormikForm>
-                    )}
+                {currentUser.providerId === 'password' &&
+                <>
+                    <p>Use this form to change your password</p>
+                    <Formik
+                        initialValues={{newPassword1: '', newPassword2: ''}}
+                        validationSchema={Yup.object({
+                            newPassword1: Yup.string().required('Password is required'),
+                            newPassword2: Yup.string().oneOf([Yup.ref('newPassword1'), null], "Passwords do not match")
+                        })}
+                        onSubmit={(values) => {
+                            console.log(values)
+                        }}
+                    >
+                        {({errors, isSubmitting, isValid, dirty}) => (
+                            <FormikForm>
+                                <MyTextInput name='newPassword1' type='password' placeholder='New Password'/>
+                                <MyTextInput name='newPassword2' type='password' placeholder='Confirm Password'/>
+                                {errors.auth &&
+                                <div className='p-2'>
+                                    <span className='my-red-color'>{errors.auth}</span>
+                                </div>
+                                }
+                                <Button variant='light' className='my-blue-btn mt-3 mb-5'
+                                        disabled={!isValid || isSubmitting || !dirty}>
+                                    Update Password
+                                </Button>
+                            </FormikForm>
+                        )}
 
-                </Formik>
+                    </Formik>
+                </>
+                }
+                {currentUser.providerId === 'facebook.com' &&
                 <div className="facebook-part mb-4">
                     <p className='fs-5 my-blue-color'>Facebook account</p>
                     <p>Please visit Facebook to update your account</p>
@@ -60,7 +67,8 @@ const AccountPage = () => {
 
                     </Button>
                 </div>
-
+                }
+                {currentUser.providerId === 'google.com' &&
                 <div className="facebook-part">
                     <p className='fs-5 my-blue-color'>Google account</p>
                     <p>Please visit Google to update your account</p>
@@ -76,6 +84,7 @@ const AccountPage = () => {
 
                     </Button>
                 </div>
+                }
             </Container>
         </AccountPageWrapper>
     );

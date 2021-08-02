@@ -9,7 +9,7 @@ import {toast} from "react-toastify";
 //Bootstrap
 import Image from "react-bootstrap/Image";
 import styled from "styled-components";
-import {BsPlus, BsPersonFill, BsPower} from "react-icons/bs";
+import {BsPlus, BsPersonFill, BsPower, BsGear} from "react-icons/bs";
 
 //Firebase
 import {signOutFirebase} from "../../app/firestore/firebaseService";
@@ -32,13 +32,17 @@ const SignedInMenu = () => {
     return (
         <SignedinMenuWrapper>
             <Image roundedCircle fluid className='user-img' src={currentUser.photoURL || '/assets/user.png'}/>
-            <NavDropdown className='nav-dropdown fs-6' title={currentUser.email} id="basic-nav-dropdown">
+            <NavDropdown className='nav-dropdown fs-6' title={currentUser.displayName} id="basic-nav-dropdown">
                 <NavDropdown.Item as={Link} to='/createEvent'>
                     <BsPlus className='singin-icon' size='20px'/>
                     Create Event
                 </NavDropdown.Item>
                 <NavDropdown.Item  as={Link} to='/account'>
                     <BsPersonFill className='singin-icon' size='20px'/>
+                    My Profile
+                </NavDropdown.Item>
+                <NavDropdown.Item  as={Link} to='/account'>
+                    <BsGear className='singin-icon' size='20px'/>
                     My Account
                 </NavDropdown.Item>
                 <NavDropdown.Item onClick={handleSignOut}>
