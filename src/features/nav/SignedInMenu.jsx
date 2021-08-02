@@ -37,9 +37,9 @@ const SignedInMenu = () => {
                     <BsPlus className='singin-icon' size='20px'/>
                     Create Event
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
+                <NavDropdown.Item  as={Link} to='/account'>
                     <BsPersonFill className='singin-icon' size='20px'/>
-                    My profile
+                    My Account
                 </NavDropdown.Item>
                 <NavDropdown.Item onClick={handleSignOut}>
                     <BsPower className='singin-icon' size='20px'/>
