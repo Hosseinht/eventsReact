@@ -37,7 +37,7 @@ const SignedInMenu = () => {
                     <BsPlus className='singin-icon' size='20px'/>
                     Create Event
                 </NavDropdown.Item>
-                <NavDropdown.Item  as={Link} to='/account'>
+                <NavDropdown.Item  as={Link} to={`/profile/${currentUser.uid}`} >
                     <BsPersonFill className='singin-icon' size='20px'/>
                     My Profile
                 </NavDropdown.Item>
