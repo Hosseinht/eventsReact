@@ -1,0 +1,29 @@
+import React from 'react';
+import styled from "styled-components";
+import Button from "react-bootstrap/Button";
+import { FaFacebookSquare, FaGoogle } from "react-icons/fa";
+
+const SocialLogin = () => {
+    return (
+        <SocialLoginWrapper>
+            <Button className='facebook-btn w-100 mb-3 d-flex justify-content-center align-items-center p-2' variant='light'> <FaFacebookSquare size='20px' className='me-2 mt-1 '/> Login with Facebook </Button>
+            <Button className='google-btn w-100  d-flex justify-content-center align-items-center p-2' variant='light'> <FaGoogle size='20px' className='me-2 mt-1'/>Login with Google </Button>
+        </SocialLoginWrapper>
+    );
+};
+
+export default SocialLogin;
+
+const SocialLoginWrapper = styled.div`
+  color: white;
+  .facebook-btn {
+    background-color: #4267B2;
+    padding-bottom: 10px!important;
+     color: white;
+  }
+  .google-btn{
+    background-color: #DB4437;
+    padding-bottom: 10px!important;
+     color: white;
+  }
+`

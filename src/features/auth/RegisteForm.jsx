@@ -10,6 +10,7 @@ import styled from "styled-components";
 import {useDispatch} from "react-redux";
 import {closeModal} from "../../app/common/modals/modalReducer";
 import {registerInFirebase, signInWithEmail} from "../../app/firestore/firebaseService";
+import SocialLogin from "./SocialLogin";
 
 const RegisterForm = () => {
     const dispatch = useDispatch()
@@ -55,7 +56,7 @@ const RegisterForm = () => {
                                 variant='light'
                                 disabled={!isValid || !dirty || isSubmitting}
                                 type='submit'
-                                className='my-blue-btn mt-3  w-100'
+                                className='my-blue-btn mb-3 mt-3  w-100'
                             >
                                 {isSubmitting && <Spinner
                                     as="span"
@@ -68,6 +69,8 @@ const RegisterForm = () => {
 
                                 Register
                             </Button>
+                            <p className='text-center'>Or</p>
+                            <SocialLogin/>
                         </FormikForm>
                     </LoginFormWrapper>
 

@@ -9,6 +9,7 @@ import styled from "styled-components";
 import {useDispatch} from "react-redux";
 import {closeModal} from "../../app/common/modals/modalReducer";
 import {signInWithEmail} from "../../app/firestore/firebaseService";
+import SocialLogin from "./SocialLogin";
 
 const LoginForm = () => {
     const dispatch = useDispatch()
@@ -50,7 +51,7 @@ const LoginForm = () => {
                                 variant='light'
                                 disabled={!isValid || !dirty || isSubmitting}
                                 type='submit'
-                                className='my-blue-btn mt-3  w-100'
+                                className='my-blue-btn mt-3 mb-3 w-100'
                             >
                                 {isSubmitting && <Spinner
                                     as="span"
@@ -63,6 +64,8 @@ const LoginForm = () => {
 
                                 Login
                             </Button>
+                            <p className='text-center'>Or</p>
+                            <SocialLogin/>
                         </FormikForm>
                     </LoginFormWrapper>
 
