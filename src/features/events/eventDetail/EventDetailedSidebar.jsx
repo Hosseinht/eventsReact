@@ -5,7 +5,7 @@ import Image from "react-bootstrap/Image";
 
 const EventDetailedSidebar = ({attendees}) => {
     return (
-        <EventDetailedSidebarWrapper>
+        <EventDetailedSidebarWrapper >
             <p className='text-center '>{attendees.length} {attendees.length > 1 ? 'People' : 'Person'} Going</p>
 
             {attendees.map(attendee => (

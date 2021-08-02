@@ -7,7 +7,7 @@ import {Calendar} from "react-calendar";
 const EventFilters = () => {
     return (
         <>
-            <EventFiltersWrapper>
+            <EventFiltersWrapper className='mt-5'>
                 <div className="filter-part d-flex align-items-center my-red-color">
                     <div>
                         <FaFilter/>

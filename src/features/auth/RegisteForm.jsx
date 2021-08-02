@@ -1,4 +1,5 @@
 import React from 'react';
+import {useHistory} from "react-router-dom";
 import ModalWrapper from "../../app/common/modals/ModalWrapper";
 import {Formik, Form as FormikForm,} from "formik";
 import * as Yup from 'yup'
@@ -12,6 +13,7 @@ import {registerInFirebase, signInWithEmail} from "../../app/firestore/firebaseS
 
 const RegisterForm = () => {
     const dispatch = useDispatch()
+    const history = useHistory()
     return (
         <ModalWrapper header='Register' size='md'>
             <Formik
@@ -27,6 +29,7 @@ const RegisterForm = () => {
                         await registerInFirebase(values)
                         setSubmitting(false)
                         dispatch(closeModal())
+                        history.push('/events')
                     } catch (error) {
                         setErrors({auth: error.message})
                         setSubmitting(false)

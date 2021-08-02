@@ -23,7 +23,7 @@ const SignedInMenu = () => {
         // async because we want to wait until the user has signed out before we push to the new location
         try {
             await signOutFirebase()
-            history.push('/')
+            history.push('/events')
         } catch (error) {
             toast.error(error.message)
         }
