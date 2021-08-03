@@ -5,6 +5,7 @@ import Container from "react-bootstrap/Container";
 
 import {BsPersonFill} from "react-icons/bs";
 import Button from "react-bootstrap/Button";
+import ProfileForm from "./ProfileForm";
 
 const AboutTab = ({profile}) => {
     const [edit, setEdit] = useState(false)
@@ -23,13 +24,17 @@ const AboutTab = ({profile}) => {
                 </div>
             </div>
             <div>
-                {edit ? <p>Profile Form</p> :
+                {edit ? (
+                    <ProfileForm profile={profile}/>
+                ) : (
                     <>
                         <div>
                             <span><strong>Member Since: {format(profile.createdAt, 'dd MMM yyyy')}</strong></span>
                             <div>{profile.description || null}</div>
                         </div>
                     </>
+                )
+
                 }
             </div>
         </AboutTabWrapper>
