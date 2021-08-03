@@ -3,8 +3,9 @@ import styled from "styled-components";
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from "react-bootstrap/Tab";
 import Container from "react-bootstrap/Container";
+import AboutTab from "./AboutTab";
 
-const ProfileContent = () => {
+const ProfileContent = ({profile}) => {
     return (
         <ProfileContentWrapper className=' d-flex justify-content-center align-items-center'>
 
@@ -17,7 +18,7 @@ const ProfileContent = () => {
                 >
 
                     <Tab eventKey="about" title="About" >
-                        <p className='ms-1'>Not</p>
+                        <AboutTab profile={profile}/>
                     </Tab>
                     <Tab eventKey="photos" title="Photos">
                         Why
