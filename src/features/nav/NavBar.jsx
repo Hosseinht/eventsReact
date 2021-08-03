@@ -20,10 +20,10 @@ const NavBar = ({setFormOpen}) => {
     return (
         <NavbarCustom>
             <Navbar fixed={'top'} className='' expand="lg">
-                <Container className='py-3'>
+                <Container className='py-3  justify-content-center d-flex'>
                     <Navbar.Toggle className="mx-sm-5" aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse className='justify-content-between ' id="basic-navbar-nav">
-                        <Nav className=" align-items-center mx-sm-5 align-items-sm-start ">
+                        <Nav className=" align-items-center  w-100 mx-sm-5 align-items-sm-start">
                             <Navbar.Brand as={Link} to='/events' className='fs-3  events-logo'
                             >Eeavents</Navbar.Brand>
                             {authenticated &&
@@ -36,7 +36,7 @@ const NavBar = ({setFormOpen}) => {
                             {/*if authenticated is true anything after && will be executed*/}
                             {/*<Nav.Link as={Link} to='/sandbox'>Sandbox </Nav.Link>*/}
                         </Nav>
-                        <Nav className='justify-content-evenly login-register-btn w-50 mx-sm-5 align-items-sm-start'>
+                        <Nav className='justify-content-evenly login-register-btn w-70 mx-sm-5 align-items-sm-start'>
                             {authenticated ? <SignedInMenu/> :
                                 <SignedOutMenu/>}
                         </Nav>

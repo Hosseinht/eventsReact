@@ -16,8 +16,8 @@ const ProfileContent = () => {
                     className="mb-3"
                 >
 
-                    <Tab eventKey="about" title="About">
-                        Not
+                    <Tab eventKey="about" title="About" >
+                        <p className='ms-1'>Not</p>
                     </Tab>
                     <Tab eventKey="photos" title="Photos">
                         Why
