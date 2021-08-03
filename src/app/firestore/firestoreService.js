@@ -75,5 +75,8 @@ export function setUserProfileData(user) {
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
     })
     // we use set because we want to use user id as document id
+}
 
+export const getUserProfile = (userId) => {
+    return db.collection('users').doc(userId)
 }
