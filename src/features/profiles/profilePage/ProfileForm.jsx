@@ -8,6 +8,8 @@ import MyTextInput from "../../../app/common/form/MyTextInput";
 import MyTextArea from "../../../app/common/form/MyTextArea";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
+import {toast} from "react-toastify";
+import {updateUserProfile} from "../../../app/firestore/firestoreService";
 
 const ProfileForm = ({profile}) => {
     return (
@@ -20,15 +22,23 @@ const ProfileForm = ({profile}) => {
                 validationSchema={Yup.object({
                     displayName: Yup.string().required()
                 })}
-                onSubmit={(values) => (
-                    console.log(values)
-                )}
+                // we use async to able to loading(setSubmitting)
+                onSubmit={async (values, {setSubmitting}) => {
+                    try {
+                        await updateUserProfile(values)
+                    } catch (error) {
+                        toast.error(error.message)
+                    } finally {
+                        setSubmitting(false)
+                    }
+
+                }}
             >
                 {({isSubmitting, isValid, dirty}) => (
                     <ProfileFormWrapper>
                         <FormikForm className={'mt-3 py-2'}>
                             <MyTextInput name='displayName' placeholder='Display Name'/>
-                            <MyTextArea name='displayName' placeholder='Display Name'/>
+                            <MyTextArea name='description' placeholder='Description'/>
                             <Button variant='light' className='mt-3 my-blue-btn-invert ' type='submit'
                                     disabled={isSubmitting || !isValid || !dirty}>
                                 {isSubmitting ?
@@ -63,7 +73,7 @@ export default ProfileForm;
 
 const ProfileFormWrapper = styled.div`
   .my-blue-btn-invert{
-    width: 100px; 
+    width: 150px; 
   }
 
 `
