@@ -6,7 +6,7 @@ import {BsPersonFill, BsTrashFill} from "react-icons/bs";
 import Button from "react-bootstrap/Button";
 
 import Card from "react-bootstrap/Card";
-import PhotoUploadWidget from "./PhotoUploadWidget";
+import PhotoUploadWidget from "../../../app/common/photos/PhotoUploadWidget";
 
 const PhotoTab = ({profile, isCurrentUser}) => {
     const [edit, setEdit] = useState(true)
