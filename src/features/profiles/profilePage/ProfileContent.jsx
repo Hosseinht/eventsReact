@@ -12,7 +12,7 @@ const ProfileContent = ({profile, isCurrentUser}) => {
 
             <Container className='profile-content-container w-75 mt-5 my-box-shadow'>
                 <Tabs
-                    defaultActiveKey="about"
+                    defaultActiveKey="photos"
                     transition={false}
                     id="noanim-tab-example"
                     className="mb-3"

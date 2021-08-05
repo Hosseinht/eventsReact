@@ -6,9 +6,10 @@ import {BsPersonFill, BsTrashFill} from "react-icons/bs";
 import Button from "react-bootstrap/Button";
 
 import Card from "react-bootstrap/Card";
+import PhotoUploadWidget from "./PhotoUploadWidget";
 
 const PhotoTab = ({profile, isCurrentUser}) => {
-    const [edit, setEdit] = useState(false)
+    const [edit, setEdit] = useState(true)
 
     return (
         <PhotoTabWrapper>
@@ -27,7 +28,7 @@ const PhotoTab = ({profile, isCurrentUser}) => {
             </div>
             <div>
                 {edit ? (
-                    <p>Photo Widget</p>
+                    <PhotoUploadWidget/>
                 ) : (
                     <>
                         <Card className='border-0 mt-3' style={{width:'200px'}}>
