@@ -10,6 +10,7 @@ import {toast} from "react-toastify";
 import Image from "react-bootstrap/Image";
 import styled from "styled-components";
 import {BsPlus, BsPersonFill, BsPower, BsGear} from "react-icons/bs";
+import Spinner from "react-bootstrap/Spinner";
 
 //Firebase
 import {signOutFirebase} from "../../app/firestore/firebaseService";
@@ -29,7 +30,7 @@ const SignedInMenu = () => {
             toast.error(error.message)
         }
     }
-    // if (!currentUserProfile )  return <Spinner animation={"grow"} size={'sm'}/>
+    if (!currentUserProfile )  return <Spinner animation={"grow"} size={'sm'}/>
     return (
         <SignedinMenuWrapper>
 
@@ -79,17 +80,3 @@ const SignedinMenuWrapper = styled.div`
     }
 `
 
-
-//
-// <div>
-//             <Menu.Item position='right'>
-//                 <Image avatar spaced='right' src='/assets/user.png'/>
-//                 <Dropdown pointing='top left' text="Bob">
-//                     <Dropdown.Menu>
-//                         <Dropdown.Item as={Link} to="/createEvent" text="Create Event" icon='plus'/>
-//                         <Dropdown.Item text="My Profile" icon='user'/>
-//                         <Dropdown.Item text="Sign out" icon='power'/>
-//                     </Dropdown.Menu>
-//                 </Dropdown>
-//             </Menu.Item>
-//         </div>

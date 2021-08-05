@@ -22,7 +22,7 @@ function App() {
     const {currentUserProfile} = useSelector(state => state.profile)
 
 
-    if (initialized || !currentUserProfile ) return <LoadingComponent content='Loading app...'/>
+    if (initialized ) return <LoadingComponent content='Loading app...'/>
 
     return (
         <>
