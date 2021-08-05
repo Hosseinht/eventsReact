@@ -16,7 +16,8 @@ import {signOutFirebase} from "../../app/firestore/firebaseService";
 
 
 const SignedInMenu = () => {
-    const {currentUser} = useSelector(state => state.auth)
+
+    const {currentUserProfile} = useSelector(state => state.profile)
     const history = useHistory()
 
     async function handleSignOut() {
@@ -28,16 +29,17 @@ const SignedInMenu = () => {
             toast.error(error.message)
         }
     }
-
+    // if (!currentUserProfile )  return <Spinner animation={"grow"} size={'sm'}/>
     return (
         <SignedinMenuWrapper>
-            <Image roundedCircle fluid className='user-img' src={currentUser.photoURL || '/assets/user.png'}/>
-            <NavDropdown className='nav-dropdown fs-6' title={currentUser.displayName} id="basic-nav-dropdown">
+
+            <Image roundedCircle fluid className='user-img' src={currentUserProfile.photoURL || '/assets/user.png'}/>
+            <NavDropdown className='nav-dropdown fs-6' title={currentUserProfile.displayName} id="basic-nav-dropdown">
                 <NavDropdown.Item as={Link} to='/createEvent'>
                     <BsPlus className='singin-icon' size='20px'/>
                     Create Event
                 </NavDropdown.Item>
-                <NavDropdown.Item  as={Link} to={`/profile/${currentUser.uid}`} >
+                <NavDropdown.Item  as={Link} to={`/profile/${currentUserProfile.id}`} >
                     <BsPersonFill className='singin-icon' size='20px'/>
                     My Profile
                 </NavDropdown.Item>

@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
 import {format} from 'date-fns'
 import styled from "styled-components";
-import Container from "react-bootstrap/Container";
 
 import {BsPersonFill} from "react-icons/bs";
 import Button from "react-bootstrap/Button";
 import ProfileForm from "./ProfileForm";
 
-const AboutTab = ({profile}) => {
+const AboutTab = ({profile, isCurrentUser}) => {
     const [edit, setEdit] = useState(false)
 
     return (
@@ -17,11 +16,13 @@ const AboutTab = ({profile}) => {
                     <BsPersonFill className='me-1' size='30px'/>
                     <span>About  <strong> {profile.displayName}</strong></span>
                 </div>
+                {isCurrentUser &&
                 <div className="btn-part">
                     <Button variant='light' className='my-blue-btn' onClick={() => setEdit(!edit)}>
                         {edit ? 'Cancel' : 'Edit'}
                     </Button>
                 </div>
+                }
             </div>
             <div>
                 {edit ? (

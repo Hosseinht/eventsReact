@@ -8,7 +8,7 @@ import {openModal} from "../../app/common/modals/modalReducer";
 const SignedOutMenu = () => {
     const dispatch = useDispatch()
     return (
-        <SignoutMenuWrapper>
+        <SignoutMenuWrapper className='d-flex'>
             <Button onClick={() => dispatch(openModal({modalType: 'LoginForm'}))} variant='light'
                     className='singout-btn py-2'> Login </Button>{' '}
             <Button onClick={() => dispatch(openModal({modalType: 'RegisterForm'}))} variant='outline-light' className='singout-btn py-2'> Register </Button>

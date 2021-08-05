@@ -4,8 +4,9 @@ import Tabs from 'react-bootstrap/Tabs'
 import Tab from "react-bootstrap/Tab";
 import Container from "react-bootstrap/Container";
 import AboutTab from "./AboutTab";
+import PhotoTab from "./PhotosTab";
 
-const ProfileContent = ({profile}) => {
+const ProfileContent = ({profile, isCurrentUser}) => {
     return (
         <ProfileContentWrapper className=' d-flex justify-content-center align-items-center'>
 
@@ -18,10 +19,10 @@ const ProfileContent = ({profile}) => {
                 >
 
                     <Tab eventKey="about" title="About" >
-                        <AboutTab profile={profile}/>
+                        <AboutTab profile={profile} isCurrentUser={isCurrentUser}/>
                     </Tab>
                     <Tab eventKey="photos" title="Photos">
-                        Why
+                        <PhotoTab profile={profile} isCurrentUser={isCurrentUser}/>
                     </Tab>
                     <Tab eventKey="events" title="Events">
                         HI

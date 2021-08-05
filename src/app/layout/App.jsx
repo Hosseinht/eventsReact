@@ -3,7 +3,7 @@ import '../../index.css';
 import Container from "react-bootstrap/Container";
 import EventDashboard from "../../features/events/eventDashboard/EventDashboard";
 import NavBar from "../../features/nav/NavBar";
-import {Route,useLocation} from 'react-router-dom'
+import {Route, useLocation} from 'react-router-dom'
 import HomePage from "../../features/home/HomePage";
 import EventDetailedPage from "../../features/events/eventDetail/EventDetailedPage";
 import EventForm from "../../features/events/eventForm/EventForm";
@@ -19,8 +19,10 @@ import ProfilePage from "../../features/profiles/profilePage/ProfilePage";
 function App() {
     const {key} = useLocation()
     const {initialized} = useSelector((state) => state.auth)
+    const {currentUserProfile} = useSelector(state => state.profile)
 
-    if(initialized) return <LoadingComponent content='Loading app...'/>
+
+    if (initialized || !currentUserProfile ) return <LoadingComponent content='Loading app...'/>
 
     return (
         <>
@@ -32,11 +34,11 @@ function App() {
                 <Route path='/events' exact component={EventDashboard}/>
                 <Route path='/sandbox' exact component={Sandbox}/>
                 <Route path='/events/:id' component={EventDetailedPage}/>
-                <Route path={['/createEvent', '/manage/:id']} component={EventForm} key={key} />
+                <Route path={['/createEvent', '/manage/:id']} component={EventForm} key={key}/>
                 {/*<Route path='/eventDetail' component={EventDetailedPage} />*/}
                 <Route path='/account' component={AccountPage}/>
                 <Route path='/profile/:id' component={ProfilePage}/>
-                <Route path='/error'  component={ErrorComponent}/>
+                <Route path='/error' component={ErrorComponent}/>
             </Container>
 
         </>
