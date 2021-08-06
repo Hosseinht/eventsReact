@@ -116,7 +116,7 @@ export async function updateUserProfilePhoto(downloadURL, filename) {
         // add the photo to the user photo collection inside the document
         return await db.collection('users').doc(user.uid).collection('photos').add({
             name: filename,
-            url: downloadURL 
+            url: downloadURL
         })
     } catch (error) {
         throw error
@@ -127,3 +127,19 @@ export async function updateUserProfilePhoto(downloadURL, filename) {
 export function getUserPhotos(userUid) {
     return db.collection('users').doc(userUid).collection('photos')
 }
+
+export async function setMainPhoto(photo) {
+    const user = firebase.auth().currentUser;
+    try {
+        await db.collection('users').doc(user.uid).update({
+            photoURL: photo.url
+        })
+        // update the auth part of the user profile data
+        return await user.updateProfile({
+            photoURL: photo.url
+        })
+    } catch (error) {
+        throw error
+    }
+}
+
