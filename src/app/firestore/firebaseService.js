@@ -36,7 +36,7 @@ export async function socialLogin(selectedProvider) {
     try {
         const result = await firebase.auth().signInWithPopup(provider)
         console.log(result)
-        if (result.additionalUserInfo.isNewUser){
+        if (result.additionalUserInfo.isNewUser) {
             await setUserProfileData(result.user)
         }
     } catch (error) {
@@ -50,4 +50,12 @@ export function updateUserPassword(creds) {
     // this is stored in local storage
     return user.updatePassword(creds.newPassword1)
 
+}
+
+// Upload Image
+export function uploadToFirebaseStorage(file, filename) {
+    const user = firebase.auth().currentUser;
+    const storageRef = firebase.storage().ref()
+    return storageRef.child(`${user.uid}/user_images/${filename}`).put(file)
+    // put, upload the file
 }

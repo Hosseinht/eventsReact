@@ -12,19 +12,19 @@ const PhotoUploadWidget = () => {
     const [image, setImage] = useState(null)
     return (
         <div>
-            <Row className='mt-3 '>
-                <Col lg={4} md={"auto"}>
-                    <p className='my-blue-color text-uppercase'>Step 1 - Add Photo</p>
+            <Row className='mt-5 '>
+                <Col lg={4} md={"auto"} className='d-flex flex-column justify-content-between align-items-center'>
+                    <p className='my-blue-color text-uppercase '>Step 1 - Add Photo</p>
                     <PhotoWidgetDropzone setFiles={setFiles}/>
                 </Col>
-                <Col lg={4} md={"auto"}>
-                    <p className='my-blue-color text-uppercase'>Step 2 - Resize</p>
+                <Col lg={4} md={"auto"} className='d-flex flex-column justify-content-between align-items-center'>
+                    <p className='my-blue-color text-uppercase text-start' >Step 2 - Resize</p>
                     {files.length > 0 &&
                     <PhotoWidgetCropper setImage={setImage} imagePreview={files[0].preview}/>
                     }
                 </Col>
-                <Col lg={4} md={"auto"}>
-                    <p className='my-blue-color text-uppercase'>Step 3 - Review & Upload</p>
+                <Col lg={4} md={"auto"} className='d-flex flex-column justify-content-between align-items-center'>
+                    <p className='my-blue-color text-uppercase' >Step 3 - Review & Upload</p>
                     {files.length > 0 &&
                     <>
                         <div className='img-preview' style={{minHeight: 200, minWidth: 200, overflow: 'hidden'}}/>

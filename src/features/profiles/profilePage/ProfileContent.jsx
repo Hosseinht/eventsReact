@@ -45,7 +45,7 @@ export default ProfileContent;
 
 const ProfileContentWrapper = styled.div`
   .profile-content-container{
-    min-height: 400px;
+    min-height: 500px;
   }
   .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
     color: #36bff7;
