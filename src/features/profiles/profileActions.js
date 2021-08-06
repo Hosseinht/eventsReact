@@ -1,9 +1,9 @@
-import {LISTEN_TO_CURRENT_USER_PROFILE, LISTEN_TO_SELECTED_USER_PROFILE} from "./profileConsts";
+import {LISTEN_TO_CURRENT_USER_PROFILE, LISTEN_TO_SELECTED_USER_PROFILE, LISTEN_TO_USER_PHOTOS} from "./profileConsts";
 
 
 export const listenToCurrentUserProfile = (profile) => {
     return {
-        type:LISTEN_TO_CURRENT_USER_PROFILE,
+        type: LISTEN_TO_CURRENT_USER_PROFILE,
         payload: profile
     }
 };
@@ -11,7 +11,14 @@ export const listenToCurrentUserProfile = (profile) => {
 
 export const listenToSelectedProfile = (profile) => {
     return {
-        type:LISTEN_TO_SELECTED_USER_PROFILE,
+        type: LISTEN_TO_SELECTED_USER_PROFILE,
         payload: profile
     }
 };
+
+export const listenToUserPhotos = (photos) => {
+    return {
+        type: LISTEN_TO_USER_PHOTOS,
+        payload: photos
+    }
+}
