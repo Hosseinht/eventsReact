@@ -8,11 +8,12 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import PhotoUploadWidget from "../../../app/common/photos/PhotoUploadWidget";
 import useFirestoreCollection from "../../../app/hooks/useFirestoreCollection";
-import {getUserPhotos, setMainPhoto} from "../../../app/firestore/firestoreService";
+import {deletePhotosFromCollection, getUserPhotos, setMainPhoto} from "../../../app/firestore/firestoreService";
 import {useDispatch, useSelector} from "react-redux";
 import {listenToUserPhotos} from "../profileActions";
 import Spinner from "react-bootstrap/cjs/Spinner";
 import {toast} from "react-toastify";
+import {deleteFromFirebaseStorage} from "../../../app/firestore/firebaseService";
 
 const PhotoTab = ({profile, isCurrentUser}) => {
     const dispatch = useDispatch()
@@ -20,6 +21,7 @@ const PhotoTab = ({profile, isCurrentUser}) => {
     const {loading} = useSelector(state => state.async)
     const {photos} = useSelector(state => state.profile)
     const [updating, setUpdating] = useState({isUpdating: false, target: null})
+    const [deleting, setDeleting] = useState({isDeleting: false, target: null})
 
     useFirestoreCollection({
         query: () => getUserPhotos(profile.id),
@@ -36,6 +38,18 @@ const PhotoTab = ({profile, isCurrentUser}) => {
             toast.error(error.message)
         } finally {
             setUpdating({isUpdating: false, target: null})
+        }
+    }
+
+    async function handleDeletePhoto(photo, target) {
+        setDeleting({isDeleting: true, target})
+        try {
+            await deleteFromFirebaseStorage(photo.name)
+            await deletePhotosFromCollection(photo.id)
+        } catch (error) {
+            toast.error(error.message)
+        } finally {
+            setDeleting({isDeleting: false, target: null})
         }
     }
 
@@ -66,17 +80,34 @@ const PhotoTab = ({profile, isCurrentUser}) => {
                                         <Card.Img fluid src={photo.url}/>
                                         <Card.Body className='ms-1 mt-1 p-0'>
                                             {/*callback func because we need photo as a parameter*/}
-                                            <Button onClick={(e) => handleSetMainPhoto(photo, e.target.name)}
-                                                    variant='light'
-                                                    className='my-blue-btn-invert' name={photo.id}>
+                                            <Button
+                                                onClick={(e) => handleSetMainPhoto(photo, e.target.name)}
+                                                disabled={photo.url === profile.photoURL}
+                                                variant='light'
+                                                className='my-blue-btn-invert'
+                                                name={photo.id}>
                                                 {updating.isUpdating && updating.target === photo.id ?
                                                     <Spinner className='photos-spinner-btn' size='sm'
                                                              animation='border'/> :
                                                     "Main"
                                                 }
                                             </Button>{' '}
-                                            <Button variant='light'
-                                                    className='my-red-btn-inverted '><BsTrashFill/></Button>
+                                            <Button
+                                                onClick={(e) => handleDeletePhoto(photo, e.target.name)}
+                                                disabled={photo.url === profile.photoURL}
+                                                variant='light'
+                                                className='my-red-btn-inverted '
+                                                name={photo.id}>
+                                                {deleting.isDeleting && deleting.target === photo.id ?
+                                                    <div>
+                                                        <Spinner className='photos-spinner-btn' size='sm'
+                                                                 animation='border'/>
+                                                    </div>
+                                                    :
+                                                    <BsTrashFill/>
+                                                }
+
+                                            </Button>
                                         </Card.Body>
                                     </Card>
                                 ))}

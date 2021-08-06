@@ -59,3 +59,12 @@ export function uploadToFirebaseStorage(file, filename) {
     return storageRef.child(`${user.uid}/user_images/${filename}`).put(file)
     // put, upload the file
 }
+
+export function deleteFromFirebaseStorage(filename) {
+    const userUid = firebase.auth().currentUser.uid;
+    const storageRef = firebase.storage().ref()
+    // get a reference to the individual photo itself
+    const photoRef = storageRef.child(`${userUid}/user_images/${filename}`)
+    return photoRef.delete()
+    // this part delete from storage but we need to delete from the firebase database. Next:firestoreServices
+}

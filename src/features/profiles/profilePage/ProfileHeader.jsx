@@ -13,7 +13,10 @@ const ProfileHeader = ({profile, isCurrentUser}) => {
                 <Card
                     className='border-0 profile-header-card d-flex flex-wrap justify-content-between align-items-center flex-lg-row flex-sm-column'>
                     <div>
+
                         <Image className='profile-img p-2' rounded fluid src={profile.photoURL || '/assets/user.png'}/>
+
+
                     </div>
                     <div className='d-flex justify-content-center align-items-center flex-column w-50 p-2'>
                         <h4>{profile.displayName}</h4>
