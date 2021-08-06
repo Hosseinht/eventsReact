@@ -116,7 +116,7 @@ export async function updateUserProfilePhoto(downloadURL, filename) {
         // add the photo to the user photo collection inside the document
         return await db.collection('users').doc(user.uid).collection('photos').add({
             name: filename,
-            url: downloadURL
+            url: downloadURL 
         })
     } catch (error) {
         throw error

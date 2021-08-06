@@ -22,7 +22,7 @@ const ProfilePage = ({match}) => {
         deps: [dispatch, match.params.id],
 
     })
-    if ((loading && !selectedUserProfile) || (!selectedUserProfile && !error)) return <LoadingComponent/>
+    if ((loading && !selectedUserProfile) || (!currentUser) || (!selectedUserProfile && !error)) return <LoadingComponent/>
 
     return (
         <Container>

@@ -28,7 +28,7 @@ const PhotoTab = ({profile, isCurrentUser}) => {
             </div>
             <div>
                 {edit ? (
-                    <PhotoUploadWidget/>
+                    <PhotoUploadWidget setEdit={setEdit}/>
                 ) : (
                     <>
                         <Card className='border-0 mt-3' style={{width:'200px'}}>
