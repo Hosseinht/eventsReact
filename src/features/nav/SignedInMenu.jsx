@@ -30,17 +30,17 @@ const SignedInMenu = () => {
             toast.error(error.message)
         }
     }
-    if (!currentUserProfile )  return <Spinner animation={"grow"} size={'sm'}/>
+    // if (!currentUserProfile )  return <Spinner animation={"grow"} size={'sm'}/>
     return (
         <SignedinMenuWrapper>
 
-            <Image roundedCircle fluid className='user-img' src={currentUserProfile.photoURL || '/assets/user.png'}/>
-            <NavDropdown className='nav-dropdown fs-6' title={currentUserProfile.displayName} id="basic-nav-dropdown">
+            <Image roundedCircle fluid className='user-img' src={currentUserProfile?.photoURL || '/assets/user.png'}/>
+            <NavDropdown className='nav-dropdown fs-6' title={currentUserProfile?.displayName} id="basic-nav-dropdown">
                 <NavDropdown.Item as={Link} to='/createEvent'>
                     <BsPlus className='singin-icon' size='20px'/>
                     Create Event
                 </NavDropdown.Item>
-                <NavDropdown.Item  as={Link} to={`/profile/${currentUserProfile.id}`} >
+                <NavDropdown.Item  as={Link} to={`/profile/${currentUserProfile?.id}`} >
                     <BsPersonFill className='singin-icon' size='20px'/>
                     My Profile
                 </NavDropdown.Item>

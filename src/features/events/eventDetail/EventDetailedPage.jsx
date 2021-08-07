@@ -24,15 +24,19 @@ import LoadingComponent from "../../../app/layout/LoadingComponents";
 const EventDetailedPage = ({match}) => {
     const dispatch = useDispatch()
     //match allows us to access to params(id)
+    const {currentUser} = useSelector(state => state.auth)
     const event = useSelector((state) => state.event.events.find(e => e.id === match.params.id))
     // event is the reducer and events is property for events that we're storing our events. initialState{events:sampleData}
 
     const {loading, error} = useSelector((state) => state.async)
+    const isHost = event?.hostUid === currentUser?.uid;
+    const isGoing = event?.attendees?.some(a => a.id === currentUser?.uid)
+    // It will tell us if the currentuser is in the attendees list
 
     useFirestoreDoc({
         query: () => listenToEventFromFirestore(match.params.id),
         data: (event) => dispatch(listenToEvents([event])),
-        deps:[match.params.id, dispatch]
+        deps: [match.params.id, dispatch]
         // when the eventId(match.params.id) changes rerun the use effect
     })
 
@@ -44,7 +48,7 @@ const EventDetailedPage = ({match}) => {
             <Container>
                 <Row>
                     <Col md={"auto"} lg={6}>
-                        <EventDetailedHeader event={event}/>
+                        <EventDetailedHeader isHost={isHost} isGoing={isGoing} event={event}/>
                         <EventDetailedInfo event={event}/>
                         <EventDetailedChat/>
 

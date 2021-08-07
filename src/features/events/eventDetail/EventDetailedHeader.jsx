@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 import {Link} from "react-router-dom";
 
 
-const EventDetailedHeader = ({event}) => {
+const EventDetailedHeader = ({event, isHost, isGoing}) => {
     return (
         <EventDetailedHeaderWrapper>
             <div className='fixedoverlay'>
@@ -26,17 +26,24 @@ const EventDetailedHeader = ({event}) => {
             </div>
 
             <div className="header-btn-part">
+                {!isHost &&
                 <div className="header-btn-group">
-                    <div className="header-cancel-btn">
-                        <Button variant={'light'}> Cancel My Place</Button>
-                    </div>
-                    <div className="header-join-btn">
-                        <Button variant={'light'}>JOIN THIS EVENT</Button>
-                    </div>
+                    {isGoing ?
+                        <div className="header-cancel-btn">
+                            <Button variant={'light'}> Cancel My Place</Button>
+                        </div>
+                        :
+                        <div className="header-join-btn">
+                            <Button variant={'light'}>JOIN THIS EVENT</Button>
+                        </div>
+                    }
                 </div>
-                <div className="header-event-btn">
+                }
+                {isHost &&
+                <div className="header-event-btn ms-auto">
                     <Button as={Link} to={`/manage/${event.id}`} variant={'light'}>Manage Event</Button>
                 </div>
+                }
             </div>
         </EventDetailedHeaderWrapper>
     );
@@ -75,6 +82,17 @@ const EventDetailedHeaderWrapper = styled.div`
   .header-cancel-btn {
     margin-right: 5px;
     box-shadow: none ;
+   
+  }
+  .header-event-btn {
+  .btn{
+    background-color: #f7de62;
+    color: #282828;
+  }
+  .btn:hover{
+    background-color: #fad932;
+    color: #282828;
+  }
    
   }
 

@@ -28,6 +28,7 @@ const ProfilePage = ({match}) => {
         <Container>
             <Row>
                 <Col>
+                    {/*{currentUser && }*/}
                     <ProfileHeader profile={selectedUserProfile}
                                    isCurrentUser={currentUser.uid === selectedUserProfile.id}/>
                     <ProfileContent profile={selectedUserProfile}  isCurrentUser={currentUser.uid === selectedUserProfile.id}/>
