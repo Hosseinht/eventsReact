@@ -5,7 +5,7 @@ import {format} from "date-fns";
 import Image from "react-bootstrap/cjs/Image";
 import Button from "react-bootstrap/Button";
 import {Link} from "react-router-dom";
-import {addUserAttendance} from "../../../app/firestore/firestoreService";
+import {addUserAttendance, cancelUserAttendance} from "../../../app/firestore/firestoreService";
 import {toast} from "react-toastify";
 import Spinner from "react-bootstrap/cjs/Spinner";
 
@@ -23,6 +23,18 @@ const EventDetailedHeader = ({event, isHost, isGoing}) => {
             setLoading(false)
         }
     }
+
+    async function handleUserLeaveEvent() {
+        setLoading(true)
+        try {
+            await cancelUserAttendance(event)
+        } catch (error) {
+            toast.error(error.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
 
     return (
         <EventDetailedHeaderWrapper>
@@ -46,16 +58,26 @@ const EventDetailedHeader = ({event, isHost, isGoing}) => {
                 <div className="header-btn-group">
                     {isGoing ?
                         <div className="header-cancel-btn">
-                            <Button variant={'light'}> Cancel My Place</Button>
+                            <Button
+                                onClick={handleUserLeaveEvent}
+                                variant={'light'}
+                                className='my-red-btn-inverted'
+                            >
+                                {loading ? <Spinner className='photos-spinner' animation="border" size="sm"/> :
+                                    "Cancel My Place"
+                                }
+
+                            </Button>
                         </div>
                         :
                         <div className="header-join-btn">
                             <Button
                                 onClick={handleUserJoinEvent}
                                 variant={'light'}
+                                className='my-blue-btn-invert'
                             >
-                                {loading ?  <Spinner className='photos-spinner' animation='grow'/> :
-                                "JOIN THIS EVENT"
+                                {loading ? <Spinner className='photos-spinner' animation="border" size="sm"/> :
+                                    "JOIN THIS EVENT"
                                 }
 
                             </Button>
@@ -103,10 +125,18 @@ const EventDetailedHeaderWrapper = styled.div`
     display: flex;
     
   }
+  .header-join-btn{
+    .btn {
+      min-width: 130px;
+    }
+  }
   .header-cancel-btn {
     margin-right: 5px;
     box-shadow: none ;
-   
+    .btn {
+      min-width: 130px;
+    }
+    
   }
   .header-event-btn {
   .btn{

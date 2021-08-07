@@ -166,5 +166,20 @@ export function addUserAttendance(event) {
         // in firestore we can't query an array of objects
 
         attendeeIds: firebase.firestore.FieldValue.arrayUnion(user.uid)
-    }) 
+    })
+}
+
+// because we need to get an event document we're going to need to make this an asysnc function
+export async function cancelUserAttendance(event) {
+    const user = firebase.auth().currentUser
+    try {
+        const eventDoc = await db.collection('events').doc(event.id).get()
+            return db.collection('events').doc(event.id).update({
+            attendeeIds:firebase.firestore.FieldValue.arrayRemove(user.uid),
+            attendees: eventDoc.data().attendees.filter(attendee => attendee.id !== user.uid)
+                //all the attendees apart from current user
+        })
+    }catch (error) {
+        throw error
+    }
 }
