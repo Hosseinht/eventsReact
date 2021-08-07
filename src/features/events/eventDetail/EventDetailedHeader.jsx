@@ -1,13 +1,29 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import {format} from "date-fns";
 //Bootstrap
 import Image from "react-bootstrap/cjs/Image";
 import Button from "react-bootstrap/Button";
 import {Link} from "react-router-dom";
+import {addUserAttendance} from "../../../app/firestore/firestoreService";
+import {toast} from "react-toastify";
+import Spinner from "react-bootstrap/cjs/Spinner";
 
 
 const EventDetailedHeader = ({event, isHost, isGoing}) => {
+    const [loading, setLoading] = useState(false)
+
+    async function handleUserJoinEvent() {
+        setLoading(true)
+        try {
+            await addUserAttendance(event)
+        } catch (error) {
+            toast.error(error.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
     return (
         <EventDetailedHeaderWrapper>
             <div className='fixedoverlay'>
@@ -34,7 +50,15 @@ const EventDetailedHeader = ({event, isHost, isGoing}) => {
                         </div>
                         :
                         <div className="header-join-btn">
-                            <Button variant={'light'}>JOIN THIS EVENT</Button>
+                            <Button
+                                onClick={handleUserJoinEvent}
+                                variant={'light'}
+                            >
+                                {loading ?  <Spinner className='photos-spinner' animation='grow'/> :
+                                "JOIN THIS EVENT"
+                                }
+
+                            </Button>
                         </div>
                     }
                 </div>
