@@ -41,15 +41,22 @@ export function listenToEventFromFirestore(eventId) {
 }
 
 export function addEventToFirestore(event) {
+    const user = firebase.auth().currentUser
     return db.collection('events').add({
         ...event,
-        hostedBy: 'Jane',
-        hostPhotoURL: 'https://randomuser.me/api/portraits/women/21.jpg',
+        hostUid: user.uid,
+        hostedBy: user.displayName,
+        hostPhotoURL: user.photoURL || null,
         attendees: firebase.firestore.FieldValue.arrayUnion({
-            id: cuid(),
-            displayName: 'Jane',
-            photoURL: 'https://randomuser.me/api/portraits/women/21.jpg',
-        })
+            id: user.uid,
+            displayName: user.displayName,
+            photoURL: user.photoURL || null
+        }),
+        // in firestore we can't query an array of objects
+
+        attendeeIds: firebase.firestore.FieldValue.arrayUnion(user.uid)
+        // now we are able to query so that we can find which vents are user with that specific uid is attending
+        // we just can query simple string base arrays in Firestore
     })
 }
 
