@@ -5,6 +5,7 @@ import Tab from "react-bootstrap/Tab";
 import Container from "react-bootstrap/Container";
 import AboutTab from "./AboutTab";
 import PhotoTab from "./PhotosTab";
+import EventsTab from "./EventsTab";
 
 const ProfileContent = ({profile, isCurrentUser}) => {
     return (
@@ -12,10 +13,11 @@ const ProfileContent = ({profile, isCurrentUser}) => {
 
             <Container className='profile-content-container w-75 mt-5 my-box-shadow'>
                 <Tabs
-                    defaultActiveKey="about"
+                    defaultActiveKey="events"
                     transition={false}
                     id="noanim-tab-example"
                     className="mb-3"
+
                 >
 
                     <Tab eventKey="about" title="About" >
@@ -25,7 +27,7 @@ const ProfileContent = ({profile, isCurrentUser}) => {
                         <PhotoTab profile={profile} isCurrentUser={isCurrentUser}/>
                     </Tab>
                     <Tab eventKey="events" title="Events">
-                        HI
+                       <EventsTab/>
                     </Tab>
                     <Tab eventKey="followers" title="Followers">
                         HI
