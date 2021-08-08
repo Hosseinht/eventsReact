@@ -3,12 +3,13 @@ import styled from "styled-components";
 import {FaFilter} from "react-icons/fa";
 import {BsFillCalendarFill} from "react-icons/bs"
 import {Calendar} from "react-calendar";
+import ListGroup from "react-bootstrap/ListGroup";
 
-const EventFilters = () => {
+const EventFilters = ({predicate, setPredicate, loading}) => {
     return (
         <>
             <EventFiltersWrapper className='mt-5'>
-                <div className="filter-part d-flex align-items-center my-red-color">
+                <div className="filter-part d-flex align-items-center my-blue-color">
                     <div>
                         <FaFilter/>
                     </div>
@@ -16,20 +17,35 @@ const EventFilters = () => {
                         Filters
                     </div>
                 </div>
-                <div className="filter-part-content border-top">
-                    <div>
+                <ListGroup variant='flush' className="filter-part-content border-top">
+                    <ListGroup.Item
+                        className=' border-0'
+                        active={predicate.get('filter') === 'all'}
+                        onClick={() => setPredicate('filter', "all")}
+                        disabled={loading}
+                    >
                         All Events
-                    </div>
-                    <div className='mt-3'>
+                    </ListGroup.Item>
+                    <ListGroup.Item
+                        className='mt-3 border-0'
+                        active={predicate.get('filter') === 'a'}
+                        onClick={() => setPredicate('filter', "a")}
+                        disabled={loading}
+                    >
                         I'm Going
-                    </div>
-                    <div className='mt-3'>
+                    </ListGroup.Item>
+                    <ListGroup.Item
+                        className='mt-3 border-0'
+                        active={predicate.get('filter') === 'isHosting'}
+                        onClick={() => setPredicate('filter', "isHosting")}
+                        disabled={loading}
+                    >
                         I'm Hosting
-                    </div>
-                </div>
+                    </ListGroup.Item>
+                </ListGroup>
             </EventFiltersWrapper>
             <EventFiltersDateWrapper>
-                <div className="date-part my-box-shadow d-flex align-items-center mt-5 my-red-color">
+                <div className="date-part my-box-shadow d-flex align-items-center mt-5 my-blue-color">
                     <div>
                         <BsFillCalendarFill/>
                     </div>
@@ -37,7 +53,13 @@ const EventFilters = () => {
                         Select Date
                     </div>
                 </div>
-                <Calendar className='calendar-part my-box-shadow'/>
+                <Calendar
+                    onChange={date => setPredicate('startDate', date)}
+                    value={predicate.get('startDate') || new Date()}
+                    tileDisabled={() => loading}
+                    className='calendar-part my-box-shadow'
+                />
+                {/*date= date that's been selected*/}
             </EventFiltersDateWrapper>
 
         </>
@@ -54,6 +76,13 @@ const EventFiltersWrapper = styled.div`
     }
     .filter-part-content {
       padding: 10px;
+    }
+    .list-group-item.active{
+      background-color: white;
+      //border-color: #36bff7;
+      color: #36bff7;
+      border: none;
+      border-top: none;
     }
  
 `

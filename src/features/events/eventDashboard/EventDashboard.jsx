@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import EventList from "./EventList";
 import EventFilters from "./EventFilter";
 import {useDispatch, useSelector} from "react-redux";
@@ -23,6 +23,15 @@ const EventDashboard = () => {
     // event is the reducer and events is property for events that we're storing our events. initialState{events:sampleData}
     const {loading} = useSelector(state => state.async)
 
+    // Map: a javascript object that allows us to use certain methods. and get and set different elements in the map
+    const [predicate, setPredicate] = useState(new Map([
+        ['startDate', new Date()],
+        ['filter', 'all']
+    ]))
+
+    function handleSetPredicate(key, value){
+        setPredicate(new Map(predicate.set(key, value)))
+    }
 
     useFirestoreCollection({
         query: () => listenToEventsFromFirestore(),
@@ -46,7 +55,7 @@ const EventDashboard = () => {
                     />
                 </Col>
                 <Col lg={4} md={"auto"}>
-                    <EventFilters/>
+                    <EventFilters predicate={predicate} setPredicate={handleSetPredicate} loading={loading}/>
                 </Col>
             </Row>
         </Container>
