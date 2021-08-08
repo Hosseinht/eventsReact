@@ -202,3 +202,23 @@ export async function cancelUserAttendance(event) {
         throw error
     }
 }
+
+export async function getUserEventQuery(activeTab, userUid) {
+    let eventsRef = db.collection('events')
+    const today = new Date()
+    switch (activeTab) {
+        case 'past events':
+            return eventsRef
+                .where('attendeeIds', 'array-contains', userUid)
+                .where('date', '<=', today)
+                .orderBy('date', 'desc')
+        case 'hosting':
+            return eventsRef
+                .where('hostUid', '==', userUid)
+                .orderBy('date')
+        default:
+            return eventsRef
+                .where('attendeeIds', 'array-contains', userUid)
+                .orderBy('date')
+    }
+}

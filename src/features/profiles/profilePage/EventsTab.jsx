@@ -15,7 +15,7 @@ import Card from "react-bootstrap/Card";
 import Spinner from "react-bootstrap/cjs/Spinner";
 
 const EventsTab = ({profile, isCurrentUser}) => {
-    const [activeTab, setactiveTab] = useState(false)
+    const [activeTab, setactiveTab] = useState("future events")
 
     return (
         <EventTabWrapper>
@@ -28,16 +28,16 @@ const EventsTab = ({profile, isCurrentUser}) => {
 
             <div className='  mt-5 w-100 '>
                 <Tabs
-                    defaultActiveKey="about"
+                    defaultActiveKey={activeTab}
                     transition={false}
                     id="noanim-tab-example"
-                    className="mb-3 border-0 w-100 "
+                    className="mb-3 border-0 w-100 d-flex justify-content-center"
                     variant='pills'
 
                 >
                         <Tab tabClassName=' me-5' eventKey="future events" title="Future Events">
                             <div className='d-flex justify-content-start align-items-center flex-wrap '>
-                                <Card className='border-0 mt-5 me-3 mb-3' style={{width: '200px'}}>
+                                <Card className='border-0 ms-auto me-auto mt-5  mb-3' style={{width: '200px'}}>
                                     <Card.Img fluid src='/assets/categoryImages/drinks.jpg'/>
                                     <Card.Body className='ms-1 mt-1 p-0 d-flex flex-column align-items-center'>
                                         <span className='r'><strong>Title</strong></span>
@@ -45,26 +45,24 @@ const EventsTab = ({profile, isCurrentUser}) => {
                                         <div>Time</div>
                                     </Card.Body>
                                 </Card>
-
                             </div>
                         </Tab>
                         <Tab tabClassName=' me-5' eventKey="past events" title="Past Events">
                             <div className='d-flex justify-content-start align-items-center flex-wrap '>
-                                <Card className='border-0 mt-5 me-3 mb-3' style={{width: '200px'}}>
+                                <Card className='border-0 ms-auto me-auto mt-5  mb-3' style={{width: '200px'}}>
                                     <Card.Img fluid src='/assets/categoryImages/drinks.jpg'/>
                                     <Card.Body className='ms-1 mt-1 p-0 d-flex flex-column align-items-center'>
                                         <span className='r'><strong>Title</strong></span>
-                                        <div>Date</div>
+                                        <div>Dateaa</div>
                                         <div>Time</div>
                                     </Card.Body>
                                 </Card>
-
-                            </div>n
+                            </div>
                         </Tab>
                         <Tab tabClassName=' me-5' eventKey="hosting" title="Hosting">
                             <div className='d-flex justify-content-start align-items-center flex-wrap '>
-                                <Card className='border-0 mt-5 me-3 mb-3' style={{width: '200px'}}>
-                                    <Card.Img fluid src='/assets/categoryImages/drinks.jpg'/>
+                                <Card className='border-0 mt-5 ms-auto me-auto mb-3' style={{width: '200px'}}>
+                                    <Card.Img as='img' style={{width: '200px'}} fluid src='/assets/categoryImages/drinks.jpg'/>
                                     <Card.Body className='ms-1 mt-1 p-0 d-flex flex-column align-items-center'>
                                         <span className='r'><strong>Title</strong></span>
                                         <div>Date</div>
