@@ -105,7 +105,9 @@ body {
     width: 100%;
     border: none;
 }
-
+a {
+    text-decoration: none;
+}
 /*.loginbtn {*/
 /*  background-color: #ed7966 !important;*/
 /*}*/

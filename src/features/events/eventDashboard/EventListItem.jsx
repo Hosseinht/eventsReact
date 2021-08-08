@@ -12,7 +12,6 @@ import {Link} from "react-router-dom";
 import {deleteEventInFirestore} from "../../../app/firestore/firestoreService";
 
 
-
 const EventListitem = ({event}) => {
 
 
@@ -26,8 +25,12 @@ const EventListitem = ({event}) => {
                     <div className="event-title">
                         <h3>{event.title}</h3>
                     </div>
-                    <div className="user-name">
-                        <p>{event.hostedBy}</p>
+                    <div className="user-name d-flex">
+                        Hosted by
+                        <Link className='ms-1' to={`/profile/${event.hostUid}`}>
+                            <p>{event.hostedBy}</p>
+                        </Link>
+
                     </div>
                 </div>
 
@@ -42,15 +45,15 @@ const EventListitem = ({event}) => {
             )}
 
 
-            <div className="middle-part">
-                <div className="middle-part-date">
-                    <BsFillClockFill size='15px' className='middle-part-icon'/>
+            <div className="d-flex flex-wrap">
+                <div className="d-flex align-items-center">
+                    <BsFillClockFill size='15px' className='me-1'/>
                     <div className="date">
                         {format(event.date, 'MMMM d, yyyy h:mm a')}
                     </div>
                 </div>
-                <div className="middle-part-venue ">
-                    <BsGeoAlt size='15px' className='middle-part-icon'/>
+                <div className="d-flex align-items-center mt-lg-0 mt-sm-2  mt-md-2">
+                    <BsGeoAlt size='15px' className='me-1'/>
                     <div className="venue">
                         {event.venue.address}
                     </div>
@@ -58,7 +61,7 @@ const EventListitem = ({event}) => {
             </div>
             <div className="attendee-part">
                 {event.attendees.map(attendee => (
-                    <EventListAttendee attende={attendee} key={attendee.id}/>
+                    <EventListAttendee attendee={attendee} key={attendee.id}/>
                 ))}
             </div>
             <div className="bottom-part">

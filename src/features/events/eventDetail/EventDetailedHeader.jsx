@@ -48,7 +48,8 @@ const EventDetailedHeader = ({event, isHost, isGoing}) => {
                         <p>{format(event.date, 'MMMM d, yyyy h:mm a')}</p>
                     </div>
                     <div className="content-title-host">
-                        <p className='fs-6'>Hosted by <strong> {event.hostedBy}</strong></p>
+                        <p className='fs-6'>Hosted by <strong className=' host-text'><Link
+                            to={`/profile/${event.hostUid}`}>{event.hostedBy}</Link></strong></p>
                     </div>
                 </div>
             </div>
@@ -149,5 +150,10 @@ const EventDetailedHeaderWrapper = styled.div`
   }
    
   }
-
+  .host-text{
+    a{
+      color: #f1f1f1;
+    }
+    
+  }
 `
