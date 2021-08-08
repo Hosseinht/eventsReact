@@ -34,9 +34,9 @@ const EventDashboard = () => {
     }
 
     useFirestoreCollection({
-        query: () => listenToEventsFromFirestore(),
+        query: () => listenToEventsFromFirestore(predicate),
         data: events => dispatch(listenToEvents(events)),
-        deps: [dispatch]
+        deps: [dispatch, predicate]
     })
 
     return (

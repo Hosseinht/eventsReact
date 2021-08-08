@@ -30,9 +30,28 @@ export function dataFromSnapshot(snapshot) {
 }
 
 
-const listenToEventsFromFirestore = () => {
-    return db.collection('events').orderBy('date');
-    // get or listen to data. here we listen
+const listenToEventsFromFirestore = (predicate) => {
+    const user = firebase.auth().currentUser;
+    let eventsRef = db.collection('events').orderBy('date');
+
+    switch (predicate.get('filter')) {
+        case 'isGoing':
+            return eventsRef
+                // specify queries
+                //if the user going to event
+                //array-contains: get the user or the event that currently logged in user is present in the attendeeIds of this particular event
+                // user.uid is what is we are looking for
+                .where('attendeeIds', "array-contains", user.uid)
+                .where('date', '>=', predicate.get('startDate'))
+        // where then we specify the field that we wat to query on
+        case 'isHosting':
+            return eventsRef
+                .where('hostUid', '==', user.uid)
+                .where('date', '>=', predicate.get('startDate'))
+        default:
+            return eventsRef
+                .where('date', '>=', predicate.get('startDate'))
+    }
 };
 export default listenToEventsFromFirestore;
 
@@ -174,12 +193,12 @@ export async function cancelUserAttendance(event) {
     const user = firebase.auth().currentUser
     try {
         const eventDoc = await db.collection('events').doc(event.id).get()
-            return db.collection('events').doc(event.id).update({
-            attendeeIds:firebase.firestore.FieldValue.arrayRemove(user.uid),
+        return db.collection('events').doc(event.id).update({
+            attendeeIds: firebase.firestore.FieldValue.arrayRemove(user.uid),
             attendees: eventDoc.data().attendees.filter(attendee => attendee.id !== user.uid)
-                //all the attendees apart from current user
+            //all the attendees apart from current user
         })
-    }catch (error) {
+    } catch (error) {
         throw error
     }
 }

@@ -20,6 +20,7 @@ export const asyncActionFinish = () => {
 };
 
 export const asyncActionError = (error) => {
+    console.log(error)
     return {
         type: ASYNC_ACTION_ERROR,
         payload: error

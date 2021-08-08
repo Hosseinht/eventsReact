@@ -9,11 +9,11 @@ const EventFilters = ({predicate, setPredicate, loading}) => {
     return (
         <>
             <EventFiltersWrapper className='mt-5'>
-                <div className="filter-part d-flex align-items-center my-blue-color">
+                <div className="filter-part d-flex align-items-center my-blue-color ms-2">
                     <div>
                         <FaFilter/>
                     </div>
-                    <div className='ms-2'>
+                    <div className='ms-2 mt-1 '>
                         Filters
                     </div>
                 </div>
@@ -28,8 +28,8 @@ const EventFilters = ({predicate, setPredicate, loading}) => {
                     </ListGroup.Item>
                     <ListGroup.Item
                         className='mt-3 border-0'
-                        active={predicate.get('filter') === 'a'}
-                        onClick={() => setPredicate('filter', "a")}
+                        active={predicate.get('filter') === 'isGoing'}
+                        onClick={() => setPredicate('filter', "isGoing")}
                         disabled={loading}
                     >
                         I'm Going
@@ -49,7 +49,7 @@ const EventFilters = ({predicate, setPredicate, loading}) => {
                     <div>
                         <BsFillCalendarFill/>
                     </div>
-                    <div className='ms-2'>
+                    <div className='ms-2 mt-1'>
                         Select Date
                     </div>
                 </div>
