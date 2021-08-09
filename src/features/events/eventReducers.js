@@ -1,9 +1,9 @@
-
-import {CREATE_EVENT, DELETE_EVENT, FETCH_EVENTS, UPDATE_EVENT} from "./eventConstant";
+import {CREATE_EVENT, DELETE_EVENT, FETCH_EVENTS, LISTEN_TO_EVENT_CHAT, UPDATE_EVENT} from "./eventConstant";
 
 
 const initialState = {
-    events: []
+    events: [],
+    comments: []
 }
 
 // action = {type, payload}. we simply remove action. .
@@ -24,7 +24,7 @@ export const eventReducer = (state = initialState, {type, payload}) => {
         case DELETE_EVENT:
             return {
                 ...state,
-                 events: [...state.events.filter(evt => evt.id !== payload)]
+                events: [...state.events.filter(evt => evt.id !== payload)]
                 // payload here is eventId in action.so we don't use payload.id
                 // اگه یکی نیستن فیلترش کن
             }
@@ -34,6 +34,11 @@ export const eventReducer = (state = initialState, {type, payload}) => {
                 // events: [...payload]
                 // events are array anyway so we don't need to spread this action so:
                 events: payload
+            }
+        case LISTEN_TO_EVENT_CHAT:
+            return {
+                ...state,
+                comments: payload
             }
         default:
             return state

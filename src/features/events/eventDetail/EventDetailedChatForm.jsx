@@ -1,15 +1,27 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Formik, Form as FormikForm} from 'formik';
 import {toast} from "react-toastify";
-import {addEventChatComment} from "../../../app/firestore/firebaseService";
+import {addEventChatComment, firebaseObjectToArray, getEventChatRef} from "../../../app/firestore/firebaseService";
 import MyTextArea from "../../../app/common/form/MyTextArea";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/cjs/Spinner";
 import {FaRegEdit} from "react-icons/fa";
 // Styled Component
 import styled from "styled-components";
+import {useDispatch, useSelector} from "react-redux";
+import {listenToEventChat} from "../eventActions";
 
 const EventDetailedChatForm = ({eventId}) => {
+    const dispatch = useDispatch()
+    const {comments} = useSelector((state) => state.event)
+
+    useEffect(() => {
+        getEventChatRef(eventId).on('value', snapshot => {
+            if (!snapshot.exists()) return;
+           dispatch(listenToEventChat(firebaseObjectToArray(snapshot.val())))
+        })
+    },[eventId, dispatch])
+
     return (
         <Formik
             initialValues={{comment: ''}}

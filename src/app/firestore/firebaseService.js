@@ -2,6 +2,13 @@ import firebase from "../config/firebase";
 import {setUserProfileData} from "./firestoreService";
 import {toast} from "react-toastify";
 
+export function firebaseObjectToArray(snapshot) {
+    if (snapshot) {
+        // entries return an array of key/value
+        return Object.entries(snapshot).map(e => Object.assign({}, e[1], {id: e[0]}))
+        //assign: we are going to make a new object of each elements in the array
+    }
+}
 
 export function signInWithEmail(creds) {
     return firebase.auth().signInWithEmailAndPassword(creds.email, creds.password);
@@ -80,4 +87,8 @@ export function addEventChatComment(eventId, comment) {
         date: Date.now()
     }
     return firebase.database().ref(`chat/${eventId}`).push(newComment)
+}
+
+export function getEventChatRef(eventId) {
+    return firebase.database().ref(`chat/${eventId}`).orderByKey()
 }
