@@ -19,7 +19,7 @@ import ProfilePage from "../../features/profiles/profilePage/ProfilePage";
 function App() {
     const {key} = useLocation()
     const {initialized} = useSelector((state) => state.auth)
-    const {currentUserProfile} = useSelector(state => state.profile)
+    // const {currentUserProfile} = useSelector(state => state.profile)
 
 
     if (initialized ) return <LoadingComponent content='Loading app...'/>

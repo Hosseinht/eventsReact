@@ -76,8 +76,8 @@ const PhotoTab = ({profile, isCurrentUser}) => {
                         ) : (
                             <div className='d-flex justify-content-center align-items-center flex-wrap '>
                                 {photos.map((photo) => (
-                                    <Card className='border-0 mt-5 me-3 mb-3' style={{width: '200px'}}>
-                                        <Card.Img fluid src={photo.url}/>
+                                    <Card key={photo.id} className='border-0 mt-5 me-3 mb-3' style={{width: '200px'}}>
+                                        <Card.Img  src={photo.url}/>
                                         <Card.Body className='ms-1 mt-1 p-0'>
                                             {/*callback func because we need photo as a parameter*/}
                                             <Button

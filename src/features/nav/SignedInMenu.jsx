@@ -10,7 +10,7 @@ import {toast} from "react-toastify";
 import Image from "react-bootstrap/Image";
 import styled from "styled-components";
 import {BsPlus, BsPersonFill, BsPower, BsGear} from "react-icons/bs";
-import Spinner from "react-bootstrap/Spinner";
+
 
 //Firebase
 import {signOutFirebase} from "../../app/firestore/firebaseService";

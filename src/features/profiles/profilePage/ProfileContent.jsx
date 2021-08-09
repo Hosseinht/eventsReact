@@ -27,7 +27,7 @@ const ProfileContent = ({profile, isCurrentUser}) => {
                         <PhotoTab profile={profile} isCurrentUser={isCurrentUser}/>
                     </Tab>
                     <Tab eventKey="events" title="Events">
-                       <EventsTab/>
+                       <EventsTab  profile={profile} isCurrentUser={isCurrentUser}/>
                     </Tab>
                     <Tab eventKey="followers" title="Followers">
                         HI

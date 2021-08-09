@@ -1,7 +1,6 @@
 // it just store our firebase and firestore queries
 
 import firebase from "../config/firebase";
-import cuid from "cuid";
 
 const db = firebase.firestore()
 
@@ -203,7 +202,7 @@ export async function cancelUserAttendance(event) {
     }
 }
 
-export async function getUserEventQuery(activeTab, userUid) {
+export function getUserEventQuery(activeTab, userUid) {
     let eventsRef = db.collection('events')
     const today = new Date()
     switch (activeTab) {
@@ -219,6 +218,7 @@ export async function getUserEventQuery(activeTab, userUid) {
         default:
             return eventsRef
                 .where('attendeeIds', 'array-contains', userUid)
+                .where('date', '>=', today)
                 .orderBy('date')
     }
 }
