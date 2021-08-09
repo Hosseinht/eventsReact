@@ -6,8 +6,9 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Image from "react-bootstrap/Image";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import EventDetailedChatForm from "./EventDetailedChatForm";
 
-const EventDetailedChat = () => {
+const EventDetailedChat = ({eventId}) => {
     return (
         <EventDetailedChatWrapper>
             <ListGroup>
@@ -69,12 +70,7 @@ const EventDetailedChat = () => {
                             </div>
                         </div>
                     </div>
-                    <Form>
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                            <Form.Control as="textarea" rows={3}/>
-                        </Form.Group>
-                        <Button className='my-blue-btn'>Add Reply</Button>
-                    </Form>
+                    <EventDetailedChatForm eventId={eventId}/>
                 </ListGroup.Item>
 
             </ListGroup>

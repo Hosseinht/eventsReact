@@ -50,7 +50,7 @@ const EventDetailedPage = ({match}) => {
                     <Col md={"auto"} lg={6}>
                         <EventDetailedHeader isHost={isHost} isGoing={isGoing} event={event}/>
                         <EventDetailedInfo event={event}/>
-                        <EventDetailedChat/>
+                        <EventDetailedChat eventId={event.id}/>
 
                     </Col>
                     <Col md={"auto"} lg={4}>
