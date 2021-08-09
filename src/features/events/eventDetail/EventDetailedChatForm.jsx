@@ -12,15 +12,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {listenToEventChat} from "../eventActions";
 
 const EventDetailedChatForm = ({eventId}) => {
-    const dispatch = useDispatch()
-    const {comments} = useSelector((state) => state.event)
 
-    useEffect(() => {
-        getEventChatRef(eventId).on('value', snapshot => {
-            if (!snapshot.exists()) return;
-           dispatch(listenToEventChat(firebaseObjectToArray(snapshot.val())))
-        })
-    },[eventId, dispatch])
 
     return (
         <Formik

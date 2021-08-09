@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from "styled-components";
 
 //Bootstrap
@@ -7,72 +7,74 @@ import Image from "react-bootstrap/Image";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import EventDetailedChatForm from "./EventDetailedChatForm";
+import {useDispatch, useSelector} from "react-redux";
+import {firebaseObjectToArray, getEventChatRef} from "../../../app/firestore/firebaseService";
+import {listenToEventChat} from "../eventActions";
+import {Link} from "react-router-dom";
+import {formatDistance} from 'date-fns'
 
 const EventDetailedChat = ({eventId}) => {
+    const dispatch = useDispatch()
+    const {comments} = useSelector((state) => state.event)
+
+    useEffect(() => {
+        getEventChatRef(eventId).on('value', snapshot => {
+            if (!snapshot.exists()) return;
+            dispatch(listenToEventChat(firebaseObjectToArray(snapshot.val())))
+        })
+    }, [eventId, dispatch])
+
     return (
         <EventDetailedChatWrapper>
             <ListGroup>
-                <h4  className="text-center">Chat about this event</h4>
-                <ListGroup.Item>
-                    <div className="chat-group">
-                        <div className="chat-group-user">
-                            <Image className='user-img' src="/assets/user.png"/>
-                            <div className="chat-group-username">
-                                <p>Matt</p>
-                            </div>
-                            <div className="chat-group-time">
-                                <span className='text-muted'>Today at 5:42PM</span>
-                            </div>
-                        </div>
-                        <div className="chat-group-comment-part">
-                            <div className="chat-group-comment">
-                                <p>This has been very useful for my research. Thanks as well!
-                                    <span className='d-block text-muted'>Reply</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div className='reply-to-right'>
-                            <div className="chat-group-user">
-                                <Image className='user-img' src="/assets/user.png"/>
-                                <div className="chat-group-username">
-                                    <p>Matt</p>
-                                </div>
+                <h4 className="text-center">Chat about this event</h4>
+                {comments.map(comment => (
+                    <ListGroup.Item key={comment.id}>
+                        <div className="chat-group">
+                            <div className="chat-group-user d-flex align-items-center">
+                                <Link to={`profile/${comment.uid}`} className='d-flex align-items-center'>
+                                    <Image className='user-img' src={comment.photoURL || "/assets/user.png"}/>
+                                    <div className="chat-group-username">
+                                        <span>{comment.displayName}</span>
+                                    </div>
+                                </Link>
                                 <div className="chat-group-time">
-                                    <span className='text-muted'>Today at 5:42PM</span>
+                                    <span className='text-muted'>{formatDistance(comment.date, new Date())}</span>
+                                    {/*new Date() represent today's date*/}
                                 </div>
                             </div>
                             <div className="chat-group-comment-part">
                                 <div className="chat-group-comment">
-                                    <p>This has been very useful for my research. Thanks as well!This has been very
-                                        useful for my research. Thanks as well!This has been very useful for my
-                                        research. Thanks as well!
+                                    <p>{comment.text}
                                         <span className='d-block text-muted'>Reply</span>
                                     </p>
                                 </div>
                             </div>
+                            {/*<div className='reply-to-right'>*/}
+                            {/*    <div className="chat-group-user">*/}
+                            {/*        <Image className='user-img' src="/assets/user.png"/>*/}
+                            {/*        <div className="chat-group-username">*/}
+                            {/*            <p>Chatt</p>*/}
+                            {/*        </div>*/}
+                            {/*        <div className="chat-group-time">*/}
+                            {/*            <span className='text-muted'>Today at 5:42PM</span>*/}
+                            {/*        </div>*/}
+                            {/*    </div>*/}
+                            {/*    <div className="chat-group-comment-part">*/}
+                            {/*        <div className="chat-group-comment">*/}
+                            {/*            <p>This has been very useful for my research. Thanks as well!This has been very*/}
+                            {/*                useful for my research. Thanks as well!This has been very useful for my*/}
+                            {/*                research. Thanks as well!*/}
+                            {/*                <span className='d-block text-muted'>Reply</span>*/}
+                            {/*            </p>*/}
+                            {/*        </div>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
                         </div>
-                    </div>
-                    <div className="chat-group">
-                        <div className="chat-group-user">
-                            <Image className='user-img' src="/assets/user.png"/>
-                            <div className="chat-group-username">
-                                <p>Matt</p>
-                            </div>
-                            <div className="chat-group-time">
-                                <span className='text-muted'>Today at 5:42PM</span>
-                            </div>
-                        </div>
-                        <div className="chat-group-comment-part">
-                            <div className="chat-group-comment">
-                                <p>This has been very useful for my research. Thanks as well!
-                                    <span className='d-block text-muted'>Reply</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <EventDetailedChatForm eventId={eventId}/>
-                </ListGroup.Item>
 
+                    </ListGroup.Item>
+                ))}
+                <EventDetailedChatForm eventId={eventId}/>
             </ListGroup>
 
         </EventDetailedChatWrapper>
@@ -112,7 +114,7 @@ const EventDetailedChatWrapper = styled.div`
     margin: 5px 10px 0 8px;
   }
   .chat-group-time {
-    margin-top: 4px;
+    //margin-top: 4px;
     span{
       font-size: 10px;
       
