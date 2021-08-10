@@ -1,4 +1,11 @@
-import {CREATE_EVENT, DELETE_EVENT, FETCH_EVENTS, LISTEN_TO_EVENT_CHAT, UPDATE_EVENT} from "./eventConstant";
+import {
+    CLEAR_COMMENTS,
+    CREATE_EVENT,
+    DELETE_EVENT,
+    FETCH_EVENTS,
+    LISTEN_TO_EVENT_CHAT,
+    UPDATE_EVENT
+} from "./eventConstant";
 
 
 const initialState = {
@@ -39,6 +46,11 @@ export const eventReducer = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 comments: payload
+            }
+        case CLEAR_COMMENTS:
+            return {
+                ...state,
+                comments: []
             }
         default:
             return state

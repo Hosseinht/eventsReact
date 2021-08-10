@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 
 //Bootstrap
@@ -12,75 +12,102 @@ import {firebaseObjectToArray, getEventChatRef} from "../../../app/firestore/fir
 import {listenToEventChat} from "../eventActions";
 import {Link} from "react-router-dom";
 import {formatDistance} from 'date-fns'
+import {CLEAR_COMMENTS} from "../eventConstant";
 
 const EventDetailedChat = ({eventId}) => {
     const dispatch = useDispatch()
     const {comments} = useSelector((state) => state.event)
+    const [showReplyForm, setShowReplyForm] = useState({open: false, commentId: null})
+
+    function handleCloseReplyForm() {
+        // close form after comment is submitted
+        setShowReplyForm({open: false, commentId: null})
+    }
 
     useEffect(() => {
         getEventChatRef(eventId).on('value', snapshot => {
             if (!snapshot.exists()) return;
             dispatch(listenToEventChat(firebaseObjectToArray(snapshot.val()).reverse()))
-        })
+        });
+        return () => {
+            dispatch({type: CLEAR_COMMENTS})
+            getEventChatRef().off()
+        }
     }, [eventId, dispatch])
 
     return (
         <EventDetailedChatWrapper>
             <ListGroup>
                 <h4 className="text-center">Chat about this event</h4>
-                 <EventDetailedChatForm eventId={eventId}/>
-                {comments.map(comment => (
-                    <ListGroup.Item key={comment.id}>
-                        <div className="chat-group">
-                            <div className="chat-group-user d-flex align-items-center">
-                                <Link to={`profile/${comment.uid}`} className='d-flex align-items-center'>
-                                    <Image className='user-img' src={comment.photoURL || "/assets/user.png"}/>
-                                    <div className="chat-group-username">
-                                        <span>{comment.displayName}</span>
+                <div className='my-box-shadow'>
+                    <EventDetailedChatForm eventId={eventId} parentId={0}/>
+
+                    {comments.map(comment => (
+                        <ListGroup.Item key={comment.id}>
+                            <div className="chat-group">
+                                <div className="chat-group-user d-flex align-items-center">
+                                    <Link to={`profile/${comment.uid}`} className='d-flex align-items-center'>
+                                        <Image className='user-img' src={comment.photoURL || "/assets/user.png"}/>
+                                        <div className="chat-group-username">
+                                            <span>{comment.displayName}</span>
+                                        </div>
+                                    </Link>
+                                    <div className="chat-group-time">
+                                        <span className='text-muted'>{formatDistance(comment.date, new Date())}</span>
+                                        {/*new Date() represent today's date*/}
                                     </div>
-                                </Link>
-                                <div className="chat-group-time">
-                                    <span className='text-muted'>{formatDistance(comment.date, new Date())}</span>
-                                    {/*new Date() represent today's date*/}
                                 </div>
-                            </div>
-                            <div className="chat-group-comment-part">
-                                <div className="chat-group-comment">
-                                    <p>{comment.text.split('\n').map((text, i) => (
-                                        <span key={i}>
+                                <div className="chat-group-comment-part">
+                                    <div className="chat-group-comment">
+                                        <p>{comment.text.split('\n').map((text, i) => (
+                                            <span key={i}>
                                             {text}
-                                            <br/>
+                                                <br/>
                                         </span>
-                                    ))}
+                                        ))}
+                                            <div className='chat-chat border-0'>
+                                         <span onClick={() => setShowReplyForm({open: true, commentId: comment.id})}
+                                               className='d-block ms-2 text-muted border-0 my-reply'>Reply
+                                         </span>
+                                                {showReplyForm.open && showReplyForm.commentId === comment.id &&
+                                                <EventDetailedChatForm
+                                                    className='border-0'
+                                                    eventId={eventId}
+                                                    parentId={comment.id}
+                                                    closeForm={handleCloseReplyForm}
+                                                />
+                                                }
+                                            </div>
+                                        </p>
 
-                                    </p>
-                                    <span className='d-block text-muted'>Reply</span>
+
+                                    </div>
                                 </div>
+                                {/*<div className='reply-to-right'>*/}
+                                {/*    <div className="chat-group-user">*/}
+                                {/*        <Image className='user-img' src="/assets/user.png"/>*/}
+                                {/*        <div className="chat-group-username">*/}
+                                {/*            <p>Chatt</p>*/}
+                                {/*        </div>*/}
+                                {/*        <div className="chat-group-time">*/}
+                                {/*            <span className='text-muted'>Today at 5:42PM</span>*/}
+                                {/*        </div>*/}
+                                {/*    </div>*/}
+                                {/*    <div className="chat-group-comment-part">*/}
+                                {/*        <div className="chat-group-comment">*/}
+                                {/*            <p>This has been very useful for my research. Thanks as well!This has been very*/}
+                                {/*                useful for my research. Thanks as well!This has been very useful for my*/}
+                                {/*                research. Thanks as well!*/}
+                                {/*                <span className='d-block text-muted'>Reply</span>*/}
+                                {/*            </p>*/}
+                                {/*        </div>*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
                             </div>
-                            {/*<div className='reply-to-right'>*/}
-                            {/*    <div className="chat-group-user">*/}
-                            {/*        <Image className='user-img' src="/assets/user.png"/>*/}
-                            {/*        <div className="chat-group-username">*/}
-                            {/*            <p>Chatt</p>*/}
-                            {/*        </div>*/}
-                            {/*        <div className="chat-group-time">*/}
-                            {/*            <span className='text-muted'>Today at 5:42PM</span>*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*    <div className="chat-group-comment-part">*/}
-                            {/*        <div className="chat-group-comment">*/}
-                            {/*            <p>This has been very useful for my research. Thanks as well!This has been very*/}
-                            {/*                useful for my research. Thanks as well!This has been very useful for my*/}
-                            {/*                research. Thanks as well!*/}
-                            {/*                <span className='d-block text-muted'>Reply</span>*/}
-                            {/*            </p>*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                        </div>
 
-                    </ListGroup.Item>
-                ))}
+                        </ListGroup.Item>
+                    ))}
+                </div>
             </ListGroup>
 
         </EventDetailedChatWrapper>
@@ -140,4 +167,24 @@ const EventDetailedChatWrapper = styled.div`
     margin-left: 30px;
     margin-top: 10px;
   }
+  //.chat-chat {
+  //  border: none;
+  //}
+  //textarea {
+  //    border: none;
+  //    :focus{
+  //      border: none;
+  //    }
+  //  }
+  .form-control:focus {
+     box-shadow: #FF4242;
+     
+     }
+   .my-reply {
+      cursor: pointer;
+     }
+  //   input[type="text"]:focus{
+  //    border: none;
+  //   }
+    
 `

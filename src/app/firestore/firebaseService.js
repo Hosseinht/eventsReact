@@ -77,14 +77,17 @@ export function deleteFromFirebaseStorage(filename) {
 }
 
 // add something to the database
-export function addEventChatComment(eventId, comment) {
+export function addEventChatComment(eventId, values) {
+    // values we get from our form
     const user = firebase.auth().currentUser;
     const newComment = {
         displayName: user.displayName,
         photoURL: user.photoURL,
         uid: user.uid,
-        text: comment,
-        date: Date.now()
+        text: values.comment,
+        date: Date.now(),
+        parentId:values.parentId
+        // to track which comment was being replied
     }
     return firebase.database().ref(`chat/${eventId}`).push(newComment)
 }
