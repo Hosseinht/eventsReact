@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Formik, Form as FormikForm} from 'formik';
+import {Formik, Form as FormikForm, Field} from 'formik';
 import {toast} from "react-toastify";
 import {addEventChatComment, firebaseObjectToArray, getEventChatRef} from "../../../app/firestore/firebaseService";
 import MyTextArea from "../../../app/common/form/MyTextArea";
@@ -28,23 +28,32 @@ const EventDetailedChatForm = ({eventId}) => {
                 }
             }}
         >
-            {({isSubmitting}) => (
+            {({isSubmitting, handleSubmit}) => (
                 <ChatBtn>
-                    <FormikForm>
-                        <MyTextArea
-                            name='comment'
-                            placeholder='Please enter your comment here'
-                        />
-
-                        <Button type='submit' variant='light' className='w-20 my-blue-btn-invert mt-2 '>
-                            {isSubmitting ?
-                                <Spinner animation='border' size='sm'/> :
-                                <div className='d-flex justify-content-center align-items-center'>
-                                    <FaRegEdit className='me-1'/> Add reply
+                    <FormikForm className='form-control '>
+                        <Field name='comment'>
+                            {({field}) => (
+                                <div style={{position: 'relative'}}>
+                                    {isSubmitting ? <Spinner animation="border" size='sm'/>
+                                        :
+                                        <textarea
+                                            className='form-text w-100'
+                                            {...field}
+                                            placeholder='Enter your comment (Enter to submit, Shift + Enter for new line)'
+                                            onKeyPress={(e) => {
+                                                if (e.key === 'Enter' && e.shiftKey) {
+                                                    return;
+                                                    // do your normal behaviour
+                                                }
+                                                if (e.key === 'Enter' && !e.shiftKey) {
+                                                    handleSubmit();
+                                                }
+                                            }}
+                                        > </textarea>
+                                    }
                                 </div>
-                            }
-                        </Button>
-
+                            )}
+                        </Field>
                     </FormikForm>
                 </ChatBtn>
             )}

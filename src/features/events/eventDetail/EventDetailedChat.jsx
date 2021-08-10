@@ -20,7 +20,7 @@ const EventDetailedChat = ({eventId}) => {
     useEffect(() => {
         getEventChatRef(eventId).on('value', snapshot => {
             if (!snapshot.exists()) return;
-            dispatch(listenToEventChat(firebaseObjectToArray(snapshot.val())))
+            dispatch(listenToEventChat(firebaseObjectToArray(snapshot.val()).reverse()))
         })
     }, [eventId, dispatch])
 
@@ -28,6 +28,7 @@ const EventDetailedChat = ({eventId}) => {
         <EventDetailedChatWrapper>
             <ListGroup>
                 <h4 className="text-center">Chat about this event</h4>
+                 <EventDetailedChatForm eventId={eventId}/>
                 {comments.map(comment => (
                     <ListGroup.Item key={comment.id}>
                         <div className="chat-group">
@@ -45,9 +46,15 @@ const EventDetailedChat = ({eventId}) => {
                             </div>
                             <div className="chat-group-comment-part">
                                 <div className="chat-group-comment">
-                                    <p>{comment.text}
-                                        <span className='d-block text-muted'>Reply</span>
+                                    <p>{comment.text.split('\n').map((text, i) => (
+                                        <span key={i}>
+                                            {text}
+                                            <br/>
+                                        </span>
+                                    ))}
+
                                     </p>
+                                    <span className='d-block text-muted'>Reply</span>
                                 </div>
                             </div>
                             {/*<div className='reply-to-right'>*/}
@@ -74,7 +81,6 @@ const EventDetailedChat = ({eventId}) => {
 
                     </ListGroup.Item>
                 ))}
-                <EventDetailedChatForm eventId={eventId}/>
             </ListGroup>
 
         </EventDetailedChatWrapper>
