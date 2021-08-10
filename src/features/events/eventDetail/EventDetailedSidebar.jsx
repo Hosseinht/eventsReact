@@ -10,8 +10,8 @@ const EventDetailedSidebar = ({attendees, hostUid}) => {
             <p className='text-center '>{attendees.length} {attendees.length > 1 ? 'People' : 'Person'} Going</p>
 
             {attendees.map(attendee => (
-                <>
-                    <div key={attendee.id} className="sidebar-user">
+                <div key={attendee.id}>
+                    <div  className="sidebar-user">
                         <Link to={`/profile/${attendee.id}`}>
                             <div className='d-flex align-items-center'>
                                 <Image src={attendee.photoURL || "/assets/user.png"}/>
@@ -25,7 +25,7 @@ const EventDetailedSidebar = ({attendees, hostUid}) => {
                         }
                     </div>
 
-                </>
+                </div>
 
             ))}
         </EventDetailedSidebarWrapper>

@@ -1,15 +1,11 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Formik, Form as FormikForm, Field} from 'formik';
 import {toast} from "react-toastify";
-import {addEventChatComment, firebaseObjectToArray, getEventChatRef} from "../../../app/firestore/firebaseService";
-import MyTextArea from "../../../app/common/form/MyTextArea";
-import Button from "react-bootstrap/Button";
+import {addEventChatComment} from "../../../app/firestore/firebaseService";
 import Spinner from "react-bootstrap/cjs/Spinner";
-import {FaRegEdit} from "react-icons/fa";
+
 // Styled Component
 import styled from "styled-components";
-import {useDispatch, useSelector} from "react-redux";
-import {listenToEventChat} from "../eventActions";
 import * as Yup from 'yup'
 
 const EventDetailedChatForm = ({eventId, parentId, closeForm}) => {

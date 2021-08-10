@@ -4,8 +4,7 @@ import styled from "styled-components";
 //Bootstrap
 import ListGroup from "react-bootstrap/ListGroup";
 import Image from "react-bootstrap/Image";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+
 import EventDetailedChatForm from "./EventDetailedChatForm";
 import {useDispatch, useSelector} from "react-redux";
 import {firebaseObjectToArray, getEventChatRef} from "../../../app/firestore/firebaseService";
@@ -13,6 +12,7 @@ import {listenToEventChat} from "../eventActions";
 import {Link} from "react-router-dom";
 import {formatDistance} from 'date-fns'
 import {CLEAR_COMMENTS} from "../eventConstant";
+import {createDataTree} from "../../../app/common/util/util";
 
 const EventDetailedChat = ({eventId}) => {
     const dispatch = useDispatch()
@@ -40,15 +40,15 @@ const EventDetailedChat = ({eventId}) => {
             <ListGroup>
                 <h4 className="text-center">Chat about this event</h4>
                 <div className='my-box-shadow'>
-                    <EventDetailedChatForm eventId={eventId} parentId={0}/>
+                    <EventDetailedChatForm eventId={eventId} parentId={0} closeForm={setShowReplyForm}/>
 
-                    {comments.map(comment => (
+                    {createDataTree(comments).map((comment) => (
                         <ListGroup.Item key={comment.id}>
                             <div className="chat-group">
                                 <div className="chat-group-user d-flex align-items-center">
                                     <Link to={`profile/${comment.uid}`} className='d-flex align-items-center'>
                                         <Image className='user-img' src={comment.photoURL || "/assets/user.png"}/>
-                                        <div className="chat-group-username">
+                                        <div className="chat-group-username ms-3">
                                             <span>{comment.displayName}</span>
                                         </div>
                                     </Link>
@@ -58,51 +58,81 @@ const EventDetailedChat = ({eventId}) => {
                                     </div>
                                 </div>
                                 <div className="chat-group-comment-part">
-                                    <div className="chat-group-comment">
+                                    <div className="chat-group-comment ms-5">
                                         <p>{comment.text.split('\n').map((text, i) => (
                                             <span key={i}>
                                             {text}
                                                 <br/>
                                         </span>
-                                        ))}
-                                            <div className='chat-chat border-0'>
-                                         <span onClick={() => setShowReplyForm({open: true, commentId: comment.id})}
-                                               className='d-block ms-2 text-muted border-0 my-reply'>Reply
-                                         </span>
-                                                {showReplyForm.open && showReplyForm.commentId === comment.id &&
-                                                <EventDetailedChatForm
-                                                    className='border-0'
-                                                    eventId={eventId}
-                                                    parentId={comment.id}
-                                                    closeForm={handleCloseReplyForm}
-                                                />
-                                                }
-                                            </div>
-                                        </p>
-
-
+                                        ))}</p>
+                                        <div className='chat-chat border-0'>
+                                                 <span onClick={() => setShowReplyForm({
+                                                     open: true,
+                                                     commentId: comment.id
+                                                 })}
+                                                       className='d-block  text-muted border-0 my-reply'>Reply
+                                                 </span>
+                                            {showReplyForm.open && showReplyForm.commentId === comment.id &&
+                                            <EventDetailedChatForm
+                                                className='border-0'
+                                                eventId={eventId}
+                                                parentId={comment.id}
+                                                closeForm={handleCloseReplyForm}
+                                            />
+                                            }
+                                        </div>
                                     </div>
                                 </div>
-                                {/*<div className='reply-to-right'>*/}
-                                {/*    <div className="chat-group-user">*/}
-                                {/*        <Image className='user-img' src="/assets/user.png"/>*/}
-                                {/*        <div className="chat-group-username">*/}
-                                {/*            <p>Chatt</p>*/}
-                                {/*        </div>*/}
-                                {/*        <div className="chat-group-time">*/}
-                                {/*            <span className='text-muted'>Today at 5:42PM</span>*/}
-                                {/*        </div>*/}
-                                {/*    </div>*/}
-                                {/*    <div className="chat-group-comment-part">*/}
-                                {/*        <div className="chat-group-comment">*/}
-                                {/*            <p>This has been very useful for my research. Thanks as well!This has been very*/}
-                                {/*                useful for my research. Thanks as well!This has been very useful for my*/}
-                                {/*                research. Thanks as well!*/}
-                                {/*                <span className='d-block text-muted'>Reply</span>*/}
-                                {/*            </p>*/}
-                                {/*        </div>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
+                                {comment.childNodes.length > 0 && (
+                                    <div className='reply-to-right'>
+                                        {comment.childNodes.reverse().map(child => (
+                                            <div key={child.id}>
+                                                <div className="chat-group-user d-flex align-items-center">
+                                                    <Link to={`profile/${child.uid}`}
+                                                          className='d-flex align-items-center'>
+                                                        <Image className='user-img'
+                                                               src={child.photoURL || "/assets/user.png"}/>
+                                                        <div className="chat-group-username ms-3">
+                                                            <span>{child.displayName}</span>
+                                                        </div>
+                                                    </Link>
+                                                    <div className="chat-group-time">
+                                                        <span
+                                                            className='text-muted'>{formatDistance(child.date, new Date())}</span>
+                                                        {/*new Date() represent today's date*/}
+                                                    </div>
+                                                </div>
+                                                <div className="chat-group-comment-part">
+                                                    <div className="chat-group-comment ms-5">
+                                                        <p>{child.text.split('\n').map((text, i) => (
+                                                            <span key={i}>
+                                                                {text}
+                                                                <br/>
+                                                             </span>
+                                                        ))}</p>
+
+                                                        <div className='chat-chat border-0'>
+                                                             <span onClick={() => setShowReplyForm({
+                                                                 open: true,
+                                                                 commentId: child.id
+                                                             })}
+                                                                   className='d-block text-muted border-0 my-reply'>Reply
+                                                             </span>
+                                                            {showReplyForm.open && showReplyForm.commentId === child.id &&
+                                                            <EventDetailedChatForm
+                                                                className='border-0'
+                                                                eventId={eventId}
+                                                                parentId={child.parentId}
+                                                                closeForm={handleCloseReplyForm}
+                                                            />
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
 
                         </ListGroup.Item>
