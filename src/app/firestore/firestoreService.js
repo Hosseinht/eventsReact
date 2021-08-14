@@ -222,3 +222,30 @@ export function getUserEventQuery(activeTab, userUid) {
                 .orderBy('date')
     }
 }
+
+export async function followUser(profile) {
+    const user = firebase.auth().currentUser;
+    try {
+        await db.collection('following').doc(user.uid).collection('userFollowing').doc(profile.id).set({
+            displayName: profile.displayName,
+            photoURL: profile.photoURL,
+            uid: profile.id
+        })
+        // currently logged in user tht is following the user(profile) that passed in followUser
+        await db.collection('following').doc(profile.id).collection('userFollowers').doc(user.uid).set({
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+            uid: user.uid
+        })
+        // counting
+        await db.collection('users').doc(user.uid).update({
+            followingCount: firebase.firestore.FieldValue.increment(1)
+        })
+         return await db.collection('users').doc(profile.id).update({
+            followerCount: firebase.firestore.FieldValue.increment(1)
+        })
+        // return? because we will use lading indicator
+    } catch (error) {
+        throw error
+    }
+}

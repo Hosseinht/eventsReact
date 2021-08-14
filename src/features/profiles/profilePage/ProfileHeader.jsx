@@ -1,12 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import styled from "styled-components";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
+import {toast} from "react-toastify";
+import {followUser} from "../../../app/firestore/firestoreService";
+import Spinner from "react-bootstrap/cjs/Spinner";
 
 const ProfileHeader = ({profile, isCurrentUser}) => {
+    let initialText = 'Follow'
+    const [text, setText] = useState('Follow')
+    const [following, setFollowing] = useState(false)
+    const [loading, setLoading] = useState(false)
+
+
+    async function handleFollowUser() {
+        setLoading(true)
+        try {
+            await followUser(profile)
+        } catch (error) {
+            toast.error(error.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+
     return (
         <ProfileHeaderWrapper className='d-flex  justify-content-center'>
             <Container className='w-75 my-box-shadow '>
@@ -29,9 +50,27 @@ const ProfileHeader = ({profile, isCurrentUser}) => {
                                 className="number3">8.9</span></div>
                         </div>
                         {!isCurrentUser &&
-                        <Button className='my-blue-btn-invert following-btn'>
-                            Following
-                        </Button>
+                        <div>
+                            {following ?
+                                <Button   className='my-blue-btn-invert following-btn'>
+                                    {text}
+                                </Button>
+                                :
+                                <Button
+                                    onMouseOver={() => setText('Unfollow')}
+                                    onMouseLeave={() =>setText(initialText)}
+                                    className='my-blue-btn-invert following-btn'
+                                    onClick={handleFollowUser}
+                                >
+                                    {loading ?
+                                        <Spinner animation='border' size={'sm'}/>
+                                        :
+                                        "Following"
+                                    }
+                                </Button>
+                            }
+                        </div>
+
                         }
                     </div>
                 </Card>
