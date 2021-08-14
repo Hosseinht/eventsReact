@@ -6,7 +6,7 @@ import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import {toast} from "react-toastify";
-import {followUser} from "../../../app/firestore/firestoreService";
+import {followUser, unfollowUser} from "../../../app/firestore/firestoreService";
 import Spinner from "react-bootstrap/cjs/Spinner";
 
 const ProfileHeader = ({profile, isCurrentUser}) => {
@@ -20,6 +20,17 @@ const ProfileHeader = ({profile, isCurrentUser}) => {
         setLoading(true)
         try {
             await followUser(profile)
+        } catch (error) {
+            toast.error(error.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    async function handleUnfollowUser() {
+        setLoading(true)
+        try {
+            await unfollowUser(profile)
         } catch (error) {
             toast.error(error.message)
         } finally {
@@ -51,8 +62,8 @@ const ProfileHeader = ({profile, isCurrentUser}) => {
                         </div>
                         {!isCurrentUser &&
                         <div>
-                            {following ?
-                                <Button   className='my-blue-btn-invert following-btn'>
+                            {!following ?
+                                <Button onClick={handleUnfollowUser}  className='my-blue-btn-invert following-btn'>
                                     {text}
                                 </Button>
                                 :
