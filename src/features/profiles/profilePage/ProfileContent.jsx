@@ -6,6 +6,7 @@ import Container from "react-bootstrap/Container";
 import AboutTab from "./AboutTab";
 import PhotoTab from "./PhotosTab";
 import EventsTab from "./EventsTab";
+import FollowingTab from "./FollowingTab";
 
 const ProfileContent = ({profile, isCurrentUser}) => {
     return (
@@ -30,7 +31,7 @@ const ProfileContent = ({profile, isCurrentUser}) => {
                        <EventsTab  profile={profile} isCurrentUser={isCurrentUser}/>
                     </Tab>
                     <Tab eventKey="followers" title="Followers">
-                        HI
+                      <FollowingTab profile={profile}/>
                     </Tab>
                     <Tab eventKey="following" title="Following">
                         HI
