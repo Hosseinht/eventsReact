@@ -62,7 +62,7 @@ const ProfileHeader = ({profile, isCurrentUser}) => {
                         </div>
                         {!isCurrentUser &&
                         <div>
-                            {!following ?
+                            {following ?
                                 <Button onClick={handleUnfollowUser}  className='my-blue-btn-invert following-btn'>
                                     {text}
                                 </Button>

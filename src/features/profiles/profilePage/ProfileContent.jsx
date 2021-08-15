@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from "react-bootstrap/Tab";
@@ -9,15 +9,17 @@ import EventsTab from "./EventsTab";
 import FollowingTab from "./FollowingTab";
 
 const ProfileContent = ({profile, isCurrentUser}) => {
+    const [activeTab, setActiveTab] = useState("about")
     return (
         <ProfileContentWrapper className=' d-flex justify-content-center align-items-center'>
 
             <Container className='profile-content-container w-75 mt-5 my-box-shadow'>
                 <Tabs
-                    defaultActiveKey="events"
+                    defaultActiveKey={activeTab}
                     transition={false}
                     id="noanim-tab-example"
                     className="mb-3"
+                     onSelect={(k) => setActiveTab(k)}
 
                 >
 
@@ -31,10 +33,10 @@ const ProfileContent = ({profile, isCurrentUser}) => {
                        <EventsTab  profile={profile} isCurrentUser={isCurrentUser}/>
                     </Tab>
                     <Tab eventKey="followers" title="Followers">
-                      <FollowingTab profile={profile}/>
+                      <FollowingTab profile={profile} defaultActiveKey={activeTab}/>
                     </Tab>
                     <Tab eventKey="following" title="Following">
-                        HI
+                      <FollowingTab profile={profile} defaultActiveKey={activeTab}/>
                     </Tab>
 
                 </Tabs>

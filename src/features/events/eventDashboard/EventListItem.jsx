@@ -12,8 +12,8 @@ import {Link} from "react-router-dom";
 import {deleteEventInFirestore} from "../../../app/firestore/firestoreService";
 
 
-const EventListitem = ({event}) => {
 
+const EventListitem = ({event}) => {
 
     return (
         <EventListWrapper className='mt-5'>

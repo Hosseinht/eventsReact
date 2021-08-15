@@ -59,7 +59,7 @@ export function listenToEventFromFirestore(eventId) {
 }
 
 export function addEventToFirestore(event) {
-    const user = firebase.auth().currentUser
+    const user = firebase.auth().currentUser;
     return db.collection('events').add({
         ...event,
         hostUid: user.uid,
@@ -124,25 +124,26 @@ export async function updateUserProfile(profile) {
 // upload user profile photo
 export async function updateUserProfilePhoto(downloadURL, filename) {
     const user = firebase.auth().currentUser;
-    const userDocRef = db.collection('users').doc(user.uid)
+    const userDocRef = db.collection('users').doc(user.uid);
     //userDocRef: we want to see if the user already got a profile photo
     try {
         const userDoc = await userDocRef.get();
         //get the data from user doc
         if (!userDoc.data().photoURL) {
             await db.collection('users').doc(user.uid).update({
-                photoURL: downloadURL
+                photoURL: downloadURL,
             });
             // update user firebase auth profile
             await user.updateProfile({
-                photoURL: downloadURL
-            })
+                photoURL: downloadURL,
+            });
         }
+
         // add the photo to the user photo collection inside the document
         return await db.collection('users').doc(user.uid).collection('photos').add({
             name: filename,
-            url: downloadURL
-        })
+            url: downloadURL,
+        });
     } catch (error) {
         throw error
     }
@@ -150,22 +151,24 @@ export async function updateUserProfilePhoto(downloadURL, filename) {
 
 // get photos from firestore
 export function getUserPhotos(userUid) {
-    return db.collection('users').doc(userUid).collection('photos')
+    return db.collection('users').doc(userUid).collection('photos');
 }
 
+// update the auth part of the user profile data
 export async function setMainPhoto(photo) {
     const user = firebase.auth().currentUser;
     try {
         await db.collection('users').doc(user.uid).update({
-            photoURL: photo.url
-        })
-        // update the auth part of the user profile data
+            photoURL: photo.url,
+        });
         return await user.updateProfile({
-            photoURL: photo.url
-        })
+            photoURL: photo.url,
+        });
+
     } catch (error) {
-        throw error
+        throw error;
     }
+
 }
 
 export function deletePhotosFromCollection(photoId) {
@@ -264,4 +267,12 @@ export async function unfollowUser(profile) {
     } catch (error) {
         throw error
     }
+}
+
+export function getFollowersCollection(profileId) {
+    return db.collection('following').doc(profileId).collection('userFollowers')
+}
+
+export function getFollowingCollection(profileId) {
+    return db.collection('following').doc(profileId).collection('userFollowing')
 }
