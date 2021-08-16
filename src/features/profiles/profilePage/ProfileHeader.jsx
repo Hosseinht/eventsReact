@@ -1,25 +1,45 @@
-import React, {useState} from 'react';
-
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import {toast} from "react-toastify";
-import {followUser, unfollowUser} from "../../../app/firestore/firestoreService";
+import {followUser, getFollowingDoc, unfollowUser} from "../../../app/firestore/firestoreService";
 import Spinner from "react-bootstrap/cjs/Spinner";
+import {useDispatch, useSelector} from "react-redux";
+import {setFollowUser, setUnfollowUser} from "../profileActions";
 
 const ProfileHeader = ({profile, isCurrentUser}) => {
-    let initialText = 'Follow'
-    const [text, setText] = useState('Follow')
-    const [following, setFollowing] = useState(false)
+    const dispatch = useDispatch()
+    const [text, setText] = useState('Following')
+    const [buttonHover, setButtonHover] = useState(false)
     const [loading, setLoading] = useState(false)
+    const {followingUser} = useSelector(state => state.profile)
 
+    useEffect(() => {
+        if (isCurrentUser) return;
+        setLoading(true)
+
+        async function fetchFollowingDoc() {
+            try {
+                const followingDoc = await getFollowingDoc(profile.id)
+                if (followingDoc && followingDoc.exists) {
+                    dispatch(setFollowUser())
+                }
+            } catch (error) {
+                toast.error(error.message)
+            }
+        }
+
+        fetchFollowingDoc().then(() => setLoading(false))
+    }, [dispatch, profile.id, isCurrentUser])
 
     async function handleFollowUser() {
         setLoading(true)
         try {
             await followUser(profile)
+            dispatch(setFollowUser())
         } catch (error) {
             toast.error(error.message)
         } finally {
@@ -31,6 +51,7 @@ const ProfileHeader = ({profile, isCurrentUser}) => {
         setLoading(true)
         try {
             await unfollowUser(profile)
+            dispatch(setUnfollowUser())
         } catch (error) {
             toast.error(error.message)
         } finally {
@@ -38,6 +59,15 @@ const ProfileHeader = ({profile, isCurrentUser}) => {
         }
     }
 
+    function buttonOver() {
+        setButtonHover(true)
+        setText('Unfollow')
+    }
+
+    function buttonLeave() {
+        setButtonHover(false)
+        setText('Following')
+    }
 
     return (
         <ProfileHeaderWrapper className='d-flex  justify-content-center'>
@@ -62,22 +92,22 @@ const ProfileHeader = ({profile, isCurrentUser}) => {
                         </div>
                         {!isCurrentUser &&
                         <div>
-                            {following ?
-                                <Button onClick={handleUnfollowUser}  className='my-blue-btn-invert following-btn'>
-                                    {text}
+                            {followingUser
+                                ?
+                                <Button
+                                    onClick={() => handleUnfollowUser()}
+                                    onMouseOver={() => buttonOver()}
+                                    onMouseLeave={() => buttonLeave()}
+                                    className={` ${buttonHover ? ' my-red-btn following-btn ' : 'my-blue-btn-invert following-btn '}`}
+                                >
+                                    {loading ? <Spinner animation='border' size={'sm'}/> : text}
                                 </Button>
                                 :
                                 <Button
-                                    onMouseOver={() => setText('Unfollow')}
-                                    onMouseLeave={() =>setText(initialText)}
-                                    className='my-blue-btn-invert following-btn'
                                     onClick={handleFollowUser}
+                                    className='my-blue-btn-invert  following-btn'
                                 >
-                                    {loading ?
-                                        <Spinner animation='border' size={'sm'}/>
-                                        :
-                                        "Following"
-                                    }
+                                    {loading ? <Spinner animation='border' size={'sm'}/> : 'Follow'}
                                 </Button>
                             }
                         </div>
