@@ -55,10 +55,10 @@ const ProfileHeader = ({profile, isCurrentUser}) => {
                         <div className='d-flex'>
                             <div className="d-flex p-3 flex-column  align-items-center"><span
                                 className="followers">Followers</span> <span
-                                className="number2">980</span></div>
+                                className="number2">{profile.followerCount || 0}</span></div>
                             <div className="d-flex p-3 flex-column align-items-center"><span
                                 className="rating">Following</span> <span
-                                className="number3">8.9</span></div>
+                                className="number3">{profile.followingCount || 0}</span></div>
                         </div>
                         {!isCurrentUser &&
                         <div>

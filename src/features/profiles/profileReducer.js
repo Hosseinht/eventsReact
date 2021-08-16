@@ -4,7 +4,7 @@ import {
     LISTEN_TO_USER_PHOTOS,
     LISTEN_TO_USER_EVENTS,
     LISTEN_TO_FOLLOWERS,
-    LISTEN_TO_FOLLOWINGS
+    LISTEN_TO_FOLLOWINGS, SET_FOLLOW_USER, SET_UNFOLLOW_USER
 } from "./profileConsts";
 
 const initialState = {
@@ -13,7 +13,8 @@ const initialState = {
     photos: [],
     profileEvents: [],
     followers: [],
-    followings: []
+    followings: [],
+    followingUser: false
 };
 
 
@@ -49,6 +50,16 @@ export const profileReducer = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 followings: payload
+            }
+        case SET_FOLLOW_USER:
+            return {
+                ...state,
+                followingUser: true
+            }
+        case SET_UNFOLLOW_USER:
+            return {
+                ...state,
+                followingUser: false
             }
         default:
             return state
