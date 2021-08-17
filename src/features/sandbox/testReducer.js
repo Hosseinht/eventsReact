@@ -10,7 +10,6 @@ export const increment = (amount) => async (dispatch) => {
     dispatch(asyncActionStart())
     try {
         await delay(1000)
-        throw 'Yaaaaaakhchiii';
         dispatch({type: INCREMENT_COUNTER, payload: amount})
         dispatch(asyncActionFinish())
     } catch (error) {
