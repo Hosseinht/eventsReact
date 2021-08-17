@@ -30,7 +30,7 @@ const NavBar = ({setFormOpen}) => {
                             <Button as={NavLink} to="/createEvent" className='py-2 newevent-btn' href="#home">New
                                 Event</Button>
                             }
-                             <Button as={NavLink} to="/sandbox" className='py-2 ms-2 sandbox-btn' href="#home">Sandbox</Button>
+                             {/*<Button as={NavLink} to="/sandbox" className='py-2 ms-2 sandbox-btn' href="#home">Sandbox</Button>*/}
 
 
                             {/*if authenticated is true anything after && will be executed*/}

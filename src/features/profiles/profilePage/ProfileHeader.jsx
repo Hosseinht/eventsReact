@@ -9,6 +9,7 @@ import {followUser, getFollowingDoc, unfollowUser} from "../../../app/firestore/
 import Spinner from "react-bootstrap/cjs/Spinner";
 import {useDispatch, useSelector} from "react-redux";
 import {setFollowUser, setUnfollowUser} from "../profileActions";
+import {CLEAR_FOLLOWINGS} from "../profileConsts";
 
 const ProfileHeader = ({profile, isCurrentUser}) => {
     const dispatch = useDispatch()
@@ -31,8 +32,10 @@ const ProfileHeader = ({profile, isCurrentUser}) => {
                 toast.error(error.message)
             }
         }
-
         fetchFollowingDoc().then(() => setLoading(false))
+        return ()=> {
+            dispatch({type: CLEAR_FOLLOWINGS})
+        }
     }, [dispatch, profile.id, isCurrentUser])
 
     async function handleFollowUser() {

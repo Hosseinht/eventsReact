@@ -9,7 +9,7 @@ import EventsTab from "./EventsTab";
 import FollowingTab from "./FollowingTab";
 
 const ProfileContent = ({profile, isCurrentUser}) => {
-    const [activeTab, setActiveTab] = useState("about")
+    const [activeTab, setActiveTab] = useState("followers")
     return (
         <ProfileContentWrapper className=' d-flex justify-content-center align-items-center'>
 
@@ -33,10 +33,10 @@ const ProfileContent = ({profile, isCurrentUser}) => {
                        <EventsTab  profile={profile} isCurrentUser={isCurrentUser}/>
                     </Tab>
                     <Tab eventKey="followers" title="Followers">
-                      <FollowingTab profile={profile} defaultActiveKey={activeTab}/>
+                      <FollowingTab key={profile.id} profile={profile} defaultActiveKey={activeTab}/>
                     </Tab>
                     <Tab eventKey="following" title="Following">
-                      <FollowingTab profile={profile} defaultActiveKey={activeTab}/>
+                      <FollowingTab key={profile.id} profile={profile} defaultActiveKey={activeTab}/>
                     </Tab>
 
                 </Tabs>
