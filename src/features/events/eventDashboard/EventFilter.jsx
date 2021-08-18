@@ -76,6 +76,7 @@ const EventFiltersWrapper = styled.div`
     }
     .filter-part-content {
       padding: 10px;
+      cursor: pointer;
     }
     .list-group-item.active{
       background-color: white;
