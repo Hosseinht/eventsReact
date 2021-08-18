@@ -228,34 +228,48 @@ export function getUserEventQuery(activeTab, userUid) {
 
 export async function followUser(profile) {
     const user = firebase.auth().currentUser;
-    const batch = db.batch()
+    const batch = db.batch();
     try {
-        batch.set(db.collection('following').doc(user.uid).collection('userFollowing').doc(profile.id), {
-            displayName: profile.displayName,
-            photoURL: profile.photoURL,
-            uid: profile.id
-        })
-        batch.set(db.collection('users').doc(user.uid), {
-            followingCount: firebase.firestore.FieldValue.increment(1)
-        })
-        return await batch.commit()
+        batch.set(
+            db
+                .collection('following')
+                .doc(user.uid)
+                .collection('userFollowing')
+                .doc(profile.id),
+            {
+                displayName: profile.displayName,
+                photoURL: profile.photoURL,
+                uid: profile.id,
+            }
+        );
+        batch.update(db.collection('users').doc(user.uid), {
+            followingCount: firebase.firestore.FieldValue.increment(1),
+        });
+        return await batch.commit();
     } catch (error) {
-        throw error
+        throw error;
     }
 }
 
 export async function unfollowUser(profile) {
     const user = firebase.auth().currentUser;
-    const batch = db.batch()
+    const batch = db.batch();
     try {
-        batch.delete(db.collection('following').doc(user.uid).collection('userFollowing').doc(profile.id))
-        batch.update(db.collection('users').doc(user.uid), {
-            followingCount: firebase.firestore.FieldValue.increment(-1)
-        })
+        batch.delete(
+            db
+                .collection('following')
+                .doc(user.uid)
+                .collection('userFollowing')
+                .doc(profile.id)
+        );
 
-        return await batch.commit()
+        batch.update(db.collection('users').doc(user.uid), {
+            followingCount: firebase.firestore.FieldValue.increment(-1),
+        });
+
+        return await batch.commit();
     } catch (error) {
-        throw error
+        throw error;
     }
 }
 
