@@ -15,6 +15,7 @@ import Col from "react-bootstrap/Col";
 // FireStore
 import useFirestoreCollection from "../../../app/hooks/useFirestoreCollection";
 import listenToEventsFromFirestore from "../../../app/firestore/firestoreService";
+import EventsFeed from "./EventsFeed";
 
 
 const EventDashboard = () => {
@@ -22,6 +23,7 @@ const EventDashboard = () => {
     const {events} = useSelector(state => state.event)
     // event is the reducer and events is property for events that we're storing our events. initialState{events:sampleData}
     const {loading} = useSelector(state => state.async)
+    const {authenticated} = useSelector(state => state.auth)
 
     // Map: a javascript object that allows us to use certain methods. and get and set different elements in the map
     const [predicate, setPredicate] = useState(new Map([
@@ -55,6 +57,9 @@ const EventDashboard = () => {
                     />
                 </Col>
                 <Col lg={4} md={"auto"}>
+                    {authenticated &&
+                        <EventsFeed/>
+                    }
                     <EventFilters predicate={predicate} setPredicate={handleSetPredicate} loading={loading}/>
                 </Col>
             </Row>
