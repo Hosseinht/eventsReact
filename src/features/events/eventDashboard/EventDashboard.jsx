@@ -12,19 +12,22 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
+import styled from "styled-components";
 // FireStore
 import useFirestoreCollection from "../../../app/hooks/useFirestoreCollection";
 import listenToEventsFromFirestore from "../../../app/firestore/firestoreService";
 import EventsFeed from "./EventsFeed";
 import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/cjs/Spinner";
 
 
 const EventDashboard = () => {
     const limit = 2
     const dispatch = useDispatch()
-    const {events} = useSelector(state => state.event)
+    const {events, moreEvents} = useSelector(state => state.event)
     // event is the reducer and events is property for events that we're storing our events. initialState{events:sampleData}
     const {loading} = useSelector(state => state.async)
+    const [loadingInitial, setLoadingInitial] = useState(false)
     const {authenticated} = useSelector(state => state.auth)
     const [lastDocSnapshot, setLastDocSnapshot] = useState(null)
 
@@ -39,8 +42,10 @@ const EventDashboard = () => {
     }
 
     useEffect(() => {
+        setLoadingInitial(true)
         dispatch(fetchEvents(predicate, limit)).then((lastVisible) => {
             setLastDocSnapshot(lastVisible)
+            setLoadingInitial(false)
         })
     }, [dispatch, predicate])
 
@@ -51,58 +56,40 @@ const EventDashboard = () => {
     }
 
     return (
-
-        <Container>
-            <Row>
-                <Col lg={8} md={"auto"}>
-                    {loading &&
-                    <>
-                        <EventListItemPlaceholder/>
-                        <EventListItemPlaceholder/>
-                    </>
-                    }
-                    <EventList
-                        events={events}
-                    />
-                    <Button onClick={handleFetchNextEvent} className='my-blue-btn-invert'>
-                        More...
-                    </Button>
-                </Col>
-                <Col lg={4} md={"auto"}>
-                    {authenticated &&
-                    <EventsFeed/>
-                    }
-                    <EventFilters predicate={predicate} setPredicate={handleSetPredicate} loading={loading}/>
-                </Col>
-            </Row>
-        </Container>
+        <EventDashboardWrapper>
+            <Container>
+                <Row>
+                    <Col lg={8} md={"auto"}>
+                        {loadingInitial &&
+                        <>
+                            <EventListItemPlaceholder/>
+                            <EventListItemPlaceholder/>
+                        </>
+                        }
+                        <EventList
+                            events={events}
+                        />
+                        <Button variant={'light'} disabled={!moreEvents} onClick={handleFetchNextEvent} className='my-blue-btn-invert'>
+                            {loading ? <Spinner animation='border' size='sm'/> : "More..."}
+                        </Button>
+                    </Col>
+                    <Col lg={4} md={"auto"}>
+                        {authenticated &&
+                        <EventsFeed/>
+                        }
+                        <EventFilters predicate={predicate} setPredicate={handleSetPredicate} loading={loading}/>
+                    </Col>
+                </Row>
+            </Container>
+        </EventDashboardWrapper>
 
     );
 };
 
 export default EventDashboard;
 
-// <Grid>
-//             <Grid.Column width={10}>
-//                 <EventList
-//                     events={events}
-//                     selectEvent={selectEvent}
-//                     deleteEvent={handleDeleteEvent}
-//                 />
-//             </Grid.Column>
-//             <Grid.Column width={6}>
-//                 {formOpen &&
-//                 <EventForm
-//                     setEvents={setEvents}
-//                     setFormOpen={setFormOpen}
-//                     createEvent={handleCreateEvent}
-//                     selectedEvent={selectedEvent}
-//                     updateEvent={handleUpdateEvent}
-//                     key={selectedEvent ? selectedEvent.id : null}
-//                     // Issue with clicking on the view button.
-//                     // with this react create a new component instance rather than update the current one
-//                 />}
-//                 {/*it says if form is false don't show it*/}
-//
-//             </Grid.Column>
-//         </Grid>
+const EventDashboardWrapper = styled.div`
+    .my-blue-btn-invert{
+      min-width: 100px;
+    }
+`
