@@ -10,7 +10,8 @@ import {
 
 const initialState = {
     events: [],
-    comments: []
+    comments: [],
+    moreEvents: false
 }
 
 // action = {type, payload}. we simply remove action. .
@@ -40,7 +41,8 @@ export const eventReducer = (state = initialState, {type, payload}) => {
                 ...state,
                 // events: [...payload]
                 // events are array anyway so we don't need to spread this action so:
-                events: payload
+                events: payload.events,
+                moreEvents: payload.moreEvents
             }
         case LISTEN_TO_EVENT_CHAT:
             return {

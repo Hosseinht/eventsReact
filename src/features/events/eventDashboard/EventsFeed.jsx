@@ -5,13 +5,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {firebaseObjectToArray, getUserFeedRef} from "../../../app/firestore/firebaseService";
 import {listenToFeed} from "../../profiles/profileActions";
 import EventFeedItem from "./EventFeedItem";
+import LoadingComponent from "../../../app/layout/LoadingComponents";
 
 const EventsFeed = () => {
     const dispatch = useDispatch()
     const {feed} = useSelector(state => state.profile)
 
     useEffect(() => {
-        getUserFeedRef().on('value', snapshot => {
+        getUserFeedRef()?.on('value', snapshot => {
             if (!snapshot.exists()) {
                 return;
             }
@@ -19,10 +20,10 @@ const EventsFeed = () => {
             dispatch(listenToFeed(feed))
         })
         return () => {
-            getUserFeedRef().off()
+            getUserFeedRef()?.off()
         }
     }, [dispatch])
-
+    
     return (
         <EventsFeedWrapper className='my-box-shadow'>
             <h5 className='mt-5 p-3'>News Feed</h5>

@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import EventList from "./EventList";
 import EventFilters from "./EventFilter";
 import {useDispatch, useSelector} from "react-redux";
 import EventListItemPlaceholder from "./EventListItemPlaceholder";
 
 //Actions
-import {listenToEvents} from "../eventActions";
+import {fetchEvents, listenToEvents} from "../eventActions";
 
 //Bootstrap
 import Container from "react-bootstrap/Container";
@@ -16,14 +16,17 @@ import Col from "react-bootstrap/Col";
 import useFirestoreCollection from "../../../app/hooks/useFirestoreCollection";
 import listenToEventsFromFirestore from "../../../app/firestore/firestoreService";
 import EventsFeed from "./EventsFeed";
+import Button from "react-bootstrap/Button";
 
 
 const EventDashboard = () => {
+    const limit = 2
     const dispatch = useDispatch()
     const {events} = useSelector(state => state.event)
     // event is the reducer and events is property for events that we're storing our events. initialState{events:sampleData}
     const {loading} = useSelector(state => state.async)
     const {authenticated} = useSelector(state => state.auth)
+    const [lastDocSnapshot, setLastDocSnapshot] = useState(null)
 
     // Map: a javascript object that allows us to use certain methods. and get and set different elements in the map
     const [predicate, setPredicate] = useState(new Map([
@@ -31,15 +34,21 @@ const EventDashboard = () => {
         ['filter', 'all']
     ]))
 
-    function handleSetPredicate(key, value){
+    function handleSetPredicate(key, value) {
         setPredicate(new Map(predicate.set(key, value)))
     }
 
-    useFirestoreCollection({
-        query: () => listenToEventsFromFirestore(predicate),
-        data: events => dispatch(listenToEvents(events)),
-        deps: [dispatch, predicate]
-    })
+    useEffect(() => {
+        dispatch(fetchEvents(predicate, limit)).then((lastVisible) => {
+            setLastDocSnapshot(lastVisible)
+        })
+    }, [dispatch, predicate])
+
+    function handleFetchNextEvent() {
+        dispatch(fetchEvents(predicate, limit, lastDocSnapshot)).then((lastVisible) => {
+            setLastDocSnapshot(lastVisible)
+        })
+    }
 
     return (
 
@@ -55,10 +64,13 @@ const EventDashboard = () => {
                     <EventList
                         events={events}
                     />
+                    <Button onClick={handleFetchNextEvent} className='my-blue-btn-invert'>
+                        More...
+                    </Button>
                 </Col>
                 <Col lg={4} md={"auto"}>
                     {authenticated &&
-                        <EventsFeed/>
+                    <EventsFeed/>
                     }
                     <EventFilters predicate={predicate} setPredicate={handleSetPredicate} loading={loading}/>
                 </Col>
