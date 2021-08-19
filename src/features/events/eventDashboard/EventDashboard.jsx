@@ -19,6 +19,7 @@ import listenToEventsFromFirestore from "../../../app/firestore/firestoreService
 import EventsFeed from "./EventsFeed";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/cjs/Spinner";
+import LoadingComponent from "../../../app/layout/LoadingComponents";
 
 
 const EventDashboard = () => {
@@ -68,16 +69,22 @@ const EventDashboard = () => {
                         }
                         <EventList
                             events={events}
+                            getNextEvents={handleFetchNextEvent}
+                            loading={loading}
+                            moreEvents={moreEvents}
                         />
-                        <Button variant={'light'} disabled={!moreEvents} onClick={handleFetchNextEvent} className='my-blue-btn-invert'>
-                            {loading ? <Spinner animation='border' size='sm'/> : "More..."}
-                        </Button>
+
                     </Col>
                     <Col lg={4} md={"auto"}>
                         {authenticated &&
                         <EventsFeed/>
                         }
                         <EventFilters predicate={predicate} setPredicate={handleSetPredicate} loading={loading}/>
+                    </Col>
+                     <Col lg={8} md={"auto"}>
+                         {loading &&
+                            <LoadingComponent/>
+                         }
                     </Col>
                 </Row>
             </Container>
