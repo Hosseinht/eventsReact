@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {firebaseObjectToArray, getUserFeedRef} from "../../../app/firestore/firebaseService";
 import {listenToFeed} from "../../profiles/profileActions";
 import EventFeedItem from "./EventFeedItem";
-import LoadingComponent from "../../../app/layout/LoadingComponents";
+
 
 const EventsFeed = () => {
     const dispatch = useDispatch()

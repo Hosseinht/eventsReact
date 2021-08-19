@@ -17,15 +17,15 @@ import EventDetailedSidebar from "./EventDetailedSidebar";
 //Firestore
 import useFirestoreDoc from "../../../app/hooks/useFirestoreDoc";
 import {listenToEventFromFirestore} from "../../../app/firestore/firestoreService";
-import {listenToEvents} from "../eventActions";
 import LoadingComponent from "../../../app/layout/LoadingComponents";
+import {listenToSelectedEvents} from "../eventActions";
 
 
 const EventDetailedPage = ({match}) => {
     const dispatch = useDispatch()
     //match allows us to access to params(id)
     const {currentUser} = useSelector(state => state.auth)
-    const event = useSelector((state) => state.event.events.find(e => e.id === match.params.id))
+    const event = useSelector((state) => state.event.selectedEvent)
     // event is the reducer and events is property for events that we're storing our events. initialState{events:sampleData}
 
     const {loading, error} = useSelector((state) => state.async)
@@ -35,7 +35,7 @@ const EventDetailedPage = ({match}) => {
 
     useFirestoreDoc({
         query: () => listenToEventFromFirestore(match.params.id),
-        data: (event) => dispatch(listenToEvents([event])),
+        data: (event) => dispatch(listenToSelectedEvents(event)),
         deps: [match.params.id, dispatch]
         // when the eventId(match.params.id) changes rerun the use effect
     })

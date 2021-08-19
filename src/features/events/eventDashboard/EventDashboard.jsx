@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import EventListItemPlaceholder from "./EventListItemPlaceholder";
 
 //Actions
-import {fetchEvents, listenToEvents} from "../eventActions";
+import {fetchEvents} from "../eventActions";
 
 //Bootstrap
 import Container from "react-bootstrap/Container";
@@ -14,11 +14,8 @@ import Col from "react-bootstrap/Col";
 
 import styled from "styled-components";
 // FireStore
-import useFirestoreCollection from "../../../app/hooks/useFirestoreCollection";
-import listenToEventsFromFirestore from "../../../app/firestore/firestoreService";
+
 import EventsFeed from "./EventsFeed";
-import Button from "react-bootstrap/Button";
-import Spinner from "react-bootstrap/cjs/Spinner";
 import LoadingComponent from "../../../app/layout/LoadingComponents";
 
 

@@ -17,7 +17,7 @@ import Spinner from "react-bootstrap/Spinner";
 import Modal from "react-bootstrap/Modal";
 
 //Actions
-import {listenToEvents} from "../eventActions";
+
 
 //Custom Form Inputs
 import MyTextInput from "../../../app/common/form/MyTextInput";
@@ -33,6 +33,7 @@ import {
     listenToEventFromFirestore,
     updateEventInFirestore
 } from "../../../app/firestore/firestoreService";
+import {listenToSelectedEvents} from "../eventActions";
 
 
 const EventForm = ({match, history}) => {
@@ -41,10 +42,7 @@ const EventForm = ({match, history}) => {
     const [loadingCancel, setLoadingCancel] = useState(false)
     const [confirmOpen, setConfirmOpen] = useState(false)
     const handleClose = () => setConfirmOpen(false);
-    const selectedEvent = useSelector((state) =>
-        state.event.events.find((e) => e.id === match.params.id)
-    );
-
+    const {selectedEvent} = useSelector((state) => state.event);
     const {loading, error} = useSelector(state => state.async)
     // event is the reducer and events is property for events that we're storing our events. initialState{events:sampleData}
     // - ?? is null conditional validator. if it's null we pass anything to the right
@@ -93,7 +91,7 @@ const EventForm = ({match, history}) => {
         shouldExecute: !!match.params.id,
         // !! makes it a boolean. if we don't have id it's false
         query: () => listenToEventFromFirestore(match.params.id),
-        data: (event) => dispatch(listenToEvents([event])),
+        data: (event) => dispatch(listenToSelectedEvents(event)),
         deps: [match.params.id, dispatch]
         // when the eventId(match.params.id) changes rerun the use effect
     })

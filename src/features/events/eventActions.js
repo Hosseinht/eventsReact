@@ -1,4 +1,11 @@
-import {CREATE_EVENT, DELETE_EVENT, UPDATE_EVENT, FETCH_EVENTS, LISTEN_TO_EVENT_CHAT} from "./eventConstant";
+import {
+    CREATE_EVENT,
+    DELETE_EVENT,
+    UPDATE_EVENT,
+    FETCH_EVENTS,
+    LISTEN_TO_EVENT_CHAT,
+    LISTEN_TO_SELECTED_EVENTS, CLEAR_EVENTS
+} from "./eventConstant";
 import {asyncActionError, asyncActionFinish, asyncActionStart} from "../../app/async/asyncReducer";
 import fetchEventsFromFirestore, {dataFromSnapshot} from "../../app/firestore/firestoreService";
 
@@ -18,10 +25,10 @@ export const fetchEvents = (predicate, limit, lastDocSnapshot) => async (dispatc
     }
 };
 
-export const listenToEvents = (events) => {
+export const listenToSelectedEvents = (event) => {
     return {
-        type: FETCH_EVENTS,
-        payload: events
+        type: LISTEN_TO_SELECTED_EVENTS,
+        payload: event
     }
 };
 
@@ -53,5 +60,3 @@ export const listenToEventChat = (comments) => {
         payload: comments
     }
 }
-
-

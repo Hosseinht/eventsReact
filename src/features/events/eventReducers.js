@@ -3,7 +3,7 @@ import {
     CREATE_EVENT,
     DELETE_EVENT,
     FETCH_EVENTS,
-    LISTEN_TO_EVENT_CHAT,
+    LISTEN_TO_EVENT_CHAT, LISTEN_TO_SELECTED_EVENTS,
     UPDATE_EVENT
 } from "./eventConstant";
 
@@ -11,7 +11,8 @@ import {
 const initialState = {
     events: [],
     comments: [],
-    moreEvents: false
+    moreEvents: false,
+    selectedEvent: null
 }
 
 // action = {type, payload}. we simply remove action. .
@@ -53,6 +54,11 @@ export const eventReducer = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 comments: []
+            }
+        case LISTEN_TO_SELECTED_EVENTS:
+            return {
+                ...state,
+                selectedEvent: payload
             }
         default:
             return state
