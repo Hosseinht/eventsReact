@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import EventListItemPlaceholder from "./EventListItemPlaceholder";
 
 //Actions
-import {fetchEvents} from "../eventActions";
+import {clearEvents, fetchEvents} from "../eventActions";
 
 //Bootstrap
 import Container from "react-bootstrap/Container";
@@ -36,6 +36,8 @@ const EventDashboard = () => {
     ]))
 
     function handleSetPredicate(key, value) {
+        dispatch(clearEvents())
+        setLastDocSnapshot(null)
         setPredicate(new Map(predicate.set(key, value)))
     }
 
@@ -45,6 +47,9 @@ const EventDashboard = () => {
             setLastDocSnapshot(lastVisible)
             setLoadingInitial(false)
         })
+        return () => {
+            dispatch(clearEvents())
+        }
     }, [dispatch, predicate])
 
     function handleFetchNextEvent() {

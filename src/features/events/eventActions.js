@@ -60,3 +60,9 @@ export const listenToEventChat = (comments) => {
         payload: comments
     }
 }
+
+export const clearEvents = () => {
+    return {
+        type: CLEAR_EVENTS
+    }
+}
