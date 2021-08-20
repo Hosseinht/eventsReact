@@ -1,15 +1,20 @@
 import React, {useState} from 'react';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import {openModal} from "../../app/common/modals/modalReducer";
 
 const UnAuthModal = ({history}) => {
     const [open, setOpen] = useState(true)
+    const {prevLocation} = useSelector(state => state.auth)
     const dispatch = useDispatch()
 
     function handleClose() {
-        history.goBack()
+        if(history && prevLocation){
+            history.push(prevLocation.pathname)
+        }else {
+            history.push('/events')
+        }
         setOpen(false)
     }
 

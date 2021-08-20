@@ -6,7 +6,6 @@ import 'react-calendar/dist/Calendar.css'
 import './index.css';
 import App from './app/layout/App.jsx';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 import configureStore from "./app/store/configureStore";
 import {history} from "./app/store/configureStore"
