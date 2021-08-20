@@ -4,11 +4,12 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import {openModal} from "../../app/common/modals/modalReducer";
 
-const UnAuthModal = () => {
+const UnAuthModal = ({history}) => {
     const [open, setOpen] = useState(true)
     const dispatch = useDispatch()
 
     function handleClose() {
+        history.goBack()
         setOpen(false)
     }
 
