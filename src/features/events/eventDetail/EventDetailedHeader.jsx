@@ -8,10 +8,14 @@ import {Link} from "react-router-dom";
 import {addUserAttendance, cancelUserAttendance} from "../../../app/firestore/firestoreService";
 import {toast} from "react-toastify";
 import Spinner from "react-bootstrap/cjs/Spinner";
+import {useSelector} from "react-redux";
+import UnAuthModal from "../../auth/UnAuthModal";
 
 
 const EventDetailedHeader = ({event, isHost, isGoing}) => {
     const [loading, setLoading] = useState(false)
+    const {authenticated} = useSelector(state => state.auth)
+    const [modalOpen, setModalOpen] = useState(false)
 
     async function handleUserJoinEvent() {
         setLoading(true)
@@ -38,60 +42,65 @@ const EventDetailedHeader = ({event, isHost, isGoing}) => {
 
     return (
         <EventDetailedHeaderWrapper>
-            <div className='fixedoverlay'>
-                <Image className='img-brightness' fluid src={`/assets/categoryImages/${event.category}.jpg`}/>
-                <div className="content-title">
-                    <div className="content-title-title">
-                        <p className='fs-4'>{event.title}</p>
-                    </div>
-                    <div className='content-title-date'>
-                        <p>{format(event.date, 'MMMM d, yyyy h:mm a')}</p>
-                    </div>
-                    <div className="content-title-host">
-                        <p className='fs-6'>Hosted by <strong className=' host-text'><Link
-                            to={`/profile/${event.hostUid}`}>{event.hostedBy}</Link></strong></p>
+            <>
+                {modalOpen &&
+                <UnAuthModal setModalOpen={setModalOpen}/>
+                }
+                <div className='fixedoverlay'>
+                    <Image className='img-brightness' fluid src={`/assets/categoryImages/${event.category}.jpg`}/>
+                    <div className="content-title">
+                        <div className="content-title-title">
+                            <p className='fs-4'>{event.title}</p>
+                        </div>
+                        <div className='content-title-date'>
+                            <p>{format(event.date, 'MMMM d, yyyy h:mm a')}</p>
+                        </div>
+                        <div className="content-title-host">
+                            <p className='fs-6'>Hosted by <strong className=' host-text'><Link
+                                to={`/profile/${event.hostUid}`}>{event.hostedBy}</Link></strong></p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div className="header-btn-part">
-                {!isHost &&
-                <div className="header-btn-group">
-                    {isGoing ?
-                        <div className="header-cancel-btn">
-                            <Button
-                                onClick={handleUserLeaveEvent}
-                                variant={'light'}
-                                className='my-red-btn-inverted'
-                            >
-                                {loading ? <Spinner className='photos-spinner' animation="border" size="sm"/> :
-                                    "Cancel My Place"
-                                }
+                <div className="header-btn-part">
+                    {!isHost &&
+                    <div className="header-btn-group">
+                        {isGoing ?
+                            <div className="header-cancel-btn">
+                                <Button
+                                    onClick={handleUserLeaveEvent}
+                                    variant={'light'}
+                                    className='my-red-btn-inverted'
+                                >
+                                    {loading ? <Spinner className='photos-spinner' animation="border" size="sm"/> :
+                                        "Cancel My Place"
+                                    }
 
-                            </Button>
-                        </div>
-                        :
-                        <div className="header-join-btn">
-                            <Button
-                                onClick={handleUserJoinEvent}
-                                variant={'light'}
-                                className='my-blue-btn-invert'
-                            >
-                                {loading ? <Spinner className='photos-spinner' animation="border" size="sm"/> :
-                                    "JOIN THIS EVENT"
-                                }
+                                </Button>
+                            </div>
+                            :
+                            <div className="header-join-btn">
+                                <Button
+                                    onClick={authenticated ? handleUserJoinEvent : () => setModalOpen(true)}
+                                    variant={'light'}
+                                    className='my-blue-btn-invert'
+                                >
+                                    {loading ? <Spinner className='photos-spinner' animation="border" size="sm"/> :
+                                        "JOIN THIS EVENT"
+                                    }
 
-                            </Button>
-                        </div>
+                                </Button>
+                            </div>
+                        }
+                    </div>
+                    }
+                    {isHost &&
+                    <div className="header-event-btn ms-auto">
+                        <Button as={Link} to={`/manage/${event.id}`} variant={'light'}>Manage Event</Button>
+                    </div>
                     }
                 </div>
-                }
-                {isHost &&
-                <div className="header-event-btn ms-auto">
-                    <Button as={Link} to={`/manage/${event.id}`} variant={'light'}>Manage Event</Button>
-                </div>
-                }
-            </div>
+            </>
         </EventDetailedHeaderWrapper>
     );
 };

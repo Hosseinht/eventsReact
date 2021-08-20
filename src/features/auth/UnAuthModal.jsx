@@ -4,18 +4,29 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import {openModal} from "../../app/common/modals/modalReducer";
 
-const UnAuthModal = ({history}) => {
+const UnAuthModal = ({history, setModalOpen}) => {
     const [open, setOpen] = useState(true)
     const {prevLocation} = useSelector(state => state.auth)
     const dispatch = useDispatch()
 
     function handleClose() {
+        if(!history){
+            setOpen(false)
+            setModalOpen(false)
+            return
+        }
         if(history && prevLocation){
             history.push(prevLocation.pathname)
         }else {
             history.push('/events')
         }
         setOpen(false)
+    }
+
+    function handleOpenLoginModal(modalType) {
+        dispatch(openModal({modalType}))
+        setOpen(false)
+        setModalOpen(false)
     }
 
     return (
@@ -26,11 +37,11 @@ const UnAuthModal = ({history}) => {
                 </Modal.Header>
                 <div className='d-flex justify-content-center mt-5'>
                     <Button className='my-blue-btn-invert me-3'
-                            onClick={() => dispatch(openModal({modalType: 'LoginForm'}))}>
+                            onClick={() => handleOpenLoginModal('LoginForm')}>
                         Login
                     </Button>
                     <Button className='my-blue-btn-invert'
-                            onClick={() => dispatch(openModal({modalType: 'RegisterForm'}))}>
+                            onClick={() => handleOpenLoginModal( 'RegisterForm')}>
                         Register
                     </Button>
 
