@@ -16,6 +16,7 @@ import {createDataTree} from "../../../app/common/util/util";
 
 const EventDetailedChat = ({eventId}) => {
     const dispatch = useDispatch()
+    const {authenticated} = useSelector(state => state.auth)
     const {comments} = useSelector((state) => state.event)
     const [showReplyForm, setShowReplyForm] = useState({open: false, commentId: null})
 
@@ -38,7 +39,8 @@ const EventDetailedChat = ({eventId}) => {
     return (
         <EventDetailedChatWrapper>
             <ListGroup>
-                <h4 className="text-center">Chat about this event</h4>
+                <h4 className="text-center">{authenticated ? "Chat about this event" : 'Sign in to view and chat'}</h4>
+                {authenticated &&
                 <div className='my-box-shadow'>
                     <EventDetailedChatForm eventId={eventId} parentId={0} closeForm={setShowReplyForm}/>
 
@@ -138,6 +140,7 @@ const EventDetailedChat = ({eventId}) => {
                         </ListGroup.Item>
                     ))}
                 </div>
+                }
             </ListGroup>
 
         </EventDetailedChatWrapper>
