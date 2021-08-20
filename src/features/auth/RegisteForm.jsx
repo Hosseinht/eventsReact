@@ -56,7 +56,7 @@ const RegisterForm = () => {
                                 variant='light'
                                 disabled={!isValid || !dirty || isSubmitting}
                                 type='submit'
-                                className='my-blue-btn mb-3 mt-3  w-100'
+                                className='my-blue-btn-invert mb-3 mt-3  w-100'
                             >
                                 {isSubmitting && <Spinner
                                     as="span"

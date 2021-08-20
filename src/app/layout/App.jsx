@@ -15,6 +15,7 @@ import AccountPage from "../../features/auth/AccountPage";
 import {useSelector} from "react-redux";
 import LoadingComponent from "./LoadingComponents";
 import ProfilePage from "../../features/profiles/profilePage/ProfilePage";
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
     const {key} = useLocation()
@@ -34,10 +35,10 @@ function App() {
                 <Route path='/events' exact component={EventDashboard}/>
                 <Route path='/sandbox' exact component={Sandbox}/>
                 <Route path='/events/:id' component={EventDetailedPage}/>
-                <Route path={['/createEvent', '/manage/:id']} component={EventForm} key={key}/>
+                <PrivateRoute path={['/createEvent', '/manage/:id']} component={EventForm} key={key}/>
                 {/*<Route path='/eventDetail' component={EventDetailedPage} />*/}
-                <Route path='/account' component={AccountPage}/>
-                <Route path='/profile/:id' component={ProfilePage}/>
+                <PrivateRoute path='/account' component={AccountPage}/>
+                <PrivateRoute path='/profile/:id' component={ProfilePage}/>
                 <Route path='/error' component={ErrorComponent}/>
             </Container>
 

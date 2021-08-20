@@ -51,7 +51,7 @@ const LoginForm = () => {
                                 variant='light'
                                 disabled={!isValid || !dirty || isSubmitting}
                                 type='submit'
-                                className='my-blue-btn mt-3 mb-3 w-100'
+                                className='my-blue-btn-invert mt-3 mb-3 w-100'
                             >
                                 {isSubmitting && <Spinner
                                     as="span"
