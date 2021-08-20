@@ -2,7 +2,6 @@ import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import Container from "react-bootstrap/Container";
 import {BsGeoAlt} from "react-icons/bs"
-const {REACT_APP_GOOGLE_MAP_API} = process.env
 
 function Marker() {
     return(
@@ -15,7 +14,7 @@ const EventDetailedMap = ({latLng}) => {
         <Container style={{padding:0}}>
             <div style={{height:300, width:"100%"}}>
                 <GoogleMapReact
-                    bootstrapURLKeys={{key: REACT_APP_GOOGLE_MAP_API}}
+                    bootstrapURLKeys={{key: process.env.REACT_APP_MAPS_KEY}}
                     center={latLng}
                     zoom={zoom}
                 >

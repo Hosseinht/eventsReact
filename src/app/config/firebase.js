@@ -4,10 +4,10 @@ import 'firebase/database'
 import 'firebase/auth'
 import 'firebase/storage'
 
-const {REACT_APP_FIREBASE_API} = process.env
+
 
 const firebaseConfig = {
-    apiKey: REACT_APP_FIREBASE_API,
+    apiKey: process.env.REACT_APP_API_KEY,
     authDomain: "eaavents.firebaseapp.com",
     projectId: "eaavents",
     storageBucket: "eaavents.appspot.com",
