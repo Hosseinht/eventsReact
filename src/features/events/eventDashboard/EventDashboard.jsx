@@ -3,17 +3,16 @@ import EventList from "./EventList";
 import EventFilters from "./EventFilter";
 import {useDispatch, useSelector} from "react-redux";
 import EventListItemPlaceholder from "./EventListItemPlaceholder";
+import styled from "styled-components";
 
 //Actions
-import {clearEvents, fetchEvents} from "../eventActions";
+import {fetchEvents} from "../eventActions";
 
 //Bootstrap
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import styled from "styled-components";
-// FireStore
 
 import EventsFeed from "./EventsFeed";
 import LoadingComponent from "../../../app/layout/LoadingComponents";

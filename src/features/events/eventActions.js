@@ -7,7 +7,7 @@ import {
     LISTEN_TO_SELECTED_EVENTS,
     CLEAR_EVENTS,
     SET_FILTER,
-    SET_START_DATE
+    SET_START_DATE, CLEAR_SELECTED_EVENTS
 } from "./eventConstant";
 import {asyncActionError, asyncActionFinish, asyncActionStart} from "../../app/async/asyncReducer";
 import fetchEventsFromFirestore, {dataFromSnapshot} from "../../app/firestore/firestoreService";
@@ -49,6 +49,12 @@ export const listenToSelectedEvents = (event) => {
         payload: event
     }
 };
+
+export const clearSelectedEvents = () => {
+    return {
+        type:CLEAR_SELECTED_EVENTS
+    }
+}
 
 
 export const createEvent = (event) => {

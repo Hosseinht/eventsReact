@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from "styled-components";
+import {Calendar} from "react-calendar";
+import {useDispatch, useSelector} from "react-redux";
+
 import {FaFilter} from "react-icons/fa";
 import {BsFillCalendarFill} from "react-icons/bs"
-import {Calendar} from "react-calendar";
 import ListGroup from "react-bootstrap/ListGroup";
-import {useDispatch, useSelector} from "react-redux";
+
 import {setFilter, setStartDate} from "../eventActions";
 
 const EventFilters = ({loading}) => {

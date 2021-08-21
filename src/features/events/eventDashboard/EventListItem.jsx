@@ -2,15 +2,14 @@ import React from 'react';
 import EventListAttendee from "./EventListAttendee";
 import './EventListItem.css'
 import styled from "styled-components";
+import {Link} from "react-router-dom";
+
 
 import {format} from 'date-fns'
 //Bootstrap
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import {BsFillClockFill, BsGeoAlt} from "react-icons/bs"
-import {Link} from "react-router-dom";
-import {deleteEventInFirestore} from "../../../app/firestore/firestoreService";
-
 
 
 const EventListitem = ({event}) => {
@@ -75,8 +74,6 @@ const EventListitem = ({event}) => {
                             className='py-2 px-4 my-blue-btn'>
                             View
                         </Button>{' '}
-                        <Button onClick={() => deleteEventInFirestore(event.id)}
-                                className='p-2 px-3 my-red-btn'>Delete</Button>
                     </div>
                 </div>
             </div>

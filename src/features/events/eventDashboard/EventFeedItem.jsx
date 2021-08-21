@@ -1,7 +1,9 @@
 import React from 'react';
-import Image from "react-bootstrap/Image";
 import {formatDistance} from 'date-fns';
 import styled from "styled-components";
+
+import Image from "react-bootstrap/Image";
+
 
 const EventFeedItem = ({post}) => {
     let summary;

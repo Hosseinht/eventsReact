@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components'
+import Button from "react-bootstrap/Button";
+import {Link} from "react-router-dom";
 
 const HomePage = () => {
     return (
             <HomeWrapper>
-                <h1>Congratulations! you found the empty Home page:)</h1>
+                <h1>Hello, This is the empty Home page:)</h1>
+                <Button as={Link} to='/events' className='my-blue-btn-invert mt-3 p-2 w-25'>Events</Button>
             </HomeWrapper>
     );
 };

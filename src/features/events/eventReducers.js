@@ -1,5 +1,5 @@
 import {
-    CLEAR_COMMENTS, CLEAR_EVENTS,
+    CLEAR_COMMENTS, CLEAR_EVENTS, CLEAR_SELECTED_EVENTS,
     CREATE_EVENT,
     DELETE_EVENT,
     FETCH_EVENTS,
@@ -65,6 +65,11 @@ export const eventReducer = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 selectedEvent: payload
+            }
+        case CLEAR_SELECTED_EVENTS:
+            return {
+                ...state,
+                selectedEvent:null
             }
         case CLEAR_EVENTS:
             return {

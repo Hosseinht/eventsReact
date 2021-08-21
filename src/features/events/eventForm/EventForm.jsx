@@ -1,5 +1,5 @@
 /* global google */
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Formik, Form as FormikForm} from 'formik';
 import * as Yup from 'yup'
@@ -33,10 +33,10 @@ import {
     listenToEventFromFirestore,
     updateEventInFirestore
 } from "../../../app/firestore/firestoreService";
-import {listenToSelectedEvents} from "../eventActions";
+import {clearSelectedEvents, listenToSelectedEvents} from "../eventActions";
 
 
-const EventForm = ({match, history}) => {
+const EventForm = ({match, history, location}) => {
 
     const dispatch = useDispatch();
     const [loadingCancel, setLoadingCancel] = useState(false)
@@ -44,9 +44,15 @@ const EventForm = ({match, history}) => {
     const handleClose = () => setConfirmOpen(false);
     const {selectedEvent} = useSelector((state) => state.event);
     const {loading, error} = useSelector(state => state.async)
-    // event is the reducer and events is property for events that we're storing our events. initialState{events:sampleData}
+
     // - ?? is null conditional validator. if it's null we pass anything to the right
     // if it's not our initial value is going to be set to our selectedEvent
+
+    useEffect(() => {
+        if (location.pathname !== '/createEvent') return;
+        dispatch(clearSelectedEvents())
+    }, [dispatch, location.pathname])
+
     const initialValues = selectedEvent ?? {
         title: '',
         category: '',
@@ -88,7 +94,7 @@ const EventForm = ({match, history}) => {
     }
 
     useFirestoreDoc({
-        shouldExecute: !!match.params.id,
+        shouldExecute: match.params.id !== selectedEvent?.id && location.pathname !== '/createEvent',
         // !! makes it a boolean. if we don't have id it's false
         query: () => listenToEventFromFirestore(match.params.id),
         data: (event) => dispatch(listenToSelectedEvents(event)),
@@ -104,6 +110,7 @@ const EventForm = ({match, history}) => {
             <Container className='form-container rounded-1'>
 
                 <Formik
+                    enableReinitialize
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={async (values, {setSubmitting}) => {
@@ -162,6 +169,7 @@ const EventForm = ({match, history}) => {
                                 dateFormat="MMMM d, yyyy h:mm a"
                                 showTimeSelect
                                 timeCaption='time'
+                                autoComplete='off'
                             />
 
                             <div className="form-btn-group ">
