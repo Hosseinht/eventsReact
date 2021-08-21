@@ -29,11 +29,11 @@ export function dataFromSnapshot(snapshot) {
 }
 
 
-const fetchEventsFromFirestore = (predicate, limit, lastDocSnapshot = null) => {
+const fetchEventsFromFirestore = (filter, startDate, limit, lastDocSnapshot = null) => {
     const user = firebase.auth().currentUser;
     let eventsRef = db.collection('events').orderBy('date').startAfter(lastDocSnapshot).limit(limit);
 
-    switch (predicate.get('filter')) {
+    switch (filter.get('filter')) {
         case 'isGoing':
             return eventsRef
                 // specify queries
@@ -41,15 +41,15 @@ const fetchEventsFromFirestore = (predicate, limit, lastDocSnapshot = null) => {
                 //array-contains: get the user or the event that currently logged in user is present in the attendeeIds of this particular event
                 // user.uid is what is we are looking for
                 .where('attendeeIds', "array-contains", user.uid)
-                .where('date', '>=', predicate.get('startDate'))
+                .where('date', '>=', startDate)
         // where then we specify the field that we wat to query on
         case 'isHosting':
             return eventsRef
                 .where('hostUid', '==', user.uid)
-                .where('date', '>=', predicate.get('startDate'))
+                .where('date', '>=', startDate)
         default:
             return eventsRef
-                .where('date', '>=', predicate.get('startDate'))
+                .where('date', '>=', startDate)
     }
 };
 export default fetchEventsFromFirestore;

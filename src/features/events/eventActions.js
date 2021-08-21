@@ -4,26 +4,43 @@ import {
     UPDATE_EVENT,
     FETCH_EVENTS,
     LISTEN_TO_EVENT_CHAT,
-    LISTEN_TO_SELECTED_EVENTS, CLEAR_EVENTS
+    LISTEN_TO_SELECTED_EVENTS,
+    CLEAR_EVENTS, SET_FILTER,
+    SET_START_DATE
 } from "./eventConstant";
 import {asyncActionError, asyncActionFinish, asyncActionStart} from "../../app/async/asyncReducer";
 import fetchEventsFromFirestore, {dataFromSnapshot} from "../../app/firestore/firestoreService";
 
 
-export const fetchEvents = (predicate, limit, lastDocSnapshot) => async (dispatch) => {
+export const fetchEvents = (filter, startDate, limit, lastDocSnapshot) => async (dispatch) => {
     dispatch(asyncActionStart())
     try {
-        const snapshot = await fetchEventsFromFirestore(predicate, limit, lastDocSnapshot).get()
+        const snapshot = await fetchEventsFromFirestore(filter, startDate, limit, lastDocSnapshot).get()
         const lastVisible = snapshot.docs[snapshot.docs.length - 1]
         const moreEvents = snapshot.docs.length >= limit
         const events = snapshot.docs.map(doc => dataFromSnapshot(doc))
-        dispatch({type: FETCH_EVENTS, payload: {events, moreEvents}})
+        dispatch({type: FETCH_EVENTS, payload: {events, moreEvents,lastVisible}})
         dispatch(asyncActionFinish())
-        return lastVisible
     } catch (error) {
         dispatch(asyncActionError(error))
     }
 };
+
+export const setFilter = (value) => {
+    return function (dispatch) {
+        dispatch(clearEvents())
+        dispatch({type: SET_FILTER, payload: value})
+    }
+}
+
+
+export const setStartDate = (date) => {
+    return function (dispatch) {
+        dispatch(clearEvents())
+        dispatch({type: SET_START_DATE, payload: date})
+    }
+}
+
 
 export const listenToSelectedEvents = (event) => {
     return {

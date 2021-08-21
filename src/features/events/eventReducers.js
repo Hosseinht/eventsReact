@@ -3,7 +3,7 @@ import {
     CREATE_EVENT,
     DELETE_EVENT,
     FETCH_EVENTS,
-    LISTEN_TO_EVENT_CHAT, LISTEN_TO_SELECTED_EVENTS,
+    LISTEN_TO_EVENT_CHAT, LISTEN_TO_SELECTED_EVENTS, RETAIN_STATE, SET_FILTER, SET_START_DATE,
     UPDATE_EVENT
 } from "./eventConstant";
 
@@ -12,7 +12,12 @@ const initialState = {
     events: [],
     comments: [],
     moreEvents: true,
-    selectedEvent: null
+    selectedEvent: null,
+    lastVisible: null,
+    filter: 'all',
+    startDate: new Date(),
+    retainState: false
+    // the is the flag to see if we want to keep the events we already have in memory
 }
 
 // action = {type, payload}. we simply remove action. .
@@ -43,7 +48,8 @@ export const eventReducer = (state = initialState, {type, payload}) => {
                 // events: [...payload]
                 // events are array anyway so we don't need to spread this action so:
                 events: [...state.events, ...payload.events],
-                moreEvents: payload.moreEvents
+                moreEvents: payload.moreEvents,
+                lastVisible: payload.lastVisible
             }
         case LISTEN_TO_EVENT_CHAT:
             return {
@@ -64,7 +70,27 @@ export const eventReducer = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 events: [],
-                moreEvents: true
+                moreEvents: true,
+                lastVisible: null
+            }
+        case SET_FILTER:
+            return {
+                ...state,
+                retainState: false,
+                moreEvents: true,
+                filter: payload
+            }
+        case SET_START_DATE:
+            return {
+                ...state,
+                retainState: false,
+                moreEvents: true,
+                startDate: payload
+            }
+        case RETAIN_STATE:
+            return {
+                ...state,
+                retainState: true,
             }
         default:
             return state
