@@ -33,7 +33,7 @@ const fetchEventsFromFirestore = (filter, startDate, limit, lastDocSnapshot = nu
     const user = firebase.auth().currentUser;
     let eventsRef = db.collection('events').orderBy('date').startAfter(lastDocSnapshot).limit(limit);
 
-    switch (filter.get('filter')) {
+    switch (filter) {
         case 'isGoing':
             return eventsRef
                 // specify queries

@@ -2,7 +2,7 @@ import React from 'react';
 import EventListitem from "./EventListItem";
 import InfiniteScroll from 'react-infinite-scroller'
 
-const EventList = ({events, getNextEvents, loading, moreEvents}) => {
+const EventList = ({events, getNextEvents, loading, moreEvents,}) => {
     return (
         <div>
             {events.length !== 0 && (

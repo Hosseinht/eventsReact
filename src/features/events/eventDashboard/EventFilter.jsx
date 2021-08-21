@@ -4,10 +4,14 @@ import {FaFilter} from "react-icons/fa";
 import {BsFillCalendarFill} from "react-icons/bs"
 import {Calendar} from "react-calendar";
 import ListGroup from "react-bootstrap/ListGroup";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {setFilter, setStartDate} from "../eventActions";
 
-const EventFilters = ({predicate, setPredicate, loading}) => {
+const EventFilters = ({loading}) => {
+    const dispatch = useDispatch()
     const {authenticated} = useSelector(state => state.auth)
+    const {filter, startDate} = useSelector((state) => state.event);
+
     return (
         <>
             <EventFiltersWrapper className='mt-5'>
@@ -24,24 +28,24 @@ const EventFilters = ({predicate, setPredicate, loading}) => {
                     <ListGroup variant='flush' className="filter-part-content border-top">
                         <ListGroup.Item
                             className=' border-0'
-                            active={predicate.get('filter') === 'all'}
-                            onClick={() => setPredicate('filter', "all")}
+                            active={filter === 'all'}
+                            onClick={() => dispatch(setFilter('all'))}
                             disabled={loading}
                         >
                             All Events
                         </ListGroup.Item>
                         <ListGroup.Item
                             className='mt-3 border-0'
-                            active={predicate.get('filter') === 'isGoing'}
-                            onClick={() => setPredicate('filter', "isGoing")}
+                            active={filter === 'isGoing'}
+                            onClick={() => dispatch(setFilter('isGoing'))}
                             disabled={loading}
                         >
                             I'm Going
                         </ListGroup.Item>
                         <ListGroup.Item
                             className='mt-3 border-0'
-                            active={predicate.get('filter') === 'isHosting'}
-                            onClick={() => setPredicate('filter', "isHosting")}
+                            active={filter === 'isHosting'}
+                            onClick={() => dispatch(setFilter('isHosting'))}
                             disabled={loading}
                         >
                             I'm Hosting
@@ -60,8 +64,8 @@ const EventFilters = ({predicate, setPredicate, loading}) => {
                     </div>
                 </div>
                 <Calendar
-                    onChange={date => setPredicate('startDate', date)}
-                    value={predicate.get('startDate') || new Date()}
+                    onChange={(date) => dispatch(setStartDate(date))}
+                    value={startDate || new Date()}
                     tileDisabled={() => loading}
                     className='calendar-part my-box-shadow'
                 />

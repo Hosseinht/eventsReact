@@ -16,7 +16,7 @@ const initialState = {
     lastVisible: null,
     filter: 'all',
     startDate: new Date(),
-    retainState: false
+    retainState: false,
     // the is the flag to see if we want to keep the events we already have in memory
 }
 
@@ -71,27 +71,27 @@ export const eventReducer = (state = initialState, {type, payload}) => {
                 ...state,
                 events: [],
                 moreEvents: true,
-                lastVisible: null
-            }
+                lastVisible: null,
+            };
         case SET_FILTER:
             return {
                 ...state,
                 retainState: false,
                 moreEvents: true,
-                filter: payload
-            }
+                filter: payload,
+            };
         case SET_START_DATE:
             return {
                 ...state,
                 retainState: false,
                 moreEvents: true,
-                startDate: payload
-            }
+                startDate: payload,
+            };
         case RETAIN_STATE:
             return {
                 ...state,
                 retainState: true,
-            }
+            };
         default:
             return state
 

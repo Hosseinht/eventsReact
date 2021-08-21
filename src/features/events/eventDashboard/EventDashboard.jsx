@@ -17,45 +17,31 @@ import styled from "styled-components";
 
 import EventsFeed from "./EventsFeed";
 import LoadingComponent from "../../../app/layout/LoadingComponents";
-
+import {RETAIN_STATE} from "../eventConstant";
 
 const EventDashboard = () => {
     const limit = 2
     const dispatch = useDispatch()
-    const {events, moreEvents} = useSelector(state => state.event)
+    const {events, moreEvents, filter, startDate, lastVisible, retainState} = useSelector(state => state.event)
     // event is the reducer and events is property for events that we're storing our events. initialState{events:sampleData}
     const {loading} = useSelector(state => state.async)
     const [loadingInitial, setLoadingInitial] = useState(false)
     const {authenticated} = useSelector(state => state.auth)
-    const [lastDocSnapshot, setLastDocSnapshot] = useState(null)
 
-    // Map: a javascript object that allows us to use certain methods. and get and set different elements in the map
-    const [predicate, setPredicate] = useState(new Map([
-        ['startDate', new Date()],
-        ['filter', 'all']
-    ]))
-
-    function handleSetPredicate(key, value) {
-        dispatch(clearEvents())
-        setLastDocSnapshot(null)
-        setPredicate(new Map(predicate.set(key, value)))
-    }
 
     useEffect(() => {
-        setLoadingInitial(true)
-        dispatch(fetchEvents(predicate, limit)).then((lastVisible) => {
-            setLastDocSnapshot(lastVisible)
-            setLoadingInitial(false)
-        })
+        if (retainState) return;
+        setLoadingInitial(true);
+        dispatch(fetchEvents(filter, startDate, limit)).then(() => {
+            setLoadingInitial(false);
+        });
         return () => {
-            dispatch(clearEvents())
+            dispatch({type: RETAIN_STATE})
         }
-    }, [dispatch, predicate])
+    }, [dispatch, filter, startDate, retainState]);
 
     function handleFetchNextEvent() {
-        dispatch(fetchEvents(predicate, limit, lastDocSnapshot)).then((lastVisible) => {
-            setLastDocSnapshot(lastVisible)
-        })
+        dispatch(fetchEvents(filter, startDate, limit, lastVisible));
     }
 
     return (
@@ -81,12 +67,12 @@ const EventDashboard = () => {
                         {authenticated &&
                         <EventsFeed/>
                         }
-                        <EventFilters predicate={predicate} setPredicate={handleSetPredicate} loading={loading}/>
+                        <EventFilters loading={loading}/>
                     </Col>
-                     <Col lg={8} md={"auto"}>
-                         {loading &&
-                            <LoadingComponent/>
-                         }
+                    <Col lg={8} md={"auto"}>
+                        {loading &&
+                        <LoadingComponent/>
+                        }
                     </Col>
                 </Row>
             </Container>
