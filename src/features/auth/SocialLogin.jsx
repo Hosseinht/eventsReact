@@ -16,9 +16,6 @@ const SocialLogin = () => {
 
     return (
         <SocialLoginWrapper>
-            <Button onClick={() => handleSocialLogin('facebook')} className='facebook-btn w-100 mb-3 d-flex justify-content-center align-items-center p-2'
-                    variant='light'> <FaFacebookSquare size='20px' className='me-2 mt-1 '/> Login with Facebook
-            </Button>
             <Button onClick={() => handleSocialLogin('google')} className='google-btn w-100  d-flex justify-content-center align-items-center p-2' variant='light'>
                 <FaGoogle  size='20px' className='me-2 mt-1'/>Login with Google </Button>
         </SocialLoginWrapper>
